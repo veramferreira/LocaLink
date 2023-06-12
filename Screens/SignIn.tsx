@@ -10,7 +10,15 @@ const googleSignIn = () => {
 };
 
 export default function SignIn({ navigation }: any) {
-  return <GoogleSigninButton onPress={googleSignIn} />;
+  return (
+    <>
+      <GoogleSigninButton onPress={googleSignIn} />
+      <Button
+        title="Homepage"
+        onPress={() => navigation.navigate("HomepageScreen", { name: "Jane" })}
+      />
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
