@@ -15,9 +15,11 @@ export default {
     },
     assetBundlePatterns: ["**/*"],
     ios: {
+      googleServicesFile: "./GoogleService-Info.plist",
       supportsTablet: true,
     },
     android: {
+      googleServicesFile: "./google-services.json",
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#ffffff",
@@ -34,5 +36,6 @@ export default {
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       appId: process.env.APP_ID,
     },
+    plugins: ["@react-native-google-signin/google-signin"],
   },
 };

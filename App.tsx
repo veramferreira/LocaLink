@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import SignIn from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SignUp from "./Screens/SignUp";
+// import SignUp from "./Screens/SignUp";
 import { HomepageScreen } from "./Screens/HomepageScreen";
 import About from "./Screens/About";
 import Calendar from "./Screens/Calendar";
@@ -23,11 +23,11 @@ export default function App() {
           component={SignIn}
           options={{ title: "Welcome" }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{ title: "Create your account" }}
-        />
+        /> */}
         <Stack.Screen
           name="HomepageScreen"
           component={HomepageScreen}
