@@ -22,6 +22,7 @@ const routes: NavigationItem[] = [
   { id: 5, title: "Lost&Found", screen: "LostFound" },
   { id: 6, title: "Marketplace", screen: "Marketplace" },
   { id: 7, title: "Recommendations", screen: "Recommendations" },
+  { id: 8, title: "Sign In", screen: "SignIn" },
 ];
 
 export const HomepageScreen: React.FC = () => {
