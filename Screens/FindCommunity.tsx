@@ -1,11 +1,8 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
-  Alert,
-  Button,
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
