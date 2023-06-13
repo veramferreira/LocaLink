@@ -22,6 +22,7 @@ const routes: NavigationItem[] = [
   { id: 5, title: "Lost&Found", screen: "LostFound" },
   { id: 6, title: "Marketplace", screen: "Marketplace" },
   { id: 7, title: "Recommendations", screen: "Recommendations" },
+  { id: 9, title: "FindCommunity", screen: "FindCommunity" },
 ];
 
 export const HomepageScreen: React.FC = () => {
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 18,
-    textDecoration: "none",
+    // textDecoration: "none",
     color: "white",
   },
 });
