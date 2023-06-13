@@ -11,6 +11,7 @@ import ManagementAnnouncements from "./Screens/ManagementAnnouncements";
 import Marketplace from "./Screens/Marketplace";
 import Recommendations from "./Screens/Recommendations";
 import ReportIssue from "./Screens/ReportIssue";
+import FindCommunity from "./Screens/FindCommunity";
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +68,11 @@ export default function App() {
           name="ReportIssue"
           component={ReportIssue}
           options={{ title: "Create your account" }}
+        />
+        <Stack.Screen
+          name="FindCommunity"
+          component={FindCommunity}
+          options={{ title: "Find Community" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
