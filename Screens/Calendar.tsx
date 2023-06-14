@@ -1,11 +1,13 @@
 import { useQueryClient } from "react-query";
-import { Calendar, LocaleConfig } from "react-native-calendars";
-import { Button, Text } from "react-native";
+import { Calendar } from "react-native-calendars";
+import { Button, Text, View } from "react-native";
 import colors from "../constants/colours";
 import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import getEvent from "../comp/getEvent";
+import getEventTime from "../comp/getEventTime";
+
 const CalendarScreen = () => {
   const queryClient = useQueryClient();
 
@@ -16,9 +18,9 @@ const CalendarScreen = () => {
   const handleDayPress = (day) => {
     setSelectedDate(day.dateString);
   };
-  console.log(getEvent(selectedDate));
-  const setEventToday: any = getEvent(selectedDate);
-  console.log(setEventToday);
+
+  const events = getEvent(selectedDate);
+  const eventTime = getEventTime(selectedDate);
 
   return (
     <>
@@ -32,10 +34,15 @@ const CalendarScreen = () => {
           },
         }}
       />
-      {typeof setEventToday === "object" ? (
-        <Text></Text>
+      {events.length === 0 ? (
+        <Text>No events for selected date</Text>
       ) : (
-        <Text>{setEventToday}</Text>
+        events.map((event, index) => (
+          <View key={index}>
+            <Text>{event.eventName}</Text>
+            <Text>{eventTime[index]}</Text>
+          </View>
+        ))
       )}
     </>
   );

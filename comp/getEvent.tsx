@@ -3,41 +3,46 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { fromUnixTime, format } from "date-fns";
 import { db } from "../config/firebase";
 
-const getEvent = (date) => {
-  const [calendarEvent, setCalendarEvent] = useState([{}]);
-  const [currentCalendarEvent, setCurrentCalendarEvent] = useState([{}]);
+interface CalendarEvent {
+  formDateString: string;
+  eventName: string;
+  formatTimeString: string;
+}
+
+const getEvent = (date: string): CalendarEvent[] => {
+  const [calendarEvent, setCalendarEvent] = useState<CalendarEvent[]>([]);
+  const [currentCalendarEvent, setCurrentCalendarEvent] = useState<
+    CalendarEvent[]
+  >([]);
+
   useEffect(() => {
     const q = query(collection(db, "calendarEvent"), orderBy("timestamp"));
 
     const calendarEventArrQuery = onSnapshot(q, (querySnapshot) => {
-      let calendarEventArr: Array<Object> = [];
+      let calendarEventArr: CalendarEvent[] = [];
 
       querySnapshot.forEach((doc) => {
-        calendarEventArr.push({ ...doc.data(), id: doc.id });
-      });
-      const newCalObj = calendarEventArr.map((elm) => {
+        const elm = doc.data();
         const fromUnix = fromUnixTime(elm.timestamp.seconds);
         const formatDate = format(fromUnix, "yyyy-MM-dd");
+        const formatTime = format(fromUnix, "Hmm");
         const formDateString = formatDate.toString();
         const eventName = elm.name;
-        return { formDateString, eventName };
+        const formatTimeString = formatTime.toString();
+        calendarEventArr.push({ formDateString, eventName, formatTimeString });
       });
-      const matchedDates = newCalObj.map((elm) => {
-        if (elm.formDateString === date) {
-          return elm.eventName;
-        }
-      });
-      const eventToday = matchedDates.filter((elm) => {
-        if (elm !== undefined) {
-          return elm;
-        }
-      });
-      setCurrentCalendarEvent(eventToday);
+
+      const matchedDates = calendarEventArr.filter(
+        (elm) => elm.formDateString === date
+      );
+      setCurrentCalendarEvent(matchedDates);
       setCalendarEvent(calendarEventArr);
     });
+
     return () => calendarEventArrQuery();
   }, [date]);
 
-  return currentCalendarEvent[0];
+  return currentCalendarEvent;
 };
+
 export default getEvent;
