@@ -11,12 +11,19 @@ import React from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
 import { addDoc, collection } from "@firebase/firestore";
+import * as yup from "yup";
 
 interface FormValues {
   title: string;
   description: string;
   email: string;
 }
+
+const formSchema = yup.object({
+  title: yup.string().required().min(4),
+  description: yup.string().required().min(4),
+  email: yup.string().email().required(),
+});
 
 export default function ReportIssue({ navigation }: any) {
   const handleSubmit = async (
@@ -39,11 +46,12 @@ export default function ReportIssue({ navigation }: any) {
   };
 
   return (
-    <View>
-      <Text style={styles.heading}>Report an Issue</Text>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View>
+        <Text style={styles.heading}>Report an Issue</Text>
         <Formik
           initialValues={{ title: "", description: "", email: "" }}
+          validationSchema={formSchema}
           onSubmit={handleSubmit}
         >
           {(props: FormikProps<FormValues>) => (
@@ -57,6 +65,7 @@ export default function ReportIssue({ navigation }: any) {
               />
               <Text style={styles.form}>Issue Description: </Text>
               <TextInput
+                // multiline
                 style={styles.input}
                 placeholder="describe the issue... "
                 onChangeText={(text) => props.handleChange("description")(text)}
@@ -79,8 +88,8 @@ export default function ReportIssue({ navigation }: any) {
             </View>
           )}
         </Formik>
-      </TouchableWithoutFeedback>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
