@@ -62,7 +62,9 @@ export default function ReportIssue({ navigation }: any) {
                 placeholder="issue title..."
                 onChangeText={(text) => props.handleChange("title")(text)}
                 value={props.values.title}
+                onBlur={props.handleBlur("title")}
               />
+              <Text style={styles.errorText}>{props.touched.title && props.errors.title}</Text>
               <Text style={styles.form}>Issue Description: </Text>
               <TextInput
                 // multiline
@@ -70,14 +72,20 @@ export default function ReportIssue({ navigation }: any) {
                 placeholder="describe the issue... "
                 onChangeText={(text) => props.handleChange("description")(text)}
                 value={props.values.description}
+                onBlur={props.handleBlur("description")}
               />
+              <Text style={styles.errorText}>
+                {props.touched.description && props.errors.description}
+              </Text>
               <Text style={styles.form}>Your email: </Text>
               <TextInput
                 style={styles.input}
                 placeholder="example@example.com "
                 onChangeText={(text) => props.handleChange("email")(text)}
                 value={props.values.email}
+                onBlur={props.handleBlur("email")}
               />
+              <Text style={styles.errorText}>{props.touched.email && props.errors.email}</Text>
               <TouchableOpacity
                 title="submit!"
                 onPress={props.handleSubmit}
@@ -131,4 +139,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
   },
+  errorText: {
+    color: 'crimson',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+    fontSize: 11,
+  }
 });
