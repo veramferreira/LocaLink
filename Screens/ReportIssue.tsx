@@ -2,14 +2,15 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import React from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
-import { doc, setDoc } from "@firebase/firestore";
+import { addDoc, collection } from "@firebase/firestore";
 
 interface FormValues {
   title: string;
@@ -29,7 +30,7 @@ export default function ReportIssue({ navigation }: any) {
         email: values.email,
       };
 
-      await setDoc(doc(db, "reportedIssues", "one"), docData);
+      await addDoc(collection(db, "reportedIssues"), docData);
       console.log("Document written successfully");
       resetForm();
     } catch (error) {
@@ -40,43 +41,45 @@ export default function ReportIssue({ navigation }: any) {
   return (
     <View>
       <Text style={styles.heading}>Report an Issue</Text>
-      <Formik
-        initialValues={{ title: "", description: "", email: "" }}
-        onSubmit={handleSubmit}
-      >
-        {(props: FormikProps<FormValues>) => (
-          <View style={styles.form}>
-            <Text style={styles.text}>Title: </Text>
-            <TextInput
-              style={styles.input}
-              placeholder="issue title..."
-              onChangeText={(text) => props.handleChange("title")(text)}
-              value={props.values.title}
-            />
-            <Text style={styles.form}>Issue Description: </Text>
-            <TextInput
-              style={styles.input}
-              placeholder="describe the issue... "
-              onChangeText={(text) => props.handleChange("description")(text)}
-              value={props.values.description}
-            />
-            <Text style={styles.form}>Your email: </Text>
-            <TextInput
-              style={styles.input}
-              placeholder="example@example.com "
-              onChangeText={(text) => props.handleChange("email")(text)}
-              value={props.values.email}
-            />
-            <TouchableOpacity
-              title="submit!"
-              onPress={props.handleSubmit}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Submit!</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Formik
+          initialValues={{ title: "", description: "", email: "" }}
+          onSubmit={handleSubmit}
+        >
+          {(props: FormikProps<FormValues>) => (
+            <View style={styles.form}>
+              <Text style={styles.text}>Title: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="issue title..."
+                onChangeText={(text) => props.handleChange("title")(text)}
+                value={props.values.title}
+              />
+              <Text style={styles.form}>Issue Description: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="describe the issue... "
+                onChangeText={(text) => props.handleChange("description")(text)}
+                value={props.values.description}
+              />
+              <Text style={styles.form}>Your email: </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="example@example.com "
+                onChangeText={(text) => props.handleChange("email")(text)}
+                value={props.values.email}
+              />
+              <TouchableOpacity
+                title="submit!"
+                onPress={props.handleSubmit}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Submit!</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
