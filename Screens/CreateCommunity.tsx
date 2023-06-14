@@ -16,7 +16,7 @@ export default function CreateCommunity() {
   const [postcode, setPostcode] = useState("");
   const [img, setImg] = useState("");
   const [management, setManagement] = useState([{ name: "", img: "" }]);
-  const [contacts, setContacts] = useState();
+  const [contacts, setContacts] = useState([{ name: "", contactInfo: "" }]);
 
   const [managementCounter, setManagementCounter] = useState(1);
   const [contactsCounter, setContactsCounter] = useState(1);
@@ -38,6 +38,24 @@ export default function CreateCommunity() {
       ];
     });
     console.log(management);
+  };
+  const updateContacts = (
+    inputIndex: number,
+    inputKey: string,
+    inputText: string
+  ) => {
+    setContacts((currContacts: any) => {
+      return [
+        ...currContacts.map((object: Object, index: number) => {
+          if (index === inputIndex) {
+            return { ...object, [inputKey]: inputText };
+          } else {
+            return object;
+          }
+        }),
+      ];
+    });
+    console.log(contacts);
   };
 
   const addManagement = () => {
@@ -69,39 +87,106 @@ export default function CreateCommunity() {
     console.log(management);
   };
 
+  const addContact = () => {
+    console.log(contactsCounter);
+    console.log(contacts);
+    if (contactsCounter === 5) {
+      return;
+    } else {
+      setContactsCounter(contactsCounter + 1);
+      setContacts((currContacts: any) => {
+        return [...currContacts, { name: "", img: "" }];
+      });
+    }
+  };
+
+  const removeContact = () => {
+    if (contactsCounter === 1) {
+      return;
+    } else {
+      setContactsCounter(contactsCounter - 1);
+      setContacts((currContact: any) => {
+        return currContact.filter((_: any, index: number) => {
+          return index !== contactsCounter - 1;
+        });
+      });
+    }
+
+    console.log(managementCounter);
+    console.log(management);
+  };
+
   return (
     <View>
       <Text>Community Name:</Text>
       <TextInput value={name} onChangeText={setName}></TextInput>
+
       <Text>Description:</Text>
       <TextInput value={description} onChangeText={setDescription}></TextInput>
+
       <Text>Postcode:</Text>
       <TextInput value={postcode} onChangeText={setPostcode}></TextInput>
+
       <Text>Image URL:</Text>
       <TextInput value={img} onChangeText={setImg}></TextInput>
+
       <Text>Management:</Text>
       <View>
-        <Text>Management 1 Name:</Text>
-        <TextInput
-          value={management[0].name}
-          onChangeText={(text) => updateManagement(0, "name", text)}
-        ></TextInput>
+        {management.map((manager: any, index: number) => {
+          return (
+            <View key={index}>
+              <Text>{`Management ${index + 1} Name:`}</Text>
+              <TextInput
+                value={manager.name}
+                onChangeText={(text) => updateManagement(index, "name", text)}
+              ></TextInput>
+              <Text>{`Management ${index + 1} Image URL:`}</Text>
+              <TextInput
+                value={manager.img}
+                onChangeText={(text) => updateManagement(index, "img", text)}
+              ></TextInput>
+            </View>
+          );
+        })}
       </View>
-      <View>
-        <Text>Management 1 Image URL:</Text>
-        <TextInput
-          value={management[0].img}
-          onChangeText={(text) => updateManagement(0, "img", text)}
-        ></TextInput>
-      </View>
+
       <TouchableOpacity onPress={addManagement}>
         <Text>Add A Manager</Text>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={removeManagement}>
         <Text>Remove A Manager</Text>
       </TouchableOpacity>
+
       <Text>Useful Contacts:</Text>
-      <TextInput value={contacts}></TextInput>
+      <View>
+        {contacts.map((contact: any, index: number) => {
+          return (
+            <View key={index}>
+              <Text>{`Contact ${index + 1} Name:`}</Text>
+              <TextInput
+                value={contact.name}
+                onChangeText={(text) => updateContacts(index, "name", text)}
+              ></TextInput>
+              <Text>{`Contact ${index + 1} Contact Info:`}</Text>
+              <TextInput
+                value={contact.contactInfo}
+                onChangeText={(text) =>
+                  updateContacts(index, "contactInfo", text)
+                }
+              ></TextInput>
+            </View>
+          );
+        })}
+      </View>
+
+      <TouchableOpacity onPress={addContact}>
+        <Text>Add A Contact</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={removeContact}>
+        <Text>Remove A Contact</Text>
+      </TouchableOpacity>
     </View>
   );
 }
