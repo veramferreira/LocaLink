@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import SignIn from "./Screens/SignIn";
+import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import SignUp from "./Screens/SignUp";
@@ -33,7 +33,7 @@ export default function App() {
           />
           <Stack.Screen
             name="SignIn"
-            component={SignIn}
+            component={SignInPage}
             options={{ title: "Welcome" }}
           />
           <Stack.Screen
