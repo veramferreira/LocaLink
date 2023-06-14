@@ -13,12 +13,14 @@ import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
 import { addDoc, collection } from "@firebase/firestore";
 import * as yup from "yup";
+import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins"
 
 // setting type for TS
 interface FormValues {
   title: string;
   description: string;
   email: string;
+  img: string;
 }
 
 // Setting the rules for form validation
@@ -26,6 +28,7 @@ const formSchema = yup.object({
   title: yup.string().required().min(4),
   description: yup.string().required().min(4),
   email: yup.string().email().required(),
+  img: yup.string().min(4),
 });
 
 //Setting the button colour when it's pressed
@@ -47,6 +50,7 @@ export default function ReportIssue({ navigation }: any) {
         title: values.title,
         description: values.description,
         email: values.email,
+        img: values.img,
       };
 
       await addDoc(collection(db, "reportedIssues"), docData);
@@ -71,10 +75,10 @@ export default function ReportIssue({ navigation }: any) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View>
+      <View style={styles.container}>
         <Text style={styles.heading}>Report an Issue</Text>
           <Formik
-            initialValues={{ title: "", description: "", email: "" }}
+            initialValues={{ title: "", description: "", email: "",  img: "" }}
             validationSchema={formSchema}
             onSubmit={handleSubmit}
           >
@@ -117,6 +121,17 @@ export default function ReportIssue({ navigation }: any) {
                 <Text style={styles.errorText}>
                   {props.touched.email && props.errors.email}
                 </Text>
+                <Text style={styles.text}>Image URL <Text style={styles.optionalText}>(optional)</Text>:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Image URL..."
+                  onChangeText={(text) => props.handleChange("img")(text)}
+                  value={props.values.img}
+                  onBlur={props.handleBlur("img")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.img && props.errors.img}
+                </Text>
                 <TouchableOpacity
                   title="submit!"
                   onPress={props.handleSubmit}
@@ -139,6 +154,7 @@ export default function ReportIssue({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
+  
   heading: {
     textAlign: "center",
     fontWeight: "bold",
@@ -151,6 +167,12 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 10,
     marginBottom: 10,
+  },
+  optionalText: {
+    color: "gray",
+    marginLeft: 10,
+    marginBottom: 10,
+    marginTop: 0,
   },
   input: {
     alignItems: "center",
