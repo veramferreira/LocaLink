@@ -15,8 +15,24 @@ import FindCommunity from "./Screens/FindCommunity";
 import { QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
+import { useFonts } from "expo-font";
+import {
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+} from "@expo-google-fonts/poppins";
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
@@ -39,37 +55,37 @@ export default function App() {
           <Stack.Screen
             name="About"
             component={About}
-            options={{ title: "Create your account" }}
+            options={{ title: "About your Community" }}
           />
           <Stack.Screen
             name="Calendar"
             component={CalendarScreen}
-            options={{ title: "Create your account" }}
+            options={{ title: "Calendar" }}
           />
           <Stack.Screen
             name="LostFound"
             component={LostFound}
-            options={{ title: "Create your account" }}
+            options={{ title: "Lost & Found" }}
           />
           <Stack.Screen
             name="ManagementAnnouncements"
             component={ManagementAnnouncements}
-            options={{ title: "Create your account" }}
+            options={{ title: "Management Announcements" }}
           />
           <Stack.Screen
             name="Marketplace"
             component={Marketplace}
-            options={{ title: "Create your account" }}
+            options={{ title: "Marketplace" }}
           />
           <Stack.Screen
             name="Recommendations"
             component={Recommendations}
-            options={{ title: "Create your account" }}
+            options={{ title: "Recommendations" }}
           />
           <Stack.Screen
             name="ReportIssue"
             component={ReportIssue}
-            options={{ title: "Create your account" }}
+            options={{ title: "Reporting an Issue" }}
           />
           <Stack.Screen
             name="FindCommunity"
