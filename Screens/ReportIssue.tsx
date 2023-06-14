@@ -59,6 +59,7 @@ export default function ReportIssue({ navigation }: any) {
     }
   };
 
+  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "Your form has been submitted!",
