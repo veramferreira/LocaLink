@@ -11,6 +11,7 @@ import {
   Text,
   TextInput,
 } from "react-native";
+
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 });
+
 const Chat = () => {
   const chatDB = "messages";
   const [messages, setMessages] = useState([]);
@@ -54,15 +56,16 @@ const Chat = () => {
   }, []);
 
   return (
-    <>
+    <View style={styles.wrapper}>
       <Text>
         {messages &&
           messages.map((message) => {
             return <Message key={message.id} message={message} />;
           })}
       </Text>
+      <Text>hello</Text>
       <SendMessage chatDB={chatDB} />
-    </>
+    </View>
   );
 };
 

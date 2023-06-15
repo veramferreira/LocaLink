@@ -41,11 +41,10 @@ const SendMessage = ({ scroll, chatDB }) => {
       alert("Please enter a valid message");
       return;
     }
-    const { uid, email } = auth.currentUser;
+    const { email } = auth.currentUser;
     await addDoc(collection(db, `${chatDB}`), {
       text: input,
       name: email,
-      uid,
       timestamp: serverTimestamp(),
     });
     setInput("");
@@ -62,7 +61,7 @@ const SendMessage = ({ scroll, chatDB }) => {
         placeholder="Message"
       />
       <TouchableOpacity style={styles.button} onPress={sendMessage}>
-        Send
+        <Text>Send</Text>
       </TouchableOpacity>
     </View>
   );
