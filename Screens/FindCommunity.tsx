@@ -53,10 +53,6 @@ export default function FindCommunity() {
     setSearchClicked(true);
   };
 
-  useEffect(() => {
-    console.log(searchInput);
-  }, [searchInput]);
-
   return isLoading ? (
     <Text>Loading...</Text>
   ) : (

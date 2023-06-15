@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  doc,
+  getDocs,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
 
 type NavigationItem = {
@@ -29,6 +38,20 @@ const routes: NavigationItem[] = [
 
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
+  const [community, setCommunity] = useState("");
+
+  useEffect(() => {
+    const q = query(collection(db, "Users"));
+    const usersQuery = onSnapshot(q, (querySnapshot) => {
+      let usersArr: any[] = [];
+      querySnapshot.forEach((doc) => usersArr.push(doc.data()));
+      setCommunity(usersArr[0].community_name);
+      return () => usersQuery();
+    });
+  }, []);
+  useEffect(() => {
+    console.log(community);
+  }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
     navigation.push(item.screen);
@@ -45,7 +68,9 @@ export const HomepageScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.h2}>Welcome to COMMUNITY_NAME!</Text>
+      {!community ? null : (
+        <Text style={styles.h2}>Welcome to {community}!</Text>
+      )}
       <View style={styles.containerList}>
         {routes.map((item) => (
           <React.Fragment key={item.id}>{renderItem({ item })}</React.Fragment>
