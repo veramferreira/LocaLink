@@ -3,47 +3,44 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { fromUnixTime, format } from "date-fns";
 import { db } from "../config/firebase";
 
-const getEventTime = (date) => {
-  const [calendarEventTime, setCalendarEventTime] = useState([{}]);
-  const [currentCalendarEvent, setCurrentCalendarEvent] = useState([{}]);
+interface CalendarEventTime {
+  formDateString: string;
+  formTimeString: string;
+}
+const getEventTime = (date: any) => {
+  const [currentCalendarEvent, setCurrentCalendarEvent] = useState<
+    CalendarEventTime[]
+  >([]);
+
   useEffect(() => {
-    const q = query(collection(db, "calendarEvent"), orderBy("timestamp"));
+    const unsubscribe = onSnapshot(
+      query(collection(db, "calendarEvent"), orderBy("timestamp")),
+      (querySnapshot) => {
+        const calendarEventArr: CalendarEventTime[] = [];
 
-    const calendarEventArrQuery = onSnapshot(q, (querySnapshot) => {
-      let calendarEventArr: Array<Object> = [];
+        querySnapshot.forEach((doc) => {
+          const elm = doc.data();
+          const fromUnix = fromUnixTime(elm.timestamp.seconds);
+          const formatDate = format(fromUnix, "yyyy-MM-dd");
+          const formatTime = format(fromUnix, "Hmm");
+          const formDateString = formatDate.toString();
+          const formTimeString = formatTime.toString();
+          calendarEventArr.push({ formDateString, formTimeString });
+        });
 
-      querySnapshot.forEach((doc) => {
-        calendarEventArr.push({ ...doc.data(), id: doc.id });
-      });
-      const newCalObj = calendarEventArr.map((elm) => {
-        const fromUnix = fromUnixTime(elm.timestamp.seconds);
-        const formatDate = format(fromUnix, "yyyy-MM-dd");
-        const formatTime = format(fromUnix, "Hmm");
+        const matchedDates = calendarEventArr.filter(
+          (elm) => elm.formDateString === date
+        );
+        setCurrentCalendarEvent(
+          matchedDates.map((event: any) => event.formTimeString)
+        );
+      }
+    );
 
-        const formDateString = formatDate.toString();
-        const formTimeString = formatTime.toString();
-        const eventName = elm.name;
-        return { formDateString, eventName, formTimeString };
-      });
-
-      const matchedDates = newCalObj.map((elm) => {
-        if (elm.formDateString === date) {
-          return elm.formTimeString;
-        }
-        //make this map a filter ^^^
-      });
-      const eventToday = matchedDates.filter((elm) => {
-        if (elm !== undefined) {
-          return elm;
-        }
-      });
-      eventToday.toString();
-      setCurrentCalendarEvent(eventToday);
-      setCalendarEventTime(calendarEventArr);
-    });
-    return () => calendarEventArrQuery();
+    return unsubscribe;
   }, [date]);
 
   return currentCalendarEvent;
 };
+
 export default getEventTime;
