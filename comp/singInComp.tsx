@@ -82,6 +82,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn }) => {
           console.log("Sign-in successful");
           // console.log(auth.currentUser);
           onSignIn();
+          
         })
         .catch((error) => {
           setError(error.message);

@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { auth, db } from "../config/firebase";
-import { addDoc, collection } from "@firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "@firebase/firestore";
 import * as yup from "yup";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 // setting type for TS
@@ -43,8 +43,9 @@ export default function ProfileSetup({ navigation }: any) {
         userName: values.userName,
         email: auth.currentUser?.email,
       };
-
-      await addDoc(collection(db, "Users"), docData);
+      const tempEmail = auth.currentUser?.email;
+      const createUserRef = doc(db, "Users", `${tempEmail}`);
+      await setDoc(createUserRef, docData);
       console.log("User added!");
       resetForm();
       setSubmitted(true);
@@ -68,7 +69,7 @@ export default function ProfileSetup({ navigation }: any) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.heading}>Report an Issue</Text>
+        <Text style={styles.heading}>Profile Setup</Text>
         <Formik
           initialValues={{ userName: "" }}
           validationSchema={formSchema}
@@ -76,7 +77,7 @@ export default function ProfileSetup({ navigation }: any) {
         >
           {(props: FormikProps<FormValues>) => (
             <View style={styles.form}>
-              <Text style={styles.text}>userName: </Text>
+              <Text style={styles.text}>Username: </Text>
               <TextInput
                 style={styles.input}
                 placeholder="userName"
