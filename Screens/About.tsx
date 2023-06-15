@@ -59,8 +59,8 @@ export default function About({ navigation }: any) {
         <View>
           <Text style={styles.heading}>About {community}</Text>
           <View style={styles.main}>
-            <Text style={styles.title}>Description of {community}: </Text>
             <View style={styles.block}>
+            <Text style={styles.title}>Description of {community}: </Text>
               <Text>{communityInfo.description}</Text>
             </View>
             <Text style={styles.title}>Useful Contacts:</Text>
