@@ -12,7 +12,9 @@ import Marketplace from "./Screens/Marketplace";
 import Recommendations from "./Screens/Recommendations";
 import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
+import CreateCommunity from "./Screens/CreateCommunity";
 import { QueryClient, QueryClientProvider } from "react-query";
+
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +77,11 @@ export default function App() {
             name="FindCommunity"
             component={FindCommunity}
             options={{ title: "Find Community" }}
+          />
+          <Stack.Screen
+            name="CreateCommunity"
+            component={CreateCommunity}
+            options={{ title: "Create a Community" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
