@@ -11,7 +11,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-
+import { useNavigation } from "@react-navigation/native";
 interface SignInCompProps {
   onSignIn: () => void;
 }
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
 });
 
 const SignIn: React.FC<SignInCompProps> = ({ onSignIn }) => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
@@ -68,6 +69,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn }) => {
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
+          navigation.navigate("ProfileSetup");
           console.log("User creation successful");
         })
         .catch((error) => {

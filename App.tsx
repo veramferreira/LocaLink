@@ -14,7 +14,7 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+import ProfileSetup from "./Screens/ProfileSetup";
 import Chat from "./Screens/Chat";
 
 const queryClient = new QueryClient();
@@ -34,6 +34,11 @@ export default function App() {
             name="HomepageScreen"
             component={HomepageScreen}
             options={{ title: "Create your account" }}
+          />
+          <Stack.Screen
+            name="ProfileSetup"
+            component={ProfileSetup}
+            options={{ title: "ProfileSetup" }}
           />
           <Stack.Screen
             name="SignIn"
