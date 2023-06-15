@@ -16,7 +16,6 @@ import { db } from "../config/firebase";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-
 // setting types for TS
 interface FormValues {
   name: string;
@@ -56,7 +55,6 @@ const formSchema = yup.object({
   contact3Name: yup.string().min(4),
   contact3Info: yup.string().min(4),
 });
-
 
 //Setting the button colour when it's pressed
 const buttonPressedStyle = {
@@ -109,7 +107,7 @@ export default function CreateCommunity() {
     Alert.alert(
       "Your Community has been created!",
       `Welcome to your community!`,
-      [{ text: "OK!", onPress: () => navigation.navigate('HomepageScreen') }],
+      [{ text: "OK!", onPress: () => navigation.navigate("HomepageScreen") }],
       { cancelable: false }
     );
   };
@@ -308,7 +306,7 @@ export default function CreateCommunity() {
                     {props.touched.contact1Name && props.errors.contact1Name}
                   </Text>
 
-                  <Text style={styles.text}>Contact 1 Info URL:</Text>
+                  <Text style={styles.text}>Contact 1 Contact Info:</Text>
                   <TextInput
                     style={styles.input}
                     placeholder="www.example-council.com"
@@ -340,7 +338,7 @@ export default function CreateCommunity() {
                   </Text>
 
                   <Text style={styles.text}>
-                    Contact 2 Info URL{" "}
+                    Contact 2 Contact Info{" "}
                     <Text style={styles.optionalText}>(optional)</Text> :
                   </Text>
                   <TextInput
@@ -374,7 +372,7 @@ export default function CreateCommunity() {
                   </Text>
 
                   <Text style={styles.text}>
-                    Contact 3 Info URL{" "}
+                    Contact 3 Contact Info{" "}
                     <Text style={styles.optionalText}>(optional)</Text> :
                   </Text>
                   <TextInput
