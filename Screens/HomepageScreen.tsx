@@ -34,10 +34,8 @@ const routes: NavigationItem[] = [
   { id: 8, title: "Sign In", screen: "SignIn" },
   { id: 9, title: "FindCommunity", screen: "FindCommunity" },
 
-  { id: 10, title: "Chat", screen: "Chat" },
-
   { id: 10, title: "CreateCommunity", screen: "CreateCommunity" },
-
+  { id: 11, title: "Chat", screen: "Chat" },
 ];
 
 export const HomepageScreen: React.FC = () => {

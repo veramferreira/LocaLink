@@ -81,15 +81,14 @@ export default function App() {
             options={{ title: "Find Community" }}
           />
           <Stack.Screen
-
             name="Chat"
             component={Chat}
             options={{ title: "Chat" }}
-
+          />
+          <Stack.Screen
             name="CreateCommunity"
             component={CreateCommunity}
             options={{ title: "Create a Community" }}
-
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -47,7 +47,6 @@ const SendMessage = ({ scroll, chatDB }) => {
       timestamp: serverTimestamp(),
     });
     setInput("");
-    scroll.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
