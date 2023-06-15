@@ -1,12 +1,36 @@
 import React, { useState } from "react";
 import { auth, db } from "../../config/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  TextInput,
+} from "react-native";
 
-const style = {
-  form: `h-14 w-full max-w-[728px] flex text-xl absolute bottom-0`,
-  input: `w-full text-xl p-3 bg-gray-900 text-white outline-none border-none`,
-  button: `w-[20%] bg-green-500`,
-};
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 300,
+  },
+  button: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+});
 
 const SendMessage = ({ scroll, chatDB }) => {
   const [input, setInput] = useState("");
@@ -29,18 +53,18 @@ const SendMessage = ({ scroll, chatDB }) => {
   };
 
   return (
-    <form onSubmit={sendMessage} className={style.form}>
-      <input
+    <View style={styles.wrapper}>
+      <TextInput
         value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className={style.input}
+        onChangeText={(text) => setInput(text)}
+        style={styles.input}
         type="text"
         placeholder="Message"
       />
-      <button className={style.button} type="submit">
+      <TouchableOpacity style={styles.button} onPress={sendMessage}>
         Send
-      </button>
-    </form>
+      </TouchableOpacity>
+    </View>
   );
 };
 

@@ -4,10 +4,35 @@ import { db } from "../config/firebase";
 import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 import SendMessage from "../comp/messageComp/SendMessage";
 
-const style = {
-  main: `flex flex-col p-[10px] relative overflow-y-scroll max-h-[85%]`,
-};
-
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  TextInput,
+} from "react-native";
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 300,
+  },
+  button: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+});
 const Chat = () => {
   const chatDB = "messages";
   const [messages, setMessages] = useState([]);
@@ -30,14 +55,13 @@ const Chat = () => {
 
   return (
     <>
-      <main className={style.main}>
+      <Text>
         {messages &&
           messages.map((message) => {
             return <Message key={message.id} message={message} />;
           })}
-        <span ref={scroll}></span>
-      </main>
-      <SendMessage chatDB={chatDB} scroll={scroll} />
+      </Text>
+      <SendMessage chatDB={chatDB} />
     </>
   );
 };
