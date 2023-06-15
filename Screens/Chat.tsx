@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
+  ScrollView,
 } from "react-native";
 
 const styles = StyleSheet.create({
@@ -55,15 +56,17 @@ const Chat = () => {
   }, []);
 
   return (
-    <View style={styles.wrapper}>
-      <Text>
-        {messages &&
-          messages.map((message) => {
-            return <Message key={message.id} message={message} />;
-          })}
-      </Text>
-      <SendMessage scroll={scroll} chatDB={chatDB} />
-    </View>
+    <ScrollView>
+      <View style={styles.wrapper}>
+        <Text>
+          {messages &&
+            messages.map((message) => {
+              return <Message key={message.id} message={message} />;
+            })}
+        </Text>
+        <SendMessage scroll={scroll} chatDB={chatDB} />
+      </View>
+    </ScrollView>
   );
 };
 
