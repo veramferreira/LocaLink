@@ -8,35 +8,32 @@ import {
   query,
 } from "@firebase/firestore";
 
-interface FormValues {
-  name: string;
+interface CommunityInfo {
   description: string;
-  postcode: string;
-  img: string;
-  management1Name: string;
-  management1Img: string;
-  management2Name: string;
-  management2Img: string;
-  management3Name: string;
-  management3Img: string;
   contact1Name: string;
   contact1Info: string;
   contact2Name: string;
   contact2Info: string;
   contact3Name: string;
   contact3Info: string;
+  management1Name: string;
+  management1Img: string;
+  management2Name: string;
+  management2Img: string;
+  management3Name: string;
+  management3Img: string;
 }
 
 export default function About({ navigation }: any) {
   const [community, setCommunity] = useState("");
-  const [communityInfo, setCommunityInfo] = useState("");
+  const [communityInfo, setCommunityInfo] = useState<CommunityInfo | null>(null);
 
   useEffect(() => {
     const q = query(collection(db, "Users"));
     const usersQuery = onSnapshot(q, (QuerySnapshot) => {
       let usersArr: any[] = [];
       QuerySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[1].community_name);
+      setCommunity(usersArr[3].community_name);
       return () => usersQuery();
     });
   }, []);
@@ -52,6 +49,10 @@ export default function About({ navigation }: any) {
   }, []);
 
   useEffect(() => {}, [community]);
+
+  if (!community || !communityInfo) {
+    return null;
+  }
 
   return (
     <>
@@ -90,7 +91,7 @@ export default function About({ navigation }: any) {
             </View>
             <Text style={styles.title}>Management:</Text>
             <View style={styles.managementBlock}>
-              <View style={styles.individualBlock}>
+              <View>
                 <Image
                   style={styles.avatarImg}
                   source={{
