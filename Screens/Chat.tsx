@@ -63,8 +63,7 @@ const Chat = () => {
             return <Message key={message.id} message={message} />;
           })}
       </Text>
-      <Text>hello</Text>
-      <SendMessage chatDB={chatDB} />
+      <SendMessage scroll={scroll} chatDB={chatDB} />
     </View>
   );
 };

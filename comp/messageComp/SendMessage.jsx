@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 300,
   },
   button: {
     backgroundColor: "red",
@@ -55,9 +54,8 @@ const SendMessage = ({ scroll, chatDB }) => {
     <View style={styles.wrapper}>
       <TextInput
         value={input}
-        onChangeText={(text) => setInput(text)}
+        onChangeText={setInput}
         style={styles.input}
-        type="text"
         placeholder="Message"
       />
       <TouchableOpacity style={styles.button} onPress={sendMessage}>
