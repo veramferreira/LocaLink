@@ -16,7 +16,7 @@ import CreateCommunity from "./Screens/CreateCommunity";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Chat from "./Screens/Chat";
-
+import FindCreate from "./Screens/FindCreate";
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +94,11 @@ export default function App() {
             name="CreateCommunity"
             component={CreateCommunity}
             options={{ title: "Create a Community" }}
+          />
+          <Stack.Screen
+            name="FindCreate"
+            component={FindCreate}
+            options={{ title: "FindCreate" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -49,6 +49,7 @@ export default function ProfileSetup({ navigation }: any) {
       resetForm();
       setSubmitted(true);
       showAlert();
+      navigation.navigate("FindCreate");
     } catch (error) {
       console.error("Error adding User: ", error);
     }
