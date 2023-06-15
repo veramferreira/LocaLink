@@ -16,16 +16,17 @@ const CalendarScreen = () => {
   );
 
   const handleDayPress = (day) => {
+    console.log(day.dateString);
     setSelectedDate(day.dateString);
   };
 
-  const markedDates = useState({
+  const markedDates = {
     [selectedDate]: {
       selected: true,
       disableTouchEvent: true,
       selectedColor: "orange",
     },
-  })[0];
+  };
 
   const events = getEvent(selectedDate);
   const eventTime = getEventTime(selectedDate);
