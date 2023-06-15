@@ -12,6 +12,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import CheckUserData from "../Utils/CheckUserData";
 interface SignInCompProps {
   onSignIn: () => void;
 }
@@ -80,9 +81,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
           console.log("Sign-in successful");
-          // console.log(auth.currentUser);
+
+          navigation.navigate("ProfileSetup");
           onSignIn();
-          
         })
         .catch((error) => {
           setError(error.message);
