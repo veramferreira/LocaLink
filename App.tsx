@@ -13,6 +13,7 @@ import Recommendations from "./Screens/Recommendations";
 import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
+import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Chat from "./Screens/Chat";
@@ -89,6 +90,11 @@ export default function App() {
             name="CreateCommunity"
             component={CreateCommunity}
             options={{ title: "Create a Community" }}
+          />
+          <Stack.Screen
+            name="AddEvent"
+            component={AddEvent}
+            options={{ title: "AddEvent" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
