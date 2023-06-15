@@ -1,4 +1,5 @@
 import {
+  Alert,
   Keyboard,
   ScrollView,
   StyleSheet,
@@ -12,7 +13,11 @@ import { Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import { addDoc, collection } from "@firebase/firestore";
 import { db } from "../config/firebase";
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
+
+// setting types for TS
 interface FormValues {
   name: string;
   description: string;
@@ -32,6 +37,7 @@ interface FormValues {
   contact3Info: string;
 }
 
+// Setting the rules for form validation
 const formSchema = yup.object({
   name: yup.string().required().min(4),
   description: yup.string().required().min(4),
@@ -39,19 +45,31 @@ const formSchema = yup.object({
   img: yup.string().required().min(4),
   management1Name: yup.string().required().min(3),
   management1Img: yup.string().required().min(4),
-  management2Name: yup.string().required().min(3),
-  management2Img: yup.string().required().min(4),
-  management3Name: yup.string().required().min(3),
-  management3Img: yup.string().required().min(4),
+  management2Name: yup.string().min(3),
+  management2Img: yup.string().min(4),
+  management3Name: yup.string().min(3),
+  management3Img: yup.string().min(4),
   contact1Name: yup.string().required().min(4),
   contact1Info: yup.string().required().min(4),
-  contact2Name: yup.string().required().min(4),
-  contact2Info: yup.string().required().min(4),
-  contact3Name: yup.string().required().min(4),
-  contact3Info: yup.string().required().min(4),
+  contact2Name: yup.string().min(4),
+  contact2Info: yup.string().min(4),
+  contact3Name: yup.string().min(4),
+  contact3Info: yup.string().min(4),
 });
 
+
+//Setting the button colour when it's pressed
+const buttonPressedStyle = {
+  backgroundColor: "#F57C01",
+  borderColor: "#F57C01",
+};
+
 export default function CreateCommunity() {
+  const [isButtonPressed, setButtonPressed] = useState(false);
+  const [isSubmitted, setSubmitted] = useState(false);
+
+  const navigation = useNavigation();
+
   const handleSubmit = async (
     values: FormValues,
     { resetForm }: { resetForm: () => void }
@@ -79,16 +97,28 @@ export default function CreateCommunity() {
       await addDoc(collection(db, "CommunityList"), docData);
       console.log("Document written successfully");
       resetForm();
+      setSubmitted(true);
+      showAlert();
     } catch (error) {
       console.error("Error adding document: ", error);
     }
+  };
+
+  // Setting up the alert message after the form has been submitted
+  const showAlert = () => {
+    Alert.alert(
+      "Your Community has been created!",
+      `Welcome to your community!`,
+      [{ text: "OK!", onPress: () => navigation.navigate('HomepageScreen') }],
+      { cancelable: false }
+    );
   };
 
   return (
     <ScrollView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
-          <Text style={styles.heading}>Create A Community</Text>
+          <Text style={styles.heading}>Create Community</Text>
           <Formik
             initialValues={{
               name: "",
@@ -119,33 +149,50 @@ export default function CreateCommunity() {
                   placeholder="Community name..."
                   onChangeText={(text) => props.handleChange("name")(text)}
                   value={props.values.name}
+                  onBlur={props.handleBlur("name")}
                 />
-                <Text style={styles.form}>Description:</Text>
+                <Text style={styles.errorText}>
+                  {props.touched.name && props.errors.name}
+                </Text>
+                <Text style={styles.text}>Description:</Text>
                 <TextInput
-                  // multiline
+                  multiline
+                  minHeight={70}
                   style={styles.input}
                   placeholder="Community description..."
                   onChangeText={(text) =>
                     props.handleChange("description")(text)
                   }
                   value={props.values.description}
+                  onBlur={props.handleBlur("description")}
                 />
-                <Text style={styles.form}>Postcode:</Text>
+                <Text style={styles.errorText}>
+                  {props.touched.description && props.errors.description}
+                </Text>
+                <Text style={styles.text}>Postcode:</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Insert at least first half of postcode..."
                   onChangeText={(text) => props.handleChange("postcode")(text)}
                   value={props.values.postcode}
+                  onBlur={props.handleBlur("postcode")}
                 />
-                <Text style={styles.form}>Image URL:</Text>
+                <Text style={styles.errorText}>
+                  {props.touched.postcode && props.errors.postcode}
+                </Text>
+                <Text style={styles.text}>Community Cover Image URL:</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Image URL..."
                   onChangeText={(text) => props.handleChange("img")(text)}
                   value={props.values.img}
+                  onBlur={props.handleBlur("img")}
                 />
+                <Text style={styles.errorText}>
+                  {props.touched.img && props.errors.img}
+                </Text>
                 <View>
-                  <Text style={styles.form}>Manager 1 Name:</Text>
+                  <Text style={styles.text}>Manager 1 Name:</Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Manager 1 Name..."
@@ -153,9 +200,13 @@ export default function CreateCommunity() {
                       props.handleChange("management1Name")(text)
                     }
                     value={props.values.management1Name}
+                    onBlur={props.handleBlur("management1Name")}
                   />
-
-                  <Text style={styles.form}>Manager 1 Image URL:</Text>
+                  <Text style={styles.errorText}>
+                    {props.touched.management1Name &&
+                      props.errors.management1Name}
+                  </Text>
+                  <Text style={styles.text}>Manager 1 Image URL:</Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Manager 1 Image URL..."
@@ -163,9 +214,17 @@ export default function CreateCommunity() {
                       props.handleChange("management1Img")(text)
                     }
                     value={props.values.management1Img}
+                    onBlur={props.handleBlur("management1Img")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.management1Img &&
+                      props.errors.management1Img}
+                  </Text>
 
-                  <Text style={styles.form}>Manager 2 Name:</Text>
+                  <Text style={styles.text}>
+                    Manager 2 Name{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Manager 2 Name..."
@@ -173,9 +232,16 @@ export default function CreateCommunity() {
                       props.handleChange("management2Name")(text)
                     }
                     value={props.values.management2Name}
+                    onBlur={props.handleBlur("management2Name")}
                   />
-
-                  <Text style={styles.form}>Manager 2 Image URL:</Text>
+                  <Text style={styles.errorText}>
+                    {props.touched.management2Name &&
+                      props.errors.management2Name}
+                  </Text>
+                  <Text style={styles.text}>
+                    Manager 2 Image URL{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Manager 2 Image URL..."
@@ -183,9 +249,17 @@ export default function CreateCommunity() {
                       props.handleChange("management2Img")(text)
                     }
                     value={props.values.management2Img}
+                    onBlur={props.handleBlur("management2Img")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.management2Img &&
+                      props.errors.management2Img}
+                  </Text>
 
-                  <Text style={styles.form}>Manager 3 Name:</Text>
+                  <Text style={styles.text}>
+                    Manager 3 Name{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Manager 3 Name..."
@@ -193,9 +267,17 @@ export default function CreateCommunity() {
                       props.handleChange("management3Name")(text)
                     }
                     value={props.values.management3Name}
+                    onBlur={props.handleBlur("management3Name")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.management3Name &&
+                      props.errors.management3Name}
+                  </Text>
 
-                  <Text style={styles.form}>Manager 3 Image URL:</Text>
+                  <Text style={styles.text}>
+                    Manager 3 Image URL{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Manager 3 Image URL..."
@@ -203,74 +285,121 @@ export default function CreateCommunity() {
                       props.handleChange("management3Img")(text)
                     }
                     value={props.values.management3Img}
+                    onBlur={props.handleBlur("management3Img")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.management3Img &&
+                      props.errors.management3Img}
+                  </Text>
                 </View>
 
                 <View>
-                  <Text style={styles.form}>Contact 1 Name:</Text>
+                  <Text style={styles.text}>Useful Contact 1:</Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Contact 1 Name..."
+                    placeholder="example: Council Website"
                     onChangeText={(text) =>
                       props.handleChange("contact1Name")(text)
                     }
                     value={props.values.contact1Name}
+                    onBlur={props.handleBlur("contact1Name")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.contact1Name && props.errors.contact1Name}
+                  </Text>
 
-                  <Text style={styles.form}>Contact 1 Info URL:</Text>
+                  <Text style={styles.text}>Contact 1 Info URL:</Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Contact 1 Info URL..."
+                    placeholder="www.example-council.com"
                     onChangeText={(text) =>
                       props.handleChange("contact1Info")(text)
                     }
                     value={props.values.contact1Info}
+                    onBlur={props.handleBlur("contact1Info")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.contact1Info && props.errors.contact1Info}
+                  </Text>
 
-                  <Text style={styles.form}>Contact 2 Name:</Text>
+                  <Text style={styles.text}>
+                    Useful Contact 2{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Contact 2 Name..."
+                    placeholder="example: Community Website"
                     onChangeText={(text) =>
                       props.handleChange("contact2Name")(text)
                     }
                     value={props.values.contact2Name}
+                    onBlur={props.handleBlur("contact2Name")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.contact2Name && props.errors.contact2Name}
+                  </Text>
 
-                  <Text style={styles.form}>Contact 2 Info URL:</Text>
+                  <Text style={styles.text}>
+                    Contact 2 Info URL{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Contact 2 Info URL..."
+                    placeholder="www.community.com"
                     onChangeText={(text) =>
                       props.handleChange("contact2Info")(text)
                     }
                     value={props.values.contact2Info}
+                    onBlur={props.handleBlur("contact2Info")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.contact2Info && props.errors.contact2Info}
+                  </Text>
 
-                  <Text style={styles.form}>Contact 3 Name:</Text>
+                  <Text style={styles.text}>
+                    Useful Contact 3{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Contact 3 Name..."
+                    placeholder="example: Fire Department"
                     onChangeText={(text) =>
                       props.handleChange("contact3Name")(text)
                     }
                     value={props.values.contact3Name}
+                    onBlur={props.handleBlur("contact3Name")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.contact3Name && props.errors.contact3Name}
+                  </Text>
 
-                  <Text style={styles.form}>Contact 3 Info URL:</Text>
+                  <Text style={styles.text}>
+                    Contact 3 Info URL{" "}
+                    <Text style={styles.optionalText}>(optional)</Text> :
+                  </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Contact 3 Info URL..."
+                    placeholder="www.fire-department.com"
                     onChangeText={(text) =>
                       props.handleChange("contact3Info")(text)
                     }
                     value={props.values.contact3Info}
+                    onBlur={props.handleBlur("contact3Info")}
                   />
+                  <Text style={styles.errorText}>
+                    {props.touched.contact3Info && props.errors.contact3Info}
+                  </Text>
                 </View>
                 <TouchableOpacity
-                  title="Submit!"
+                  title="submit!"
                   onPress={props.handleSubmit}
-                  style={styles.button}
+                  style={[
+                    styles.button,
+                    isButtonPressed ? buttonPressedStyle : null,
+                  ]}
+                  onPressIn={() => setButtonPressed(true)}
+                  onPressOut={() => setButtonPressed(false)}
+                  activeOpacity={1}
                 >
                   <Text style={styles.buttonText}>Submit!</Text>
                 </TouchableOpacity>
@@ -318,7 +447,20 @@ const styles = StyleSheet.create({
     margin: 10,
     borderColor: "#1B73E7",
   },
+  optionalText: {
+    color: "gray",
+    marginLeft: 10,
+    marginBottom: 10,
+    marginTop: 0,
+  },
   buttonText: {
     color: "white",
+  },
+  errorText: {
+    color: "crimson",
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+    fontSize: 11,
   },
 });
