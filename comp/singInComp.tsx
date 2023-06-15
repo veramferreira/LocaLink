@@ -78,7 +78,8 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
           console.log("Sign-in successful");
-          onSignIn(); // Call the onSignIn callback
+          console.log(auth.currentUser);
+          onSignIn();
         })
         .catch((error) => {
           setError(error.message);
