@@ -36,7 +36,7 @@ export default function About({ navigation }: any) {
     const usersQuery = onSnapshot(q, (QuerySnapshot) => {
       let usersArr: any[] = [];
       QuerySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[0].community_name);
+      setCommunity(usersArr[1].community_name);
       return () => usersQuery();
     });
   }, []);
@@ -60,40 +60,69 @@ export default function About({ navigation }: any) {
           <Text style={styles.heading}>About {community}</Text>
           <View style={styles.main}>
             <View style={styles.block}>
-            <Text style={styles.title}>Description of {community}: </Text>
-              <Text>{communityInfo.description}</Text>
-            </View>
-            <Text style={styles.title}>Useful Contacts:</Text>
-            <View>
-              <Text>{communityInfo.contact1Info}</Text>
-              <Text>{communityInfo.contact2Info}</Text>
-              <Text>{communityInfo.contact3Info}</Text>
+              <Text style={styles.title}>Description of {community}: </Text>
+              <View style={styles.contactsBody}>
+                <Text style={styles.normalText}>{communityInfo.description}</Text>
+              </View>
             </View>
             <View style={styles.block}>
-              <Text style={styles.title}>Management:</Text>
-              <View>
+              <Text style={styles.title}>Useful Contacts:</Text>
+              <View style={styles.contacts}>
+                <Text style={styles.normalText}>
+                  <Text style={styles.semiBold}>
+                    {communityInfo.contact1Name}:{" "}
+                  </Text>
+                  {communityInfo.contact1Info}
+                </Text >
+                <Text style={styles.normalText}>
+                  <Text style={styles.semiBold}>
+                    {communityInfo.contact2Name}:{" "}
+                  </Text>
+                  {communityInfo.contact2Info}
+                </Text>
+                <Text style={styles.normalText}>
+                  <Text style={styles.semiBold}>
+                    {communityInfo.contact3Name}:{" "}
+                  </Text>
+                  {communityInfo.contact3Info}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.title}>Management:</Text>
+            <View style={styles.managementBlock}>
+              <View style={styles.individualBlock}>
                 <Image
                   style={styles.avatarImg}
                   source={{
                     uri: communityInfo.management1Img,
                   }}
                 />
-                <Text>{communityInfo.management1Name}</Text>
+                <Text style={styles.adminName}>
+                  {communityInfo.management1Name}
+                </Text>
+              </View>
+              <View>
                 <Image
                   style={styles.avatarImg}
                   source={{
                     uri: communityInfo.management2Img,
                   }}
                 />
-                <Text>{communityInfo.management2Name}</Text>
+                <Text style={styles.adminName}>
+                  {communityInfo.management2Name}
+                </Text>
               </View>
-              <Image
-                style={styles.avatarImg}
-                source={{
-                  uri: communityInfo.management3Img,
-                }}
-              />
-              <Text>{communityInfo.management3Name}</Text>
+              <View>
+                <Image
+                  style={styles.avatarImg}
+                  source={{
+                    uri: communityInfo.management3Img,
+                  }}
+                />
+                <Text style={styles.adminName}>
+                  {communityInfo.management3Name}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -103,6 +132,14 @@ export default function About({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
+  semiBold: {
+    fontFamily: "Poppins_500Medium",
+  },
+  normalText: {
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 12,
+    color: '#707070',
+  },
   heading: {
     textAlign: "center",
     fontWeight: "bold",
@@ -114,8 +151,42 @@ const styles = StyleSheet.create({
     marginRight: 30,
     marginLeft: 30,
   },
+  contacts: {
+    rowGap: 4,
+    borderRadius: 8,
+    backgroundColor: "white",
+    borderColor: '#F4C01D',
+    borderWidth: 1,
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingBottom: 15,
+    paddingTop: 15,
+  },
   block: {
     marginBottom: 20,
+  },
+  contactsBody: {
+    borderRadius: 8,
+    backgroundColor: "white",
+    borderColor: '#F4C01D',
+    borderWidth: 1,
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingBottom: 15,
+    paddingTop: 15,
+  },
+  managementBlock: {
+    marginTop: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    textAlign: "center",
+  },
+  adminName: {
+    marginTop: 10,
+    textAlign: "center",
+    fontFamily: "Poppins_400Regular",
+    color: '#707070',
   },
   title: {
     marginBottom: 10,
@@ -126,5 +197,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "#F4C01D",
   },
 });
