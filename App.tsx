@@ -15,6 +15,8 @@ import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import { QueryClient, QueryClientProvider } from "react-query";
 
+import Chat from "./Screens/Chat";
+
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
@@ -79,9 +81,15 @@ export default function App() {
             options={{ title: "Find Community" }}
           />
           <Stack.Screen
+
+            name="Chat"
+            component={Chat}
+            options={{ title: "Chat" }}
+
             name="CreateCommunity"
             component={CreateCommunity}
             options={{ title: "Create a Community" }}
+
           />
         </Stack.Navigator>
       </NavigationContainer>
