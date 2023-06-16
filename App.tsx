@@ -14,8 +14,10 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
+import colours from "./constants/colours";
+// import { Header } from "@react-navigation/stack";
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
@@ -24,7 +26,19 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          initialRouteName="HomepageScreen"
+          screenOptions={{
+            headerTitle: () => <Header />,
+            headerStyle: {
+              backgroundColor: colours.primary,
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        >
           {/* <Stack.Screen
           name="SignUp"
           component={SignUp}
