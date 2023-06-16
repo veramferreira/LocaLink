@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   collection,
@@ -34,24 +34,20 @@ const routes: NavigationItem[] = [
   },
   { id: 3, title: "Report Issue", screen: "ReportIssue" },
   { id: 4, title: "Calendar", screen: "Calendar" },
-  { id: 5, title: "Lost&Found", screen: "LostFound" },
+  { id: 5, title: "Lost & Found", screen: "LostFound" },
   { id: 6, title: "Marketplace", screen: "Marketplace" },
   { id: 7, title: "Recommendations", screen: "Recommendations" },
   { id: 8, title: "Sign In", screen: "SignIn" },
-  { id: 9, title: "FindCommunity", screen: "FindCommunity" },
-
-  { id: 10, title: "CreateCommunity", screen: "CreateCommunity" },
+  { id: 9, title: "Find Community", screen: "FindCommunity" },
+  { id: 10, title: "Create Community", screen: "CreateCommunity" },
   { id: 11, title: "Chat", screen: "Chat" },
-
-  { id: 12, title: "ProfileSetup", screen: "ProfileSetup" },
-  { id: 13, title: "FindCreate", screen: "FindCreate" },
-
+  { id: 12, title: "Profile Setup", screen: "ProfileSetup" },
+  { id: 13, title: "Find Create", screen: "FindCreate" },
   {
     id: 14,
     title: "Post Announcement (admins only)",
     screen: "PostAnnouncement",
   },
-  { id: 15, title: "Communities", screen: "Communities" },
 ];
 
 export const HomepageScreen: React.FC = () => {
@@ -72,7 +68,17 @@ export const HomepageScreen: React.FC = () => {
   }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
-    navigation.push(item.screen);
+    console.log(item.screen);
+    if (item.screen === "HomepageScreen") {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: item.screen }],
+        })
+      );
+    } else {
+      navigation.navigate(item.screen, {});
+    }
   };
 
   const renderItem = ({ item }: { item: NavigationItem }) => (
@@ -108,6 +114,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     alignItems: "center",
     justifyContent: "center",
+    fontFamily: "Poppins_700Bold",
+    marginTop: 20,
+    marginBottom: 20,
   },
   container: {
     flex: 1,

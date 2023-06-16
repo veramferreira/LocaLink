@@ -1,7 +1,7 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import AddComToUser from "../Utils/AddComToUser";
 import {
   StyleSheet,
   Text,
@@ -10,7 +10,6 @@ import {
   View,
 } from "react-native";
 import colours from "../constants/colours";
-import CheckUserData from "../Utils/CheckUserData";
 
 // NEED TO TRY FIX TYPSCRIPT ISSUE WITH PREDEFINED TYPE FOR COMMUNITY IN MAP
 // type ExampleObject = {
@@ -19,12 +18,13 @@ import CheckUserData from "../Utils/CheckUserData";
 //   description: string;
 // };
 
-export default function FindCommunity() {
+export default function FindCommunity({ navigation }: any) {
   const [communityList, setCommunityList] = useState([{}]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
   const [filteredArr, setFilteredArr] = useState([{}]);
   const [searchClicked, setSearchClicked] = useState(false);
+  const [communityClicked, setCommunityClicked] = useState("");
 
   useEffect(() => {
     const q = query(collection(db, "CommunityList"), orderBy("name"));
@@ -54,9 +54,14 @@ export default function FindCommunity() {
     setSearchClicked(true);
   };
 
+  const handleYesClick = () => {
+    AddComToUser(auth.currentUser?.email, communityClicked.name);
+    navigation.navigate("HomepageScreen");
+  };
+
   return isLoading ? (
     <Text>Loading...</Text>
-  ) : (
+  ) : communityClicked.length === 0 ? (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput
@@ -76,7 +81,13 @@ export default function FindCommunity() {
             filteredArr.map((community: any, index) => {
               return (
                 // NEED TO ADD ONCLICK HERE TO NAVIGATE
-                <TouchableOpacity key={index} style={styles.itemContainer}>
+                <TouchableOpacity
+                  key={index}
+                  style={styles.itemContainer}
+                  onPress={() => {
+                    setCommunityClicked(community);
+                  }}
+                >
                   <Text>{community.name}</Text>
                 </TouchableOpacity>
               );
@@ -86,13 +97,37 @@ export default function FindCommunity() {
           communityList.map((community: any, index) => {
             return (
               // NEED TO ADD ONCLICK HERE TO NAVIGATE
-              <TouchableOpacity key={index} style={styles.itemContainer}>
+              <TouchableOpacity
+                key={index}
+                style={styles.itemContainer}
+                onPress={() => {
+                  setCommunityClicked(community);
+                }}
+              >
                 <Text>{community.name}</Text>
               </TouchableOpacity>
             );
           })
         )}
       </View>
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <Text>{communityClicked.name}</Text>
+      <Text>{communityClicked.description}</Text>
+      <Text>{communityClicked.postcode}</Text>
+      <Text>Would you like to join this community?</Text>
+      <TouchableOpacity style={styles.searchButton} onPress={handleYesClick}>
+        <Text>Yes!</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.searchButton}
+        onPress={() => {
+          setCommunityClicked("");
+        }}
+      >
+        <Text>No!</Text>
+      </TouchableOpacity>
     </View>
   );
 }

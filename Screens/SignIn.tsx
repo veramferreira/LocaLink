@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import SignIn from "../comp/singInComp";
 import LogOutComp from "../comp/logOutComp";
@@ -6,17 +6,13 @@ import { auth, db } from "../config/firebase";
 import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
 
 const styles = StyleSheet.create({
-  nav: {
-    backgroundColor: "#333",
-    height: 80,
+  container: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F57C01',
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     padding: 16,
-  },
-  heading: {
-    color: "white",
-    fontSize: 24,
   },
 });
 
@@ -56,7 +52,7 @@ const SignInPage: React.FC = () => {
   }, []);
 
   return (
-    <View style={styles.nav}>
+    <View style={styles.container}>
       {user ? (
         <LogOutComp onLogout={handleLogout} />
       ) : (

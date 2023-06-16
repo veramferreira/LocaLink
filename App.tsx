@@ -1,7 +1,9 @@
+import "react-native-gesture-handler";
 import { StyleSheet, Text, View } from "react-native";
 import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 // import SignUp from "./Screens/SignUp";
 import { HomepageScreen } from "./Screens/HomepageScreen";
 import About from "./Screens/About";
@@ -20,17 +22,35 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
-import FindCreate from "./Screens/FindCreate";
+import { FindCreate } from "./Screens/FindCreate";
+import {
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+  useFonts,
+} from "@expo-google-fonts/poppins";
+
 import colours from "./constants/colours";
 
+const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator
+        <Drawer.Navigator
           initialRouteName="HomepageScreen"
           screenOptions={{
             headerTitle: () => <Header />,
@@ -43,107 +63,93 @@ export default function App() {
             },
           }}
         >
-          {/* <Stack.Screen
+          {/* <Drawer.Screen
           name="SignUp"
           component={SignUp}
           options={{ title: "Create your account" }}
         /> */}
-          <Stack.Screen
+          <Drawer.Screen
             name="HomepageScreen"
             component={HomepageScreen}
-            options={{ title: "Create your account" }}
+            options={{ title: "Dashboard" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="ProfileSetup"
             component={ProfileSetup}
             options={{ title: "ProfileSetup" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="SignIn"
             component={SignInPage}
             options={{ title: "Welcome" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="About"
             component={About}
-            options={{ title: "Create your account" }}
+            options={{ title: "About" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="Calendar"
             component={CalendarScreen}
-            options={{ title: "Create your account" }}
+            options={{ title: "Calendar" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="LostFound"
             component={LostFound}
-            options={{ title: "Create your account" }}
+            options={{ title: "Lost & Found" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="ManagementAnnouncements"
             component={ManagementAnnouncements}
-            options={{ title: "Create your account" }}
+            options={{ title: "Management Announcements" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="Marketplace"
             component={Marketplace}
-            options={{ title: "Create your account" }}
+            options={{ title: "Marketplace" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="Recommendations"
             component={Recommendations}
-            options={{ title: "Create your account" }}
+            options={{ title: "Recommendations" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="ReportIssue"
             component={ReportIssue}
-            options={{ title: "Create your account" }}
+            options={{ title: "Report an Issue" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="FindCommunity"
             component={FindCommunity}
             options={{ title: "Find Community" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="Chat"
             component={Chat}
             options={{ title: "Chat" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="CreateCommunity"
             component={CreateCommunity}
             options={{ title: "Create a Community" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="FindCreate"
             component={FindCreate}
             options={{ title: "FindCreate" }}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name="PostAnnouncement"
             component={PostAnnouncement}
             options={{ title: "Post an Announcement" }}
           />
-          <Stack.Screen
-            name="Communities"
-            component={Communities}
-            options={{ title: "Communities" }}
-          />
-          <Stack.Screen
+          <Drawer.Screen
             name="AddEvent"
             component={AddEvent}
             options={{ title: "AddEvent" }}
           />
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     </QueryClientProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
