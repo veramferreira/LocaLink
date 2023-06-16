@@ -17,8 +17,11 @@ import PostAnnouncement from "./Screens/PostAnnouncement";
 import { Communities } from "./Screens/Communities";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
+import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
 import FindCreate from "./Screens/FindCreate";
+import colours from "./constants/colours";
+
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +29,24 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          initialRouteName="HomepageScreen"
+          screenOptions={{
+            headerTitle: () => <Header />,
+            headerStyle: {
+              backgroundColor: colours.primary,
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        >
+          {/* <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{ title: "Create your account" }}
+        /> */}
           <Stack.Screen
             name="HomepageScreen"
             component={HomepageScreen}
