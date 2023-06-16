@@ -20,7 +20,7 @@ import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
 import { FindCreate } from "./Screens/FindCreate";
-import JoinCommunity from "./Screens/JoinCommunity";
+
 import colours from "./constants/colours";
 
 const queryClient = new QueryClient();
@@ -122,11 +122,6 @@ export default function App() {
             name="PostAnnouncement"
             component={PostAnnouncement}
             options={{ title: "Post an Announcement" }}
-          />
-          <Stack.Screen
-            name="JoinCommunity"
-            component={JoinCommunity}
-            options={{ title: "JoinCommunity" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

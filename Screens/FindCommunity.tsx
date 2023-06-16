@@ -1,7 +1,7 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import { useEffect, useState } from "react";
-
+import AddComToUser from "../Utils/AddComToUser";
 import {
   StyleSheet,
   Text,
@@ -53,9 +53,12 @@ export default function FindCommunity({ navigation }: any) {
     );
     setSearchClicked(true);
   };
-  useEffect(() => {
-    console.log(communityClicked);
-  }, [communityClicked]);
+
+  const handleYesClick = () => {
+    AddComToUser(auth.currentUser?.email, communityClicked.name);
+    navigation.navigate("HomepageScreen");
+  };
+
   return isLoading ? (
     <Text>Loading...</Text>
   ) : communityClicked.length === 0 ? (
@@ -109,10 +112,22 @@ export default function FindCommunity({ navigation }: any) {
       </View>
     </View>
   ) : (
-    <View>
+    <View style={styles.container}>
       <Text>{communityClicked.name}</Text>
       <Text>{communityClicked.description}</Text>
       <Text>{communityClicked.postcode}</Text>
+      <Text>Would you like to join this community?</Text>
+      <TouchableOpacity style={styles.searchButton} onPress={handleYesClick}>
+        <Text>Yes!</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.searchButton}
+        onPress={() => {
+          setCommunityClicked("");
+        }}
+      >
+        <Text>No!</Text>
+      </TouchableOpacity>
     </View>
   );
 }
