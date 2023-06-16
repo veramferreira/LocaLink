@@ -12,9 +12,10 @@ import {
 import { Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import { addDoc, collection } from "@firebase/firestore";
-import { db } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import AddComToUser from "../Utils/AddComToUser";
 
 // setting types for TS
 interface FormValues {
@@ -97,6 +98,8 @@ export default function CreateCommunity() {
       resetForm();
       setSubmitted(true);
       showAlert();
+      AddComToUser(auth.currentUser?.email, values.name);
+      navigation.navigate("HomepageScreen");
     } catch (error) {
       console.error("Error adding document: ", error);
     }

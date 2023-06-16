@@ -16,9 +16,9 @@ import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
 import { Communities } from "./Screens/Communities";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+import ProfileSetup from "./Screens/ProfileSetup";
 import Chat from "./Screens/Chat";
-
+import FindCreate from "./Screens/FindCreate";
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +36,11 @@ export default function App() {
             name="HomepageScreen"
             component={HomepageScreen}
             options={{ title: "Create your account" }}
+          />
+          <Stack.Screen
+            name="ProfileSetup"
+            component={ProfileSetup}
+            options={{ title: "ProfileSetup" }}
           />
           <Stack.Screen
             name="SignIn"
@@ -91,6 +96,11 @@ export default function App() {
             name="CreateCommunity"
             component={CreateCommunity}
             options={{ title: "Create a Community" }}
+          />
+          <Stack.Screen
+            name="FindCreate"
+            component={FindCreate}
+            options={{ title: "FindCreate" }}
           />
           <Stack.Screen
             name="PostAnnouncement"
