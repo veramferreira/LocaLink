@@ -22,6 +22,12 @@ import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
 import { FindCreate } from "./Screens/FindCreate";
+import {
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+  useFonts,
+} from "@expo-google-fonts/poppins";
 
 import colours from "./constants/colours";
 
@@ -31,6 +37,16 @@ const Stack = createNativeStackNavigator();
 
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>

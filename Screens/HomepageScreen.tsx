@@ -114,6 +114,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     alignItems: "center",
     justifyContent: "center",
+    fontFamily: "Poppins_700Bold",
+    marginTop: 20,
+    marginBottom: 20,
   },
   container: {
     flex: 1,
