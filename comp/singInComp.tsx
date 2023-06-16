@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
+  Image,
+  ScrollView,
 } from "react-native";
 import { auth } from "../config/firebase";
 import {
@@ -23,28 +25,35 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 300,
+    paddingTop: "30%",
+  },
+  logo: {
+    width: 300,
+    height: 300,
   },
   input: {
     width: "80%",
     height: 40,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 5,
+    borderRadius: 8,
     marginBottom: 10,
     paddingHorizontal: 10,
+    backgroundColor: "white",
   },
   button: {
-    backgroundColor: "red",
+    backgroundColor: "#1B73E7",
     padding: 10,
-    borderRadius: 5,
+    paddingRight: 50,
+    paddingLeft: 50,
+    borderRadius: 8,
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
   },
   switchText: {
-    color: "blue",
+    color: "white",
     marginTop: 10,
   },
   errorText: {
@@ -110,33 +119,38 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   };
 
   return (
-    <View style={styles.wrapper}>
-      {error !== "" && <Text style={styles.errorText}>{error}</Text>}
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleAuthAction}>
-        <Text style={styles.buttonText}>
-          {isSignUp ? "Sign Up" : "Sign In"}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={toggleAuthAction}>
-        <Text style={styles.switchText}>
-          {isSignUp
-            ? "Already have an account? Sign In"
-            : "Don't have an account? Sign Up"}
-        </Text>
-      </TouchableOpacity>
+    <View>
+      <ScrollView>
+        <View style={styles.wrapper}>
+          <Image style={styles.logo} source={require("../assets/logo.png")} />
+          {error !== "" && <Text style={styles.errorText}>{error}</Text>}
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity style={styles.button} onPress={handleAuthAction}>
+            <Text style={styles.buttonText}>
+              {isSignUp ? "Sign Up" : "Sign In"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={toggleAuthAction}>
+            <Text style={styles.switchText}>
+              {isSignUp
+                ? "Already have an account? Sign In"
+                : "Don't have an account? Sign Up"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };
