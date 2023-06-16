@@ -12,8 +12,9 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import CheckUserData from "../Utils/CheckUserData";
+
 interface SignInCompProps {
+  userList: {}[];
   onSignIn: () => void;
 }
 
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignIn: React.FC<SignInCompProps> = ({ onSignIn }) => {
+const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -80,10 +81,21 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn }) => {
     } else {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-          console.log("Sign-in successful");
+          let exist = false;
+          console.log(userList);
+          for (const user of userList) {
+            if (user.email === email) {
+              exist = true;
+            }
+          }
 
-          navigation.navigate("ProfileSetup");
+          console.log("Sign-in successful");
           onSignIn();
+          if (!exist) {
+            navigation.navigate("ProfileSetup");
+          } else {
+            navigation.navigate("HomepageScreen");
+          }
         })
         .catch((error) => {
           setError(error.message);

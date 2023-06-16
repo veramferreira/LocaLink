@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import SignIn from "../comp/singInComp";
 import LogOutComp from "../comp/logOutComp";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
 
 const styles = StyleSheet.create({
   nav: {
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
 
 const SignInPage: React.FC = () => {
   const [user, setUser] = useState(auth.currentUser);
+  const [usersList, setUsersList] = useState([{}]);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
@@ -38,12 +40,30 @@ const SignInPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const q = query(collection(db, "Users"), orderBy("email"));
+
+    const UserQuery = onSnapshot(q, (querySnapshot) => {
+      let userArr: Array<Object> = [];
+
+      querySnapshot.forEach((doc) => {
+        userArr.push({ ...doc.data(), id: doc.id });
+      });
+      setUsersList(userArr);
+    });
+
+    return () => UserQuery();
+  }, []);
+
   return (
     <View style={styles.nav}>
       {user ? (
         <LogOutComp onLogout={handleLogout} />
       ) : (
-        <SignIn onSignIn={() => setUser(auth.currentUser)} />
+        <SignIn
+          userList={usersList}
+          onSignIn={() => setUser(auth.currentUser)}
+        />
       )}
     </View>
   );
