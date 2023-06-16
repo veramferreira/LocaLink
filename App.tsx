@@ -21,8 +21,6 @@ import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
 import FindCreate from "./Screens/FindCreate";
 import colours from "./constants/colours";
-import Header from "./comp/Header";
-import colours from "./constants/colours";
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
