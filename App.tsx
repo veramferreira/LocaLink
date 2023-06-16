@@ -27,11 +27,6 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{ title: "Create your account" }}
-        /> */}
           <Stack.Screen
             name="HomepageScreen"
             component={HomepageScreen}
