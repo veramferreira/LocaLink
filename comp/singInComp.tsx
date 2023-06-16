@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,7 +14,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-
+import { MyContext } from "../Context";
 interface SignInCompProps {
   userList: {}[];
   onSignIn: () => void;
@@ -68,7 +68,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState("");
-  const { userContext } = useContext(MyContext);
+  const { userContext, setUserContext } = useContext(MyContext);
 
   const handleAuthAction = () => {
     setError("");
@@ -98,7 +98,8 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               exist = true;
             }
           }
-          console.log(userContext, "hello");
+          setUserContext({ ...userContext, email: email });
+
           console.log("Sign-in successful");
           onSignIn();
           if (!exist) {

@@ -22,8 +22,6 @@ const styles = StyleSheet.create({
 });
 
 const SignInPage: React.FC = () => {
-  const { userContext } = useContext(MyContext); // Access the userContext value from the context
-
   const [user, setUser] = useState(auth.currentUser);
   const [usersList, setUsersList] = useState([{}]);
 
@@ -55,7 +53,7 @@ const SignInPage: React.FC = () => {
       });
       setUsersList(userArr);
     });
-    console.log(userContext);
+
     return () => UserQuery();
   }, []);
 
@@ -64,13 +62,10 @@ const SignInPage: React.FC = () => {
       {user ? (
         <LogOutComp onLogout={handleLogout} />
       ) : (
-        <View>
-          <SignIn
-            userList={usersList}
-            onSignIn={() => setUser(auth.currentUser)}
-          />
-          <Text>{userContext}</Text>
-        </View>
+        <SignIn
+          userList={usersList}
+          onSignIn={() => setUser(auth.currentUser)}
+        />
       )}
     </View>
   );

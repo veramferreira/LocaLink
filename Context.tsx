@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 
 interface MyContextType {
-  userContext: string;
-  setUserContext: React.Dispatch<React.SetStateAction<string>>;
+  userContext: object;
+  setUserContext: React.Dispatch<React.SetStateAction<object>>;
 }
 
 const MyContext = createContext<MyContextType | undefined>(undefined);

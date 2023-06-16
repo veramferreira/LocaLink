@@ -28,7 +28,7 @@ const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [userContext, setUserContext] = useState("Initial data");
+  const [userContext, setUserContext] = useState({});
   return (
     <QueryClientProvider client={queryClient}>
       <MyContext.Provider value={{ userContext, setUserContext }}>

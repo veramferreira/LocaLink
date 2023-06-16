@@ -1,6 +1,6 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddComToUser from "../Utils/AddComToUser";
 import {
   StyleSheet,
@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import colours from "../constants/colours";
+import { MyContext } from "../Context";
 
 // NEED TO TRY FIX TYPSCRIPT ISSUE WITH PREDEFINED TYPE FOR COMMUNITY IN MAP
 // type ExampleObject = {
@@ -25,6 +26,7 @@ export default function FindCommunity({ navigation }: any) {
   const [filteredArr, setFilteredArr] = useState([{}]);
   const [searchClicked, setSearchClicked] = useState(false);
   const [communityClicked, setCommunityClicked] = useState("");
+  const { userContext, setUserContext } = useContext(MyContext);
 
   useEffect(() => {
     const q = query(collection(db, "CommunityList"), orderBy("name"));
@@ -56,6 +58,7 @@ export default function FindCommunity({ navigation }: any) {
 
   const handleYesClick = () => {
     AddComToUser(auth.currentUser?.email, communityClicked.name);
+    setUserContext({ ...userContext, community_name: communityClicked.name });
     navigation.navigate("HomepageScreen");
   };
 

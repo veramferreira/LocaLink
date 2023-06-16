@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
+import { MyContext } from "../Context";
 
 type NavigationItem = {
   id: number;
@@ -56,6 +57,7 @@ const routes: NavigationItem[] = [
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const [community, setCommunity] = useState("");
+  const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     const q = query(collection(db, "Users"));
@@ -96,6 +98,15 @@ export const HomepageScreen: React.FC = () => {
             </React.Fragment>
           ))}
         </View>
+        {!userContext.userName ? null : (
+          <Text style={styles.h2}>{userContext.userName}!</Text>
+        )}
+        {!userContext.community_name ? null : (
+          <Text style={styles.h2}>{userContext.community_name}</Text>
+        )}
+        {!userContext.email ? null : (
+          <Text style={styles.h2}>{userContext.email}</Text>
+        )}
       </View>
     </ScrollView>
   );
