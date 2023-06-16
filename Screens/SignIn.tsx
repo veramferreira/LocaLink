@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import SignIn from "../comp/singInComp";
 import LogOutComp from "../comp/logOutComp";
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
 
 const SignInPage: React.FC = () => {
   const [user, setUser] = useState(auth.currentUser);
+  const [userContext, setUserContext] = useContext(uth.currentUser);
   const [usersList, setUsersList] = useState([{}]);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
