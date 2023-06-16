@@ -20,111 +20,116 @@ import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
 import { FindCreate } from "./Screens/FindCreate";
-
+import { MyContext } from "./Context";
 import colours from "./constants/colours";
+import { useState } from "react";
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [userContext, setUserContext] = useState("Initial data");
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="HomepageScreen"
-          screenOptions={{
-            headerTitle: () => <Header />,
-            headerStyle: {
-              backgroundColor: colours.primary,
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        >
-          {/* <Stack.Screen
+      <MyContext.Provider value={{ userContext, setUserContext }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="HomepageScreen"
+            screenOptions={{
+              headerTitle: () => <Header />,
+              headerStyle: {
+                backgroundColor: colours.primary,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          >
+            {/* <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{ title: "Create your account" }}
         /> */}
-          <Stack.Screen
-            name="HomepageScreen"
-            component={HomepageScreen}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="ProfileSetup"
-            component={ProfileSetup}
-            options={{ title: "ProfileSetup" }}
-          />
-          <Stack.Screen
-            name="SignIn"
-            component={SignInPage}
-            options={{ title: "Welcome" }}
-          />
-          <Stack.Screen
-            name="About"
-            component={About}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="Calendar"
-            component={CalendarScreen}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="LostFound"
-            component={LostFound}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="ManagementAnnouncements"
-            component={ManagementAnnouncements}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="Marketplace"
-            component={Marketplace}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="Recommendations"
-            component={Recommendations}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="ReportIssue"
-            component={ReportIssue}
-            options={{ title: "Create your account" }}
-          />
-          <Stack.Screen
-            name="FindCommunity"
-            component={FindCommunity}
-            options={{ title: "Find Community" }}
-          />
-          <Stack.Screen
-            name="Chat"
-            component={Chat}
-            options={{ title: "Chat" }}
-          />
-          <Stack.Screen
-            name="CreateCommunity"
-            component={CreateCommunity}
-            options={{ title: "Create a Community" }}
-          />
-          <Stack.Screen
-            name="FindCreate"
-            component={FindCreate}
-            options={{ title: "FindCreate" }}
-          />
-          <Stack.Screen
-            name="PostAnnouncement"
-            component={PostAnnouncement}
-            options={{ title: "Post an Announcement" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+
+            <Stack.Screen
+              name="HomepageScreen"
+              component={HomepageScreen}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="ProfileSetup"
+              component={ProfileSetup}
+              options={{ title: "ProfileSetup" }}
+            />
+            <Stack.Screen
+              name="SignIn"
+              component={SignInPage}
+              options={{ title: "Welcome" }}
+            />
+            <Stack.Screen
+              name="About"
+              component={About}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="Calendar"
+              component={CalendarScreen}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="LostFound"
+              component={LostFound}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="ManagementAnnouncements"
+              component={ManagementAnnouncements}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="Marketplace"
+              component={Marketplace}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="Recommendations"
+              component={Recommendations}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="ReportIssue"
+              component={ReportIssue}
+              options={{ title: "Create your account" }}
+            />
+            <Stack.Screen
+              name="FindCommunity"
+              component={FindCommunity}
+              options={{ title: "Find Community" }}
+            />
+            <Stack.Screen
+              name="Chat"
+              component={Chat}
+              options={{ title: "Chat" }}
+            />
+            <Stack.Screen
+              name="CreateCommunity"
+              component={CreateCommunity}
+              options={{ title: "Create a Community" }}
+            />
+            <Stack.Screen
+              name="FindCreate"
+              component={FindCreate}
+              options={{ title: "FindCreate" }}
+            />
+            <Stack.Screen
+              name="PostAnnouncement"
+              component={PostAnnouncement}
+              options={{ title: "Post an Announcement" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </MyContext.Provider>
     </QueryClientProvider>
   );
 }

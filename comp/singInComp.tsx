@@ -69,7 +69,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState("");
 
-  const handleAuthAction = () => {
+  const handleAuthAction = ({ userContext }: any) => {
     setError("");
 
     if (email === "" || password === "") {
@@ -97,7 +97,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               exist = true;
             }
           }
-
+          console.log(userContext, "hello");
           console.log("Sign-in successful");
           onSignIn();
           if (!exist) {
