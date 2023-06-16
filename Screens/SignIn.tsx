@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
 
 const SignInPage: React.FC = () => {
   const [user, setUser] = useState(auth.currentUser);
-  const [userContext, setUserContext] = useContext(uth.currentUser);
   const [usersList, setUsersList] = useState([{}]);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
