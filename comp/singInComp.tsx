@@ -81,6 +81,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
+          setUserContext({ ...userContext, email: email });
           navigation.navigate("ProfileSetup");
           console.log("User creation successful");
         })

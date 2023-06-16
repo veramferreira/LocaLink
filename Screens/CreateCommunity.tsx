@@ -13,9 +13,10 @@ import { Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import { addDoc, collection } from "@firebase/firestore";
 import { auth, db } from "../config/firebase";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AddComToUser from "../Utils/AddComToUser";
+import { MyContext } from "../Context";
 
 // setting types for TS
 interface FormValues {
@@ -66,6 +67,7 @@ const buttonPressedStyle = {
 export default function CreateCommunity() {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
+  const { userContext, setUserContext } = useContext(MyContext);
 
   const navigation = useNavigation();
 
@@ -99,6 +101,7 @@ export default function CreateCommunity() {
       setSubmitted(true);
       showAlert();
       AddComToUser(auth.currentUser?.email, values.name);
+      setUserContext({ ...userContext, community_name: values.name });
       navigation.navigate("HomepageScreen");
     } catch (error) {
       console.error("Error adding document: ", error);
