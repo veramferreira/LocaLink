@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import SignIn from "../comp/singInComp";
 import LogOutComp from "../comp/logOutComp";
