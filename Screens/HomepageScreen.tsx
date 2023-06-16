@@ -36,8 +36,16 @@ const routes: NavigationItem[] = [
 
   { id: 10, title: "CreateCommunity", screen: "CreateCommunity" },
   { id: 11, title: "Chat", screen: "Chat" },
+
   { id: 12, title: "ProfileSetup", screen: "ProfileSetup" },
   { id: 13, title: "FindCreate", screen: "FindCreate" },
+
+  {
+    id: 14,
+    title: "Post Announcement (admins only)",
+    screen: "PostAnnouncement",
+  },
+  { id: 15, title: "Communities", screen: "Communities" },
 ];
 
 export const HomepageScreen: React.FC = () => {

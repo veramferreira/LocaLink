@@ -16,7 +16,16 @@ const CalendarScreen = () => {
   );
 
   const handleDayPress = (day) => {
+    console.log(day.dateString);
     setSelectedDate(day.dateString);
+  };
+
+  const markedDates = {
+    [selectedDate]: {
+      selected: true,
+      disableTouchEvent: true,
+      selectedColor: "orange",
+    },
   };
 
   const events = getEvent(selectedDate);
@@ -24,16 +33,7 @@ const CalendarScreen = () => {
 
   return (
     <>
-      <Calendar
-        onDayPress={handleDayPress}
-        markedDates={{
-          [selectedDate]: {
-            selected: true,
-            disableTouchEvent: true,
-            selectedColor: "orange",
-          },
-        }}
-      />
+      <Calendar onDayPress={handleDayPress} markedDates={markedDates} />
       {events.length === 0 ? (
         <Text>No events for selected date</Text>
       ) : (
