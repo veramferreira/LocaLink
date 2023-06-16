@@ -14,6 +14,7 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
+import { Communities } from "./Screens/Communities";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Chat from "./Screens/Chat";
@@ -95,6 +96,11 @@ export default function App() {
             name="PostAnnouncement"
             component={PostAnnouncement}
             options={{ title: "Post an Announcement" }}
+          />
+          <Stack.Screen
+            name="Communities"
+            component={Communities}
+            options={{ title: "Communities" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
