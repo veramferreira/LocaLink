@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
@@ -79,16 +85,20 @@ export const HomepageScreen: React.FC = () => {
   );
 
   return (
-    <View style={styles.container}>
-      {!community ? null : (
-        <Text style={styles.h2}>Welcome to {community}!</Text>
-      )}
-      <View style={styles.containerList}>
-        {routes.map((item) => (
-          <React.Fragment key={item.id}>{renderItem({ item })}</React.Fragment>
-        ))}
+    <ScrollView>
+      <View style={styles.container}>
+        {!community ? null : (
+          <Text style={styles.h2}>Welcome to {community}!</Text>
+        )}
+        <View style={styles.containerList}>
+          {routes.map((item) => (
+            <React.Fragment key={item.id}>
+              {renderItem({ item })}
+            </React.Fragment>
+          ))}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
