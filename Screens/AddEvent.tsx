@@ -14,10 +14,7 @@ import { db } from "../config/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
-import DatePicker from "react-native-datepicker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
-// import DatePicker from "../comp/DatePicker";
 
 interface FormValues {
   eventName: string;

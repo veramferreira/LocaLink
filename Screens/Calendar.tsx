@@ -50,10 +50,11 @@ const CalendarScreen = () => {
       {events.length === 0 ? (
         <Text>No events for selected date</Text>
       ) : (
-        events.map((event, index) => (
+        events.map(({ eventName, date, description }, index) => (
           <View key={index}>
-            <Text>{event.eventName}</Text>
-            <Text>{eventTime[index]}</Text>
+            <Text>{eventName}</Text>
+            <Text>{description}</Text>
+            <Text>{date}</Text>
           </View>
         ))
       )}
