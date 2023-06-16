@@ -68,8 +68,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState("");
+  const { userContext } = useContext(MyContext);
 
-  const handleAuthAction = ({ userContext }: any) => {
+  const handleAuthAction = () => {
     setError("");
 
     if (email === "" || password === "") {
