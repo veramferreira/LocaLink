@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import colours from "../constants/colours";
+import CheckUserData from "../Utils/CheckUserData";
 
 // NEED TO TRY FIX TYPSCRIPT ISSUE WITH PREDEFINED TYPE FOR COMMUNITY IN MAP
 // type ExampleObject = {
