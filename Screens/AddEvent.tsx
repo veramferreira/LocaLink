@@ -14,6 +14,10 @@ import { db } from "../config/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
+import DatePicker from "react-native-datepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+// import DatePicker from "../comp/DatePicker";
 
 interface FormValues {
   eventName: string;
@@ -35,7 +39,17 @@ const buttonPressedStyle = {
 const AddEvent: React.FC = () => {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
   const navigation = useNavigation();
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
 
   const handleSubmit = async (
     values: FormValues,
@@ -99,16 +113,29 @@ const AddEvent: React.FC = () => {
                 {props.touched.description && props.errors.description}
               </Text>
               <Text style={styles.text}>Date:</Text>
+
               <TextInput
                 style={styles.input}
                 placeholder="Enter event date..."
                 onChangeText={props.handleChange("date")}
                 value={props.values.date}
                 onBlur={props.handleBlur("date")}
+                onFocus={showDatePicker}
               />
               <Text style={styles.errorText}>
                 {props.touched.date && props.errors.date}
               </Text>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={(date) => {
+                  props.setFieldValue("date", date.toISOString().split("T")[0]);
+                  hideDatePicker();
+                }}
+                textColor="#000000"
+                onCancel={hideDatePicker}
+              />
+
               <TouchableOpacity
                 title="Add Event"
                 onPress={props.handleSubmit}
