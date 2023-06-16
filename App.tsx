@@ -54,7 +54,7 @@ export default function App() {
           <Drawer.Screen
             name="HomepageScreen"
             component={HomepageScreen}
-            options={{ title: "Create your account" }}
+            options={{ title: "Dashboard" }}
           />
           <Drawer.Screen
             name="ProfileSetup"
@@ -69,37 +69,37 @@ export default function App() {
           <Drawer.Screen
             name="About"
             component={About}
-            options={{ title: "Create your account" }}
+            options={{ title: "About" }}
           />
           <Drawer.Screen
             name="Calendar"
             component={CalendarScreen}
-            options={{ title: "Create your account" }}
+            options={{ title: "Calendar" }}
           />
           <Drawer.Screen
             name="LostFound"
             component={LostFound}
-            options={{ title: "Create your account" }}
+            options={{ title: "Lost & Found" }}
           />
           <Drawer.Screen
             name="ManagementAnnouncements"
             component={ManagementAnnouncements}
-            options={{ title: "Create your account" }}
+            options={{ title: "Management Announcements" }}
           />
           <Drawer.Screen
             name="Marketplace"
             component={Marketplace}
-            options={{ title: "Create your account" }}
+            options={{ title: "Marketplace" }}
           />
           <Drawer.Screen
             name="Recommendations"
             component={Recommendations}
-            options={{ title: "Create your account" }}
+            options={{ title: "Recommendations" }}
           />
           <Drawer.Screen
             name="ReportIssue"
             component={ReportIssue}
-            options={{ title: "Create your account" }}
+            options={{ title: "Report an Issue" }}
           />
           <Drawer.Screen
             name="FindCommunity"

@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   collection,
@@ -69,7 +69,17 @@ export const HomepageScreen: React.FC = () => {
   }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
-    navigation.push(item.screen);
+    console.log(item.screen);
+    if (item.screen === "HomepageScreen") {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: item.screen }],
+        })
+      );
+    } else {
+      navigation.navigate(item.screen, {});
+    }
   };
 
   const renderItem = ({ item }: { item: NavigationItem }) => (
