@@ -1,6 +1,6 @@
 import { useQueryClient } from "react-query";
 import { Calendar } from "react-native-calendars";
-import { Button, Text, View } from "react-native";
+import { Button, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
@@ -10,9 +10,15 @@ import getEventTime from "../comp/getEventTime";
 import colours from "../constants/colours";
 import AddEvent from "./AddEvent";
 
+const buttonPressedStyle = {
+  backgroundColor: "#F57C01",
+  borderColor: "#F57C01",
+};
+
 const CalendarScreen = () => {
   const queryClient = useQueryClient();
   const navigation = useNavigation();
+  const [isButtonPressed, setButtonPressed] = useState(false);
 
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -51,11 +57,35 @@ const CalendarScreen = () => {
           </View>
         ))
       )}
-      <View style={{ margin: 20 }}>
-        <Button title="Add Event" onPress={handleAddEvent} />
-      </View>
+      <TouchableOpacity
+        style={[styles.button, isButtonPressed ? buttonPressedStyle : null]}
+        onPressIn={() => setButtonPressed(true)}
+        onPressOut={() => setButtonPressed(false)}
+        activeOpacity={1}
+      >
+        <Text style={styles.buttonText} onPress={handleAddEvent}>
+          Add Event
+        </Text>
+      </TouchableOpacity>
     </>
   );
 };
 
 export default CalendarScreen;
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    backgroundColor: "#1B73E7",
+    padding: 10,
+    fontSize: 14,
+    borderRadius: 6,
+    margin: 15,
+    borderColor: "#1B73E7",
+  },
+  buttonText: {
+    color: "white",
+  },
+});
