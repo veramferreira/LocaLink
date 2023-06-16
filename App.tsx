@@ -14,12 +14,13 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
-import { Communities } from "./Screens/Communities";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
 import Chat from "./Screens/Chat";
-import FindCreate from "./Screens/FindCreate";
+import { FindCreate } from "./Screens/FindCreate";
+import JoinCommunity from "./Screens/JoinCommunity";
 import colours from "./constants/colours";
 
 const queryClient = new QueryClient();
@@ -123,9 +124,9 @@ export default function App() {
             options={{ title: "Post an Announcement" }}
           />
           <Stack.Screen
-            name="Communities"
-            component={Communities}
-            options={{ title: "Communities" }}
+            name="JoinCommunity"
+            component={JoinCommunity}
+            options={{ title: "JoinCommunity" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
