@@ -112,6 +112,7 @@ export default function ProfileSetup({ navigation }: any) {
 
 const styles = StyleSheet.create({
   heading: {
+    fontFamily: "Poppins_700Bold",
     textAlign: "center",
     fontWeight: "bold",
     margin: 20,
@@ -123,12 +124,14 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 10,
     marginBottom: 10,
+    fontFamily: "Poppins_500Medium",
   },
   optionalText: {
     color: "gray",
     marginLeft: 10,
     marginBottom: 10,
     marginTop: 0,
+    fontFamily: 'Poppins_400Regular',
   },
   input: {
     alignItems: "center",
@@ -141,6 +144,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: "white",
+    fontFamily: 'Poppins_400Regular',
   },
   button: {
     alignItems: "center",
@@ -152,9 +156,14 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 15,
     borderColor: "#1B73E7",
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   buttonText: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
   },
   errorText: {
     color: "crimson",
@@ -162,6 +171,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     fontSize: 11,
+    fontFamily: "Poppins_500Medium",
   },
   textSubmitted: {
     textAlign: "center",

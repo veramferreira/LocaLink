@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   containerList: {
-    // flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
@@ -151,10 +150,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   itemTitle: {
     fontSize: 18,
-    // textDecoration: "none",
     color: "white",
     fontFamily: "Poppins_500Medium",
     textAlign: "center",
