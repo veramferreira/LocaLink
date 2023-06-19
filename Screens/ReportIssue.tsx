@@ -200,6 +200,10 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 15,
     borderColor: "#1B73E7",
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   buttonText: {
     color: "white",
