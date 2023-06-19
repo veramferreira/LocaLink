@@ -7,6 +7,7 @@ import getEvent from "../comp/getEvent";
 import getEventTime from "../comp/getEventTime";
 import colours from "../constants/colours";
 import AddEvent from "./AddEvent";
+import React from "react";
 
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
@@ -42,13 +43,13 @@ const CalendarScreen = () => {
   const eventTime = getEventTime(selectedDate);
 
   const handleAddEvent = () => {
-    navigation.navigate("AddEvent");
+    navigation.navigate("AddEvent", {});
   };
   // const handleEventDescriptionPress = (description: string) => {
   //   setDescription((prevDescription) => (prevDescription ? null : description));
   // };
 
-  const handleEventDescriptionPress = (eventIndex) => {
+  const handleEventDescriptionPress = (eventIndex: number) => {
     setSelectedEventIndex((prevIndex) =>
       prevIndex === eventIndex ? null : eventIndex
     );
@@ -77,8 +78,8 @@ const CalendarScreen = () => {
               <Text style={styles.h2Text}>Events on {events[0].date}</Text>
             </View>
             {events.map(({ eventName, date, description, time }, index) => (
-              <>
-                <View key={index} style={styles.eventItem}>
+              <React.Fragment key={index}>
+                <View style={styles.eventItem}>
                   <View style={styles.eventDetails}>
                     <View style={styles.eventTime}>
                       {time ? (
@@ -100,7 +101,7 @@ const CalendarScreen = () => {
                     <Text>{description}</Text>
                   </View>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </>
         )}

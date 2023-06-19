@@ -3,12 +3,13 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { fromUnixTime, format } from "date-fns";
 import { db } from "../config/firebase";
 
-interface CalendarEvent {
+export interface CalendarEvent {
   date: string;
   eventName: string;
   time: string;
   description: string;
 }
+
 const getEvent = (date: string): CalendarEvent[] => {
   const [calendarEvent, setCalendarEvent] = useState<CalendarEvent[]>([]);
   const [currentCalendarEvent, setCurrentCalendarEvent] = useState<
