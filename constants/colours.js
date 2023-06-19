@@ -1,7 +1,7 @@
 export default {
   primary: "#F57C01" /*orange*/,
   secondary: "#1B73E7" /*blue*/,
-  additional: "#F4C01D",
+  additional: "#F4C01D" /*yellow*/,
   font: "#707070" /*grey*/,
 };
 

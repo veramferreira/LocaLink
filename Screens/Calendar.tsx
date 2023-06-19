@@ -42,6 +42,7 @@ const CalendarScreen = () => {
   const handleAddEvent = () => {
     navigation.navigate("AddEvent");
   };
+  const handleEventDescriptionPress = (eventName) => {};
 
   return (
     <>
@@ -65,10 +66,18 @@ const CalendarScreen = () => {
           {events.map(({ eventName, date, description, time }, index) => (
             <View key={index} style={styles.eventItem}>
               <View style={styles.eventTime}>
-                {time ? <Text>{time}</Text> : <Text>All day</Text>}
+                {time ? (
+                  <Text style={styles.text}>{time}</Text>
+                ) : (
+                  <Text style={styles.text}>All day</Text>
+                )}
               </View>
+              <TouchableOpacity
+                onPress={() => handleEventDescriptionPress(eventName)}
+              >
+                <Text style={styles.eventName}>{eventName}</Text>
+              </TouchableOpacity>
 
-              <Text style={styles.eventName}>{eventName}</Text>
               <Text>{description}</Text>
             </View>
           ))}
@@ -122,5 +131,8 @@ const styles = StyleSheet.create({
   },
   eventName: {
     padding: 10,
+  },
+  text: {
+    color: "white",
   },
 });
