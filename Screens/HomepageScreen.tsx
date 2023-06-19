@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
+import { MyContext } from "../Context";
 
 type NavigationItem = {
   id: number;
@@ -53,13 +54,14 @@ const routes: NavigationItem[] = [
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const [community, setCommunity] = useState("");
+  const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     const q = query(collection(db, "Users"));
     const usersQuery = onSnapshot(q, (querySnapshot) => {
       let usersArr: any[] = [];
       querySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[0].community_name);
+      setCommunity(usersArr[0].communityName);
       return () => usersQuery();
     });
   }, []);
@@ -81,16 +83,14 @@ export const HomepageScreen: React.FC = () => {
     }
   };
 
-  const colours = [
-    "#1B73E7", "#F4C01D", "#FF8A64"
-  ]
+  const colours = ["#1B73E7", "#F4C01D", "#FF8A64"];
   const renderItem = ({ item }: { item: NavigationItem }) => {
     const backgroundColor = colours[item.id % colours.length];
     const itemContainerStyle = {
       ...styles.itemContainer,
       backgroundColor,
     };
-  
+
     return (
       <TouchableOpacity
         onPress={() => handleLinkPress(item)}
@@ -114,6 +114,15 @@ export const HomepageScreen: React.FC = () => {
             </React.Fragment>
           ))}
         </View>
+        {userContext?.userName && (
+          <Text style={styles.h2}>{userContext.userName}!</Text>
+        )}
+        {userContext?.communityName && (
+          <Text style={styles.h2}>{userContext.communityName}</Text>
+        )}
+        {userContext?.email && (
+          <Text style={styles.h2}>{userContext.email}</Text>
+        )}
       </View>
     </ScrollView>
   );
