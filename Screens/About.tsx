@@ -31,28 +31,14 @@ export default function About({ navigation }: any) {
   const [communityInfo, setCommunityInfo] = useState<CommunityInfo | null>(
     null
   );
-  const { userContext } = useContext(MyContext);
-
-  console.log("User Context:", userContext);
+  const { userContext, setUserContext } = useContext(MyContext);
 
 
-  // useEffect(() => {
-  //   const q = query(collection(db, "Users"));
-  //   const usersQuery = onSnapshot(q, (QuerySnapshot) => {
-  //     let usersArr: any[] = [];
-  //     QuerySnapshot.forEach((doc) => usersArr.push(doc.data()));
-  //     setCommunity(userContext.community_name);
-  //     return () => usersQuery();
-  //   });
-  // }, []);
-
-  console.log(userContext)
   useEffect(() => {
-    console.log("Community Name:", userContext.community_name);
-    if (userContext.community_name) {
+    if (userContext.communityName) {
       const q = query(
         collection(db, "CommunityList"),
-        where("community_name", "==", userContext.community_name)
+        where("name", "==", userContext.communityName)
       );
       const communityQuery = onSnapshot(q, (querySnapshot: QuerySnapshot) => {
         const communityArr: any[] = [];
@@ -63,16 +49,15 @@ export default function About({ navigation }: any) {
       });
       return () => communityQuery();
     }
-  }, [userContext.community_name]);
+  }, [userContext.communityName]);
 
   useEffect(() => {
-    setCommunity(userContext.community_name);
-  }, [userContext.community_name]);
+    setCommunity(userContext.communityName);
+  }, [userContext.communityName]);
 
   if (!community || !communityInfo) {
     return null;
   }
-
 
   return (
     <>
