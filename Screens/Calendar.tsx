@@ -2,9 +2,7 @@ import { useQueryClient } from "react-query";
 import { Calendar } from "react-native-calendars";
 import { Button, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import getEvent from "../comp/getEvent";
 import getEventTime from "../comp/getEventTime";
 import colours from "../constants/colours";
@@ -18,8 +16,10 @@ const buttonPressedStyle = {
 const CalendarScreen = () => {
   const queryClient = useQueryClient();
   const navigation = useNavigation();
-  const [isButtonPressed, setButtonPressed] = useState(false);
-  const [selectedDescription, setDescription] = useState<string | null>(null);
+  const [isButtonPressed, setButtonPressed] = useState<boolean>(false);
+  const [selectedEventIndex, setSelectedEventIndex] = useState<number | null>(
+    null
+  );
 
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -27,7 +27,7 @@ const CalendarScreen = () => {
 
   const handleDayPress = (day) => {
     setSelectedDate(day.dateString);
-    setDescription(null);
+    setSelectedEventIndex(null);
   };
 
   const markedDates = {
@@ -44,9 +44,14 @@ const CalendarScreen = () => {
   const handleAddEvent = () => {
     navigation.navigate("AddEvent");
   };
-  const handleEventDescriptionPress = (description: string) => {
-    setDescription((prevDescription) => (prevDescription ? null : description));
-    // selectedEvent ? setSelectedEvent(false) : setSelectedEvent(true);
+  // const handleEventDescriptionPress = (description: string) => {
+  //   setDescription((prevDescription) => (prevDescription ? null : description));
+  // };
+
+  const handleEventDescriptionPress = (eventIndex) => {
+    setSelectedEventIndex((prevIndex) =>
+      prevIndex === eventIndex ? null : eventIndex
+    );
   };
 
   return (
@@ -72,29 +77,31 @@ const CalendarScreen = () => {
               <Text style={styles.h2Text}>Events on {events[0].date}</Text>
             </View>
             {events.map(({ eventName, date, description, time }, index) => (
-              <View key={index} style={styles.eventItem}>
-                <View style={styles.eventDetails}>
-                  <View style={styles.eventTime}>
-                    {time ? (
-                      <Text style={styles.text}>{time}</Text>
-                    ) : (
-                      <Text style={styles.text}>All day</Text>
-                    )}
+              <>
+                <View key={index} style={styles.eventItem}>
+                  <View style={styles.eventDetails}>
+                    <View style={styles.eventTime}>
+                      {time ? (
+                        <Text style={styles.text}>{time}</Text>
+                      ) : (
+                        <Text style={styles.text}>All day</Text>
+                      )}
+                    </View>
+                    <TouchableOpacity
+                      style={styles.eventName}
+                      onPress={() => handleEventDescriptionPress(index)}
+                    >
+                      <Text>{eventName}</Text>
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity
-                    style={styles.eventName}
-                    onPress={() => handleEventDescriptionPress(description)}
-                  >
-                    <Text>{eventName}</Text>
-                  </TouchableOpacity>
                 </View>
-              </View>
+                {selectedEventIndex === index && (
+                  <View style={styles.eventDescription}>
+                    <Text>{description}</Text>
+                  </View>
+                )}
+              </>
             ))}
-            {selectedDescription ? (
-              <View style={styles.eventDescription}>
-                <Text>{selectedDescription}</Text>
-              </View>
-            ) : null}
           </>
         )}
       </View>
