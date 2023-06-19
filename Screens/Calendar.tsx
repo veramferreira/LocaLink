@@ -62,11 +62,10 @@ const CalendarScreen = () => {
         style={[styles.button, isButtonPressed ? buttonPressedStyle : null]}
         onPressIn={() => setButtonPressed(true)}
         onPressOut={() => setButtonPressed(false)}
+        onPress={handleAddEvent}
         activeOpacity={1}
       >
-        <Text style={styles.buttonText} onPress={handleAddEvent}>
-          Add Event
-        </Text>
+        <Text style={styles.buttonText}>Add Event</Text>
       </TouchableOpacity>
     </>
   );

@@ -22,13 +22,6 @@ const getEvent = (date: string): CalendarEvent[] => {
 
       querySnapshot.forEach((doc) => {
         const elm = doc.data();
-
-        // const fromUnix = fromUnixTime(elm.timestamp.seconds);
-        // const formatDate = format(fromUnix, "yyyy-MM-dd");
-        // const formatTime = format(fromUnix, "Hmm");
-        // const formDateString = formatDate.toString();
-        // const eventName = elm.name;
-        // const formatTimeString = formatTime.toString();
         calendarEventArr.push(elm);
       });
 
