@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
   title: {
     marginLeft: 15,
     marginBottom: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     fontFamily: "Poppins_500Medium",
     textAlign: "center",
     fontSize: 18,
