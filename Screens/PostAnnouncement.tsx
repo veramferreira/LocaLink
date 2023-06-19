@@ -11,7 +11,13 @@ import {
 import React, { useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
-import { addDoc, collection } from "@firebase/firestore";
+import {
+  addDoc,
+  collection,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "@firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 
@@ -50,9 +56,12 @@ export default function PostAnnouncement() {
         title: values.title,
         description: values.description,
         img: values.img,
+        timestamp: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "postAdminAnnouncement"), docData);
+      const collectionRef = collection(db, "postAdminAnnouncement");
+
+      await addDoc(collectionRef, docData);
       resetForm();
       setSubmitted(true);
       showAlert();
