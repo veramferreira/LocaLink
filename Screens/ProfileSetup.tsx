@@ -8,11 +8,12 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { auth, db } from "../config/firebase";
 import { addDoc, collection, doc, setDoc } from "@firebase/firestore";
 import * as yup from "yup";
+import { MyContext } from "../Context";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 // setting type for TS
 interface FormValues {
@@ -33,7 +34,7 @@ const buttonPressedStyle = {
 export default function ProfileSetup({ navigation }: any) {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
-
+  const { userContext, setUserContext } = useContext(MyContext);
   const handleSubmit = async (
     values: FormValues,
     { resetForm }: { resetForm: () => void }
@@ -50,13 +51,13 @@ export default function ProfileSetup({ navigation }: any) {
       resetForm();
       setSubmitted(true);
       showAlert();
+      setUserContext({ ...userContext, userName: values.userName });
       navigation.navigate("FindCreate");
     } catch (error) {
       console.error("Error adding User: ", error);
     }
   };
 
-  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "User Created",
