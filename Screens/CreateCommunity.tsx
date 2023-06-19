@@ -17,6 +17,7 @@ import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AddComToUser from "../Utils/AddComToUser";
 import { MyContext } from "../Context";
+import AddRoleToUser from "../Utils/AddRoleToUser";
 
 // setting types for TS
 interface FormValues {
@@ -101,6 +102,7 @@ export default function CreateCommunity() {
       setSubmitted(true);
       showAlert();
       AddComToUser(auth.currentUser?.email, values.name);
+      AddRoleToUser(auth.currentUser?.email, "owner");
       setUserContext({ ...userContext, communityName: values.name });
       navigation.navigate("HomepageScreen");
     } catch (error) {
