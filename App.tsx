@@ -61,6 +61,9 @@ export default function App() {
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            drawerLabelStyle: {
+              fontFamily: 'Poppins_400Regular'
+            }
           }}
         >
           {/* <Drawer.Screen

@@ -113,7 +113,7 @@ export default function ReportIssue({ navigation }: any) {
                 <Text style={styles.text}>Your email: </Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="example@example.com "
+                  placeholder="example@example.com"
                   onChangeText={(text) => props.handleChange("email")(text)}
                   value={props.values.email}
                   onBlur={props.handleBlur("email")}
@@ -156,6 +156,7 @@ export default function ReportIssue({ navigation }: any) {
 const styles = StyleSheet.create({
   
   heading: {
+    fontFamily: "Poppins_700Bold",
     textAlign: "center",
     fontWeight: "bold",
     margin: 20,
@@ -167,12 +168,14 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 10,
     marginBottom: 10,
+    fontFamily: "Poppins_500Medium",
   },
   optionalText: {
     color: "gray",
     marginLeft: 10,
     marginBottom: 10,
     marginTop: 0,
+    fontFamily: 'Poppins_400Regular',
   },
   input: {
     alignItems: "center",
@@ -185,6 +188,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: "white",
+    fontFamily: 'Poppins_400Regular',
   },
   button: {
     alignItems: "center",
@@ -199,6 +203,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
   },
   errorText: {
     color: "crimson",
@@ -206,6 +211,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     fontSize: 11,
+    fontFamily: "Poppins_500Medium",
+
   },
   textSubmitted: {
     textAlign: "center",
