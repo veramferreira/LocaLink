@@ -54,11 +54,13 @@ export default function App() {
     return null;
   }
 
+  const isLoggedIn = userContext?.userName || false;
+
   return (
     <QueryClientProvider client={queryClient}>
       <MyContext.Provider value={{ userContext, setUserContext }}>
         <NavigationContainer>
-          {!userContext?.userName ? (
+          {!isLoggedIn ? (
             <SignInPage />
           ) : (
             <Drawer.Navigator
