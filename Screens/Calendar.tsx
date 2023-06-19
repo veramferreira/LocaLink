@@ -46,18 +46,6 @@ const CalendarScreen = () => {
   return (
     <>
       <Calendar onDayPress={handleDayPress} markedDates={markedDates} />
-      {events.length === 0 ? (
-        <Text>No events for selected date</Text>
-      ) : (
-        events.map(({ eventName, date, description, time }, index) => (
-          <View key={index}>
-            <Text>{eventName}</Text>
-            <Text>{description}</Text>
-            <Text>{date}</Text>
-            <Text>{time}</Text>
-          </View>
-        ))
-      )}
       <TouchableOpacity
         style={[styles.button, isButtonPressed ? buttonPressedStyle : null]}
         onPressIn={() => setButtonPressed(true)}
@@ -67,13 +55,45 @@ const CalendarScreen = () => {
       >
         <Text style={styles.buttonText}>Add Event</Text>
       </TouchableOpacity>
+      {events.length === 0 ? (
+        <Text>No events for selected date</Text>
+      ) : (
+        <>
+          <View style={styles.h2}>
+            <Text style={styles.h2Text}>Events on {events[0].date}</Text>
+          </View>
+          {events.map(({ eventName, date, description, time }, index) => (
+            <View key={index} style={styles.eventItem}>
+              <View style={styles.eventTime}>
+                {time ? <Text>{time}</Text> : <Text>All day</Text>}
+              </View>
+
+              <Text style={styles.eventName}>{eventName}</Text>
+              <Text>{description}</Text>
+            </View>
+          ))}
+        </>
+      )}
     </>
   );
 };
 
 export default CalendarScreen;
 
+export default CalendarScreen;
+
 const styles = StyleSheet.create({
+  h2: {
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 15,
+    backgroundColor: colours.primary,
+    borderRadius: 5,
+    padding: 10,
+  },
+  h2Text: {
+    color: "white",
+  },
   button: {
     alignItems: "center",
     justifyContent: "center",
@@ -87,5 +107,20 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+  },
+  eventItem: {
+    flexDirection: "row",
+    margin: 15,
+  },
+  eventTime: {
+    backgroundColor: colours.primary,
+    borderRadius: 5,
+    padding: 10,
+    width: 65,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  eventName: {
+    padding: 10,
   },
 });

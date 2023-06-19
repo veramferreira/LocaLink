@@ -4,9 +4,10 @@ import { fromUnixTime, format } from "date-fns";
 import { db } from "../config/firebase";
 
 interface CalendarEvent {
-  formDateString: string;
+  date: string;
   eventName: string;
-  formatTimeString: string;
+  time: string;
+  description: string;
 }
 const getEvent = (date: string): CalendarEvent[] => {
   const [calendarEvent, setCalendarEvent] = useState<CalendarEvent[]>([]);
@@ -22,7 +23,6 @@ const getEvent = (date: string): CalendarEvent[] => {
 
       querySnapshot.forEach((doc) => {
         const elm = doc.data();
-        console.log(elm, "this is elm");
         calendarEventArr.push(elm);
       });
 
