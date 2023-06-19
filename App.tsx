@@ -53,39 +53,44 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <QueryClientProvider client={queryClient}>
       <MyContext.Provider value={{ userContext, setUserContext }}>
         <NavigationContainer>
-          <Drawer.Navigator
-            initialRouteName="HomepageScreen"
-            screenOptions={{
-              headerTitle: () => <Header />,
-              headerRight: () => <HeaderRight />,
-              headerStyle: {
-                backgroundColor: colours.primary,
-              },
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
-              drawerLabelStyle: {
-                fontFamily: "Poppins_400Regular",
-              },
-            }}
-          >
-            {/* <Drawer.Screen
+          {!userContext?.userName ? (
+            <SignInPage />
+          ) : (
+            <Drawer.Navigator
+              initialRouteName="HomepageScreen"
+              screenOptions={{
+                headerTitle: () => <Header />,
+                headerRight: () => <HeaderRight />,
+                headerStyle: {
+                  backgroundColor: colours.primary,
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
+                drawerLabelStyle: {
+                  fontFamily: "Poppins_400Regular",
+                },
+              }}
+            >
+              {/* <Drawer.Screen
           name="SignUp"
           component={SignUp}
           options={{ title: "Create your account" }}
         /> */}
-            {!userContext?.userName ? (
+              {/* {!userContext?.userName ? (
               <Drawer.Screen
                 name="SignIn"
                 component={SignInPage}
                 options={{ title: "Welcome" }}
               />
-            ) : (
+            ) : ( */}
+
               <>
                 <Drawer.Screen
                   name="HomepageScreen"
@@ -163,8 +168,9 @@ export default function App() {
                   options={{ title: "AddEvent" }}
                 />
               </>
-            )}
-          </Drawer.Navigator>
+              {/* )} */}
+            </Drawer.Navigator>
+          )}
         </NavigationContainer>
       </MyContext.Provider>
     </QueryClientProvider>
