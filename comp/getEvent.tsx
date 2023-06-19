@@ -22,6 +22,7 @@ const getEvent = (date: string): CalendarEvent[] => {
 
       querySnapshot.forEach((doc) => {
         const elm = doc.data();
+        console.log(elm, "this is elm");
         calendarEventArr.push(elm);
       });
 

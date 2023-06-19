@@ -20,12 +20,14 @@ interface FormValues {
   eventName: string;
   description: string;
   date: string;
+  time: string;
 }
 
 const formSchema = yup.object({
   eventName: yup.string().required().min(4),
   description: yup.string().required().min(4),
   date: yup.string().required(),
+  time: yup.string().optional(),
 });
 
 const buttonPressedStyle = {
@@ -37,6 +39,7 @@ const AddEvent: React.FC = () => {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
   const navigation = useNavigation();
 
@@ -48,6 +51,14 @@ const AddEvent: React.FC = () => {
     setDatePickerVisibility(false);
   };
 
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
   const handleSubmit = async (
     values: FormValues,
     { resetForm }: { resetForm: () => void }
@@ -57,6 +68,7 @@ const AddEvent: React.FC = () => {
         eventName: values.eventName,
         description: values.description,
         date: values.date,
+        time: values.time,
       };
 
       await addDoc(collection(db, "calendarEvent"), docData);
@@ -132,7 +144,33 @@ const AddEvent: React.FC = () => {
                 textColor="#000000"
                 onCancel={hideDatePicker}
               />
+              <Text style={styles.text}>Time:</Text>
 
+              <TextInput
+                style={styles.input}
+                placeholder="Enter event time..."
+                onChangeText={props.handleChange("time")}
+                value={props.values.time}
+                onBlur={props.handleBlur("time")}
+                onFocus={showTimePicker} // Changed the onFocus handler to showTimePicker
+              />
+              <Text style={styles.errorText}>
+                {props.touched.time && props.errors.time}
+              </Text>
+              <DateTimePickerModal
+                isVisible={isTimePickerVisible}
+                mode="time"
+                onConfirm={(time) => {
+                  const formattedTime = time.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+                  props.setFieldValue("time", formattedTime);
+                  hideTimePicker();
+                }}
+                textColor="#000000"
+                onCancel={hideTimePicker}
+              />
               <TouchableOpacity
                 title="Add Event"
                 onPress={props.handleSubmit}

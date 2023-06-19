@@ -25,7 +25,6 @@ const CalendarScreen = () => {
   );
 
   const handleDayPress = (day) => {
-    console.log(day.dateString);
     setSelectedDate(day.dateString);
   };
 
@@ -50,11 +49,12 @@ const CalendarScreen = () => {
       {events.length === 0 ? (
         <Text>No events for selected date</Text>
       ) : (
-        events.map(({ eventName, date, description }, index) => (
+        events.map(({ eventName, date, description, time }, index) => (
           <View key={index}>
             <Text>{eventName}</Text>
             <Text>{description}</Text>
             <Text>{date}</Text>
+            <Text>{time}</Text>
           </View>
         ))
       )}
