@@ -3,6 +3,7 @@ import { auth, db } from "../config/firebase";
 import { useContext, useEffect, useState } from "react";
 import AddComToUser from "../Utils/AddComToUser";
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -65,23 +66,42 @@ export default function FindCommunity({ navigation }: any) {
   return isLoading ? (
     <Text>Loading...</Text>
   ) : communityClicked.length === 0 ? (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          value={searchInput}
-          onChangeText={setSearchInput}
-        />
-        <TouchableOpacity style={styles.searchButton} onPress={handleClick}>
-          <Text>Search Communities</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.containerList}>
-        {searchClicked ? (
-          filteredArr[0] === undefined ? (
-            <Text>No Results Found</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.searchContainer}>
+          <Text style={styles.title}>Find your Community</Text>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="community/building name..."
+            value={searchInput}
+            onChangeText={setSearchInput}
+          />
+          <TouchableOpacity style={styles.searchButton} onPress={handleClick}>
+            <Text style={styles.buttonText}>Search Communities</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.containerList}>
+          {searchClicked ? (
+            filteredArr[0] === undefined ? (
+              <Text>No Results Found</Text>
+            ) : (
+              filteredArr.map((community: any, index) => {
+                return (
+                  // NEED TO ADD ONCLICK HERE TO NAVIGATE
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.itemContainer}
+                    onPress={() => {
+                      setCommunityClicked(community);
+                    }}
+                  >
+                    <Text>{community.name}</Text>
+                  </TouchableOpacity>
+                );
+              })
+            )
           ) : (
-            filteredArr.map((community: any, index) => {
+            communityList.map((community: any, index) => {
               return (
                 // NEED TO ADD ONCLICK HERE TO NAVIGATE
                 <TouchableOpacity
@@ -91,29 +111,14 @@ export default function FindCommunity({ navigation }: any) {
                     setCommunityClicked(community);
                   }}
                 >
-                  <Text>{community.name}</Text>
+                  <Text style={styles.communityName}>{community.name}</Text>
                 </TouchableOpacity>
               );
             })
-          )
-        ) : (
-          communityList.map((community: any, index) => {
-            return (
-              // NEED TO ADD ONCLICK HERE TO NAVIGATE
-              <TouchableOpacity
-                key={index}
-                style={styles.itemContainer}
-                onPress={() => {
-                  setCommunityClicked(community);
-                }}
-              >
-                <Text>{community.name}</Text>
-              </TouchableOpacity>
-            );
-          })
-        )}
+          )}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   ) : (
     <View style={styles.container}>
       <Text>{communityClicked.name}</Text>
@@ -136,6 +141,13 @@ export default function FindCommunity({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontFamily: "Poppins_700Bold",
+    textAlign: "center",
+    fontWeight: "bold",
+    margin: 20,
+    fontSize: 20,
+  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -149,12 +161,12 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   itemContainer: {
-    height: 120,
-    width: "40%",
+    height: 100,
+    width: "85%",
     padding: 10,
     borderBottomWidth: 1,
     backgroundColor: colours.secondary,
-    borderRadius: 15,
+    borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -164,16 +176,34 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   searchInput: {
-    backgroundColor: "lightblue",
+    backgroundColor: "white",
     width: 300,
+    borderWidth: 1,
+    borderColor: "#1B73E7",
+    padding: 10,
+    borderRadius: 6,
+    fontSize: 14,
+    fontFamily: 'Poppins_400Regular',
   },
   searchButton: {
-    height: 30,
-    width: "40%",
-    borderBottomWidth: 1,
-    backgroundColor: colours.secondary,
-    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 1,
+    backgroundColor: "#1B73E7",
+    padding: 10,
+    fontSize: 14,
+    borderRadius: 6,
+    margin: 15,
+    borderColor: "#1B73E7",
   },
+  buttonText: {
+    color: "white",
+    fontFamily: "Poppins_500Medium",
+    paddingRight: 20,
+    paddingLeft:20,
+  },
+  communityName: {
+    color: "white",
+    fontFamily: "Poppins_500Medium",
+  }
 });

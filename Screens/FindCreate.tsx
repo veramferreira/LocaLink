@@ -19,7 +19,7 @@ export const FindCreate: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   const handleLinkPress = (item: NavigationItem) => {
-    navigation.push(item.screen);
+    navigation.navigate(item.screen);
   };
 
   const renderItem = ({ item }: { item: NavigationItem }) => (
