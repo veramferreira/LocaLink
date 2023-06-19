@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 import { auth, db } from "../config/firebase";
 import {
@@ -6,8 +6,9 @@ import {
   collection,
   onSnapshot,
   query,
+  where,
 } from "@firebase/firestore";
-
+import { MyContext } from "../Context";
 
 interface CommunityInfo {
   description: string;
@@ -27,33 +28,51 @@ interface CommunityInfo {
 
 export default function About({ navigation }: any) {
   const [community, setCommunity] = useState("");
-  const [communityInfo, setCommunityInfo] = useState<CommunityInfo | null>(null);
+  const [communityInfo, setCommunityInfo] = useState<CommunityInfo | null>(
+    null
+  );
+  const { userContext } = useContext(MyContext);
 
-  useEffect(() => {
-    const q = query(collection(db, "Users"));
-    const usersQuery = onSnapshot(q, (QuerySnapshot) => {
-      let usersArr: any[] = [];
-      QuerySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[1].community_name);
-      return () => usersQuery();
-    });
-  }, []);
+  console.log("User Context:", userContext);
 
+
+  // useEffect(() => {
+  //   const q = query(collection(db, "Users"));
+  //   const usersQuery = onSnapshot(q, (QuerySnapshot) => {
+  //     let usersArr: any[] = [];
+  //     QuerySnapshot.forEach((doc) => usersArr.push(doc.data()));
+  //     setCommunity(userContext.community_name);
+  //     return () => usersQuery();
+  //   });
+  // }, []);
+
+  console.log(userContext)
   useEffect(() => {
-    const q = query(collection(db, "CommunityList"));
-    const communityQuery = onSnapshot(q, (QuerySnapshot) => {
-      let communityArr: any[] = [];
-      QuerySnapshot.forEach((doc) => communityArr.push(doc.data()));
-      setCommunityInfo(communityArr[8]);
+    console.log("Community Name:", userContext.community_name);
+    if (userContext.community_name) {
+      const q = query(
+        collection(db, "CommunityList"),
+        where("community_name", "==", userContext.community_name)
+      );
+      const communityQuery = onSnapshot(q, (querySnapshot: QuerySnapshot) => {
+        const communityArr: any[] = [];
+        querySnapshot.forEach((doc) => communityArr.push(doc.data()));
+        if (communityArr.length > 0) {
+          setCommunityInfo(communityArr[0]);
+        }
+      });
       return () => communityQuery();
-    });
-  }, []);
+    }
+  }, [userContext.community_name]);
 
-  useEffect(() => {}, [community]);
+  useEffect(() => {
+    setCommunity(userContext.community_name);
+  }, [userContext.community_name]);
 
   if (!community || !communityInfo) {
     return null;
   }
+
 
   return (
     <>
@@ -64,7 +83,9 @@ export default function About({ navigation }: any) {
             <View style={styles.block}>
               <Text style={styles.title}>Description of {community}: </Text>
               <View style={styles.contactsBody}>
-                <Text style={styles.normalText}>{communityInfo.description}</Text>
+                <Text style={styles.normalText}>
+                  {communityInfo.description}
+                </Text>
               </View>
             </View>
             <View style={styles.block}>
@@ -75,7 +96,7 @@ export default function About({ navigation }: any) {
                     {communityInfo.contact1Name}:{" "}
                   </Text>
                   {communityInfo.contact1Info}
-                </Text >
+                </Text>
                 <Text style={styles.normalText}>
                   <Text style={styles.semiBold}>
                     {communityInfo.contact2Name}:{" "}
@@ -138,9 +159,9 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
   },
   normalText: {
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
     fontSize: 12,
-    color: '#707070',
+    color: "#707070",
   },
   heading: {
     textAlign: "center",
@@ -157,7 +178,7 @@ const styles = StyleSheet.create({
     rowGap: 4,
     borderRadius: 8,
     backgroundColor: "white",
-    borderColor: '#F4C01D',
+    borderColor: "#F4C01D",
     borderWidth: 1,
     paddingRight: 20,
     paddingLeft: 20,
@@ -170,7 +191,7 @@ const styles = StyleSheet.create({
   contactsBody: {
     borderRadius: 8,
     backgroundColor: "white",
-    borderColor: '#F4C01D',
+    borderColor: "#F4C01D",
     borderWidth: 1,
     paddingRight: 20,
     paddingLeft: 20,
@@ -188,7 +209,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     fontFamily: "Poppins_400Regular",
-    color: '#707070',
+    color: "#707070",
   },
   title: {
     marginBottom: 10,
