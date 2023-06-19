@@ -8,7 +8,7 @@ export default function ManagementAnnouncements({ navigation }: any) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const q = query(collection(db, "postAdminAnnouncement"), orderBy("title"));
+    const q = query(collection(db, "postAdminAnnouncement"), orderBy("timestamp"));
 
     const announcementQuery = onSnapshot(q, (querySnapshot) => {
       let announcementArr: Array<Object> = [];
