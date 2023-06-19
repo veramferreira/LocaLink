@@ -8,17 +8,16 @@ import { MyContext } from "../Context"; // Import MyContext from the context fil
 
 const styles = StyleSheet.create({
   nav: {
-    backgroundColor: "#333",
+    backgroundColor: "#F57C01",
     // height: 80,
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
   },
-  heading: {
-    color: "white",
-    fontSize: 24,
-  },
+  container: {
+    flex: 1,
+    backgroundColor: "#F57C01",
+  }
 });
 
 const SignInPage: React.FC = () => {
@@ -58,15 +57,17 @@ const SignInPage: React.FC = () => {
   }, []);
 
   return (
-    <View style={styles.nav}>
-      {user ? (
-        <LogOutComp onLogout={handleLogout} />
-      ) : (
-        <SignIn
-          userList={usersList}
-          onSignIn={() => setUser(auth.currentUser)}
-        />
-      )}
+    <View style={styles.container}>
+      <View style={styles.nav}>
+        {user ? (
+          <LogOutComp onLogout={handleLogout} />
+        ) : (
+          <SignIn
+            userList={usersList}
+            onSignIn={() => setUser(auth.currentUser)}
+          />
+        )}
+      </View>
     </View>
   );
 };

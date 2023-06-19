@@ -26,13 +26,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: "30%",
+    backgroundColor: "#F57C01",
   },
   logo: {
     width: 300,
     height: 300,
   },
   input: {
-    width: "80%",
+    width: "100%",
     height: 40,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -51,10 +52,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    textAlign: 'center'
   },
   switchText: {
     color: "white",
     marginTop: 10,
+    textAlign: 'center'
   },
   errorText: {
     color: "red",
@@ -150,9 +153,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   };
 
   return (
-    <View>
+    <View style={styles.wrapper}>
       <ScrollView>
-        <View style={styles.wrapper}>
+        <View >
           <Image style={styles.logo} source={require("../assets/logo.png")} />
           {error !== "" && <Text style={styles.errorText}>{error}</Text>}
           <TextInput
