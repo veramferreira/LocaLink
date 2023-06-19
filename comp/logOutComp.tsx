@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { auth } from "../config/firebase";
 
@@ -19,11 +19,15 @@ const styles = StyleSheet.create({
 });
 
 const LogOutComp: React.FC<LogOutCompProps> = ({ onLogout }) => {
-  // Receive the onLogout prop
+  const [reRender, setReRender] = useState(false);
+  useEffect(() => {
+    setReRender(true);
+  }, [reRender]);
   const handleLogout = async () => {
     try {
       await auth.signOut();
-      onLogout(); // Call the onLogout function provided via the prop
+
+      onLogout();
     } catch (error) {
       console.log("Error logging out:", error);
     }

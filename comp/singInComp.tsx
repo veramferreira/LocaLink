@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -81,7 +81,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          setUserContext({ ...userContext, email: email });
+          setUserContext({ email: email });
           navigation.navigate("ProfileSetup");
           console.log("User creation successful");
         })
@@ -92,19 +92,50 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
     } else {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-          let exist = false;
+          let comExist = false;
+          let emailExist = false;
+          let userExist = false;
+          let comName = "";
+          let userName = "";
           console.log(userList);
           for (const user of userList) {
             if (user.email === email) {
-              exist = true;
+              emailExist = true;
+              if (user.userName) {
+                userName = user.userName;
+                userExist = true;
+              }
+              if (user.community_name) {
+                comName = user.community_name;
+                comExist = true;
+              }
             }
           }
-          setUserContext({ ...userContext, email: email });
+          if (emailExist && !userExist && !comExist) {
+            setUserContext({
+              email: email,
+            });
+          } else if (emailExist && userExist && !comExist) {
+            setUserContext({
+              email: email,
+              userName: userName,
+            });
+          } else if (comExist) {
+            setUserContext({
+              email: email,
+              userName: userName,
+              community_name: comName,
+            });
+          } else if (!emailExist) {
+            setUserContext(undefined);
+          }
 
           console.log("Sign-in successful");
           onSignIn();
-          if (!exist) {
+          if (!emailExist || !userExist) {
             navigation.navigate("ProfileSetup");
+          } else if (!comExist) {
+            navigation.navigate("FindCreate");
           } else {
             navigation.navigate("HomepageScreen");
           }

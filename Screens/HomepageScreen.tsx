@@ -84,7 +84,7 @@ export const HomepageScreen: React.FC = () => {
       <Text style={styles.itemTitle}>{item.title}</Text>
     </TouchableOpacity>
   );
-
+  console.log("homepage tag");
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -98,13 +98,13 @@ export const HomepageScreen: React.FC = () => {
             </React.Fragment>
           ))}
         </View>
-        {!userContext.userName ? null : (
+        {userContext?.userName && (
           <Text style={styles.h2}>{userContext.userName}!</Text>
         )}
-        {!userContext.community_name ? null : (
+        {userContext?.community_name && (
           <Text style={styles.h2}>{userContext.community_name}</Text>
         )}
-        {!userContext.email ? null : (
+        {userContext?.email && (
           <Text style={styles.h2}>{userContext.email}</Text>
         )}
       </View>
