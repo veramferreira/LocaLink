@@ -56,7 +56,7 @@ export default function App() {
       <MyContext.Provider value={{ userContext, setUserContext }}>
         <NavigationContainer>
           <Drawer.Navigator
-            initialRouteName="HomepageScreen"
+            initialRouteName="SignIn"
             screenOptions={{
               headerTitle: () => <Header />,
               headerStyle: {

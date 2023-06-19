@@ -53,7 +53,7 @@ const routes: NavigationItem[] = [
 
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const [community, setCommunity] = useState("");
+
   const { userContext } = useContext(MyContext);
 
   useEffect(() => {
@@ -61,13 +61,10 @@ export const HomepageScreen: React.FC = () => {
     const usersQuery = onSnapshot(q, (querySnapshot) => {
       let usersArr: any[] = [];
       querySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[0].communityName);
+
       return () => usersQuery();
     });
   }, []);
-  useEffect(() => {
-    console.log(community);
-  }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
     console.log(item.screen);
@@ -104,8 +101,10 @@ export const HomepageScreen: React.FC = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {!community ? null : (
-          <Text style={styles.h2}>Welcome to {community}! 👋</Text>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
         )}
         <View style={styles.containerList}>
           {routes.map((item) => (
