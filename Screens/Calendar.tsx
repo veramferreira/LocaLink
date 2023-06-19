@@ -63,7 +63,9 @@ const CalendarScreen = () => {
       </TouchableOpacity>
       <View style={styles.wrapper}>
         {events.length === 0 ? (
-          <Text>No events for selected date</Text>
+          <View style={styles.noEvents}>
+            <Text>No events for selected date</Text>
+          </View>
         ) : (
           <>
             <View style={styles.h2}>
@@ -170,5 +172,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
+  },
+  noEvents: {
+    margin: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
