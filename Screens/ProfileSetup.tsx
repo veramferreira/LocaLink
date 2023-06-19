@@ -58,7 +58,6 @@ export default function ProfileSetup({ navigation }: any) {
     }
   };
 
-  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "User Created",

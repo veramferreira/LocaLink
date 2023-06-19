@@ -64,7 +64,7 @@ export const HomepageScreen: React.FC = () => {
     const usersQuery = onSnapshot(q, (querySnapshot) => {
       let usersArr: any[] = [];
       querySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[0].community_name);
+      setCommunity(usersArr[0].communityName);
       return () => usersQuery();
     });
   }, []);
@@ -101,8 +101,8 @@ export const HomepageScreen: React.FC = () => {
         {userContext?.userName && (
           <Text style={styles.h2}>{userContext.userName}!</Text>
         )}
-        {userContext?.community_name && (
-          <Text style={styles.h2}>{userContext.community_name}</Text>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>{userContext.communityName}</Text>
         )}
         {userContext?.email && (
           <Text style={styles.h2}>{userContext.email}</Text>

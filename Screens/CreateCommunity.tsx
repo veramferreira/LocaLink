@@ -101,7 +101,7 @@ export default function CreateCommunity() {
       setSubmitted(true);
       showAlert();
       AddComToUser(auth.currentUser?.email, values.name);
-      setUserContext({ ...userContext, community_name: values.name });
+      setUserContext({ ...userContext, communityName: values.name });
       navigation.navigate("HomepageScreen");
     } catch (error) {
       console.error("Error adding document: ", error);

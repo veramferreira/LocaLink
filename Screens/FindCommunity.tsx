@@ -58,7 +58,7 @@ export default function FindCommunity({ navigation }: any) {
 
   const handleYesClick = () => {
     AddComToUser(auth.currentUser?.email, communityClicked.name);
-    setUserContext({ ...userContext, community_name: communityClicked.name });
+    setUserContext({ ...userContext, communityName: communityClicked.name });
     navigation.navigate("HomepageScreen");
   };
 

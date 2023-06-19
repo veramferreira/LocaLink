@@ -105,17 +105,13 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
                 userName = user.userName;
                 userExist = true;
               }
-              if (user.community_name) {
-                comName = user.community_name;
+              if (user.communityName) {
+                comName = user.communityName;
                 comExist = true;
               }
             }
           }
-          if (emailExist && !userExist && !comExist) {
-            setUserContext({
-              email: email,
-            });
-          } else if (emailExist && userExist && !comExist) {
+          if (emailExist && userExist && !comExist) {
             setUserContext({
               email: email,
               userName: userName,
@@ -124,12 +120,13 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
             setUserContext({
               email: email,
               userName: userName,
-              community_name: comName,
+              communityName: comName,
             });
-          } else if (!emailExist) {
-            setUserContext(undefined);
+          } else {
+            setUserContext({
+              email: email,
+            });
           }
-
           console.log("Sign-in successful");
           onSignIn();
           if (!emailExist || !userExist) {

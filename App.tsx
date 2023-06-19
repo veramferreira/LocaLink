@@ -34,7 +34,7 @@ export default function App() {
       <MyContext.Provider value={{ userContext, setUserContext }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="SignIn"
+            initialRouteName="HomepageScreen"
             screenOptions={{
               headerTitle: () => <Header />,
               headerStyle: {

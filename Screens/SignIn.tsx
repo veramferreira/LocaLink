@@ -9,7 +9,7 @@ import { MyContext } from "../Context"; // Import MyContext from the context fil
 const styles = StyleSheet.create({
   nav: {
     backgroundColor: "#333",
-    height: 80,
+    // height: 80,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

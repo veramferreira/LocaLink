@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { auth } from "../config/firebase";
-
+import { MyContext } from "../Context";
 interface LogOutCompProps {
   onLogout: () => Promise<void>;
 }
@@ -19,14 +19,11 @@ const styles = StyleSheet.create({
 });
 
 const LogOutComp: React.FC<LogOutCompProps> = ({ onLogout }) => {
-  const [reRender, setReRender] = useState(false);
-  useEffect(() => {
-    setReRender(true);
-  }, [reRender]);
+  const { setUserContext } = useContext(MyContext);
   const handleLogout = async () => {
     try {
       await auth.signOut();
-
+      setUserContext(undefined);
       onLogout();
     } catch (error) {
       console.log("Error logging out:", error);
