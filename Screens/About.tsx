@@ -33,7 +33,7 @@ export default function About({ navigation }: any) {
     const usersQuery = onSnapshot(q, (QuerySnapshot) => {
       let usersArr: any[] = [];
       QuerySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[3].community_name);
+      setCommunity(usersArr[1].community_name);
       return () => usersQuery();
     });
   }, []);
@@ -43,7 +43,7 @@ export default function About({ navigation }: any) {
     const communityQuery = onSnapshot(q, (QuerySnapshot) => {
       let communityArr: any[] = [];
       QuerySnapshot.forEach((doc) => communityArr.push(doc.data()));
-      setCommunityInfo(communityArr[9]);
+      setCommunityInfo(communityArr[8]);
       return () => communityQuery();
     });
   }, []);
