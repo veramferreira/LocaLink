@@ -77,77 +77,77 @@ export default function ReportIssue({ navigation }: any) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.heading}>Report an Issue</Text>
-        <Formik
-          initialValues={{ title: "", description: "", email: "", img: "" }}
-          validationSchema={formSchema}
-          onSubmit={handleSubmit}
-        >
-          {(props: FormikProps<FormValues>) => (
-            <View style={styles.form}>
-              <Text style={styles.text}>Title: </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="issue title..."
-                onChangeText={(text) => props.handleChange("title")(text)}
-                value={props.values.title}
-                onBlur={props.handleBlur("title")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.title && props.errors.title}
-              </Text>
-              <Text style={styles.text}>Issue Description: </Text>
-              <TextInput
-                multiline
-                minHeight={70}
-                style={styles.input}
-                placeholder="describe the issue... "
-                onChangeText={(text) => props.handleChange("description")(text)}
-                value={props.values.description}
-                onBlur={props.handleBlur("description")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.description && props.errors.description}
-              </Text>
-              <Text style={styles.text}>Your email: </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="example@example.com "
-                onChangeText={(text) => props.handleChange("email")(text)}
-                value={props.values.email}
-                onBlur={props.handleBlur("email")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.email && props.errors.email}
-              </Text>
-              <Text style={styles.text}>
-                Image URL <Text style={styles.optionalText}>(optional)</Text>:
-              </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Image URL..."
-                onChangeText={(text) => props.handleChange("img")(text)}
-                value={props.values.img}
-                onBlur={props.handleBlur("img")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.img && props.errors.img}
-              </Text>
-              <TouchableOpacity
-                title="submit!"
-                onPress={props.handleSubmit}
-                style={[
-                  styles.button,
-                  isButtonPressed ? buttonPressedStyle : null,
-                ]}
-                onPressIn={() => setButtonPressed(true)}
-                onPressOut={() => setButtonPressed(false)}
-                activeOpacity={1}
-              >
-                <Text style={styles.buttonText}>Submit!</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </Formik>
+          <Formik
+            initialValues={{ title: "", description: "", email: "",  img: "" }}
+            validationSchema={formSchema}
+            onSubmit={handleSubmit}
+          >
+            {(props: FormikProps<FormValues>) => (
+              <View style={styles.form}>
+                <Text style={styles.text}>Title: </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="issue title..."
+                  onChangeText={(text) => props.handleChange("title")(text)}
+                  value={props.values.title}
+                  onBlur={props.handleBlur("title")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.title && props.errors.title}
+                </Text>
+                <Text style={styles.text}>Issue Description: </Text>
+                <TextInput
+                  multiline
+                  minHeight={70}
+                  style={styles.input}
+                  placeholder="describe the issue... "
+                  onChangeText={(text) =>
+                    props.handleChange("description")(text)
+                  }
+                  value={props.values.description}
+                  onBlur={props.handleBlur("description")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.description && props.errors.description}
+                </Text>
+                <Text style={styles.text}>Your email: </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="example@example.com "
+                  onChangeText={(text) => props.handleChange("email")(text)}
+                  value={props.values.email}
+                  onBlur={props.handleBlur("email")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.email && props.errors.email}
+                </Text>
+                <Text style={styles.text}>Image URL <Text style={styles.optionalText}>(optional)</Text>:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Image URL..."
+                  onChangeText={(text) => props.handleChange("img")(text)}
+                  value={props.values.img}
+                  onBlur={props.handleBlur("img")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.img && props.errors.img}
+                </Text>
+                <TouchableOpacity
+                  title="submit!"
+                  onPress={props.handleSubmit}
+                  style={[
+                    styles.button,
+                    isButtonPressed ? buttonPressedStyle : null,
+                  ]}
+                  onPressIn={() => setButtonPressed(true)}
+                  onPressOut={() => setButtonPressed(false)}
+                  activeOpacity={1}
+                >
+                  <Text style={styles.buttonText}>Submit!</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -155,11 +155,11 @@ export default function ReportIssue({ navigation }: any) {
 
 const styles = StyleSheet.create({
   heading: {
+    fontFamily: "Poppins_700Bold",
     textAlign: "center",
     fontWeight: "bold",
     margin: 20,
     fontSize: 20,
-    fontFamily: "Poppins_700Bold",
   },
   form: {
     margin: 10,
@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     fontFamily: "Poppins_500Medium",
+  
   },
   optionalText: {
     color: "gray",
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: "white",
-    fontFamily: "Poppins_400Regular",
+    fontFamily: 'Poppins_400Regular',
   },
   button: {
     alignItems: "center",
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "Poppins_500Medium",
   },
   errorText: {
     color: "crimson",
@@ -212,7 +213,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     fontSize: 11,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "Poppins_500Medium",
+
   },
   textSubmitted: {
     textAlign: "center",
