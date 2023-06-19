@@ -54,38 +54,33 @@ export default function App() {
     return null;
   }
 
-  const isLoggedIn = userContext?.userName || false;
-
   return (
     <QueryClientProvider client={queryClient}>
       <MyContext.Provider value={{ userContext, setUserContext }}>
         <NavigationContainer>
-          {!isLoggedIn ? (
-            <SignInPage />
-          ) : (
-            <Drawer.Navigator
-              initialRouteName="HomepageScreen"
-              screenOptions={{
-                headerTitle: () => <Header />,
-                headerRight: () => <HeaderRight />,
-                headerStyle: {
-                  backgroundColor: colours.primary,
-                },
-                headerTintColor: "#fff",
-                headerTitleStyle: {
-                  fontWeight: "bold",
-                },
-                drawerLabelStyle: {
-                  fontFamily: "Poppins_400Regular",
-                },
-              }}
-            >
-              {/* <Drawer.Screen
+          <Drawer.Navigator
+            initialRouteName="HomepageScreen"
+            screenOptions={{
+              headerTitle: () => <Header />,
+              headerRight: () => <HeaderRight />,
+              headerStyle: {
+                backgroundColor: colours.primary,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              drawerLabelStyle: {
+                fontFamily: "Poppins_400Regular",
+              },
+            }}
+          >
+            {/* <Drawer.Screen
           name="SignUp"
           component={SignUp}
           options={{ title: "Create your account" }}
         /> */}
-              {/* {!userContext?.userName ? (
+            {/* {!userContext?.userName ? (
               <Drawer.Screen
                 name="SignIn"
                 component={SignInPage}
@@ -93,86 +88,87 @@ export default function App() {
               />
             ) : ( */}
 
-              <>
-                <Drawer.Screen
-                  name="HomepageScreen"
-                  component={HomepageScreen}
-                  options={{ title: "Dashboard" }}
-                />
-                <Drawer.Screen
-                  name="ProfileSetup"
-                  component={ProfileSetup}
-                  options={{ title: "ProfileSetup" }}
-                />
-                <Drawer.Screen
-                  name="About"
-                  component={About}
-                  options={{ title: "About" }}
-                />
-                <Drawer.Screen
-                  name="Calendar"
-                  component={CalendarScreen}
-                  options={{ title: "Calendar" }}
-                />
-                <Drawer.Screen
-                  name="LostFound"
-                  component={LostFound}
-                  options={{ title: "Lost & Found" }}
-                />
-                <Drawer.Screen
-                  name="ManagementAnnouncements"
-                  component={ManagementAnnouncements}
-                  options={{ title: "Management Announcements" }}
-                />
-                <Drawer.Screen
-                  name="Marketplace"
-                  component={Marketplace}
-                  options={{ title: "Marketplace" }}
-                />
-                <Drawer.Screen
-                  name="Recommendations"
-                  component={Recommendations}
-                  options={{ title: "Recommendations" }}
-                />
-                <Drawer.Screen
-                  name="ReportIssue"
-                  component={ReportIssue}
-                  options={{ title: "Report an Issue" }}
-                />
-                <Drawer.Screen
-                  name="FindCommunity"
-                  component={FindCommunity}
-                  options={{ title: "Find Community" }}
-                />
-                <Drawer.Screen
-                  name="Chat"
-                  component={Chat}
-                  options={{ title: "Chat" }}
-                />
-                <Drawer.Screen
-                  name="CreateCommunity"
-                  component={CreateCommunity}
-                  options={{ title: "Create a Community" }}
-                />
-                <Drawer.Screen
-                  name="FindCreate"
-                  component={FindCreate}
-                  options={{ title: "FindCreate" }}
-                />
-                <Drawer.Screen
-                  name="PostAnnouncement"
-                  component={PostAnnouncement}
-                  options={{ title: "Post an Announcement" }}
-                />
-                <Drawer.Screen
-                  name="AddEvent"
-                  component={AddEvent}
-                  options={{ title: "AddEvent" }}
-                />
-              </>
-              {/* )} */}
-            </Drawer.Navigator>
-          )}
+            <Drawer.Screen
+              name="HomepageScreen"
+              component={HomepageScreen}
+              options={{ title: "Dashboard" }}
+            />
+            <Drawer.Screen
+              name="ProfileSetup"
+              component={ProfileSetup}
+              options={{ title: "ProfileSetup" }}
+            />
+            <Drawer.Screen
+              name="SignIn"
+              component={SignInPage}
+              options={{ title: "Welcome" }}
+            />
+            <Drawer.Screen
+              name="About"
+              component={About}
+              options={{ title: "About" }}
+            />
+            <Drawer.Screen
+              name="Calendar"
+              component={CalendarScreen}
+              options={{ title: "Calendar" }}
+            />
+            <Drawer.Screen
+              name="LostFound"
+              component={LostFound}
+              options={{ title: "Lost & Found" }}
+            />
+            <Drawer.Screen
+              name="ManagementAnnouncements"
+              component={ManagementAnnouncements}
+              options={{ title: "Management Announcements" }}
+            />
+            <Drawer.Screen
+              name="Marketplace"
+              component={Marketplace}
+              options={{ title: "Marketplace" }}
+            />
+            <Drawer.Screen
+              name="Recommendations"
+              component={Recommendations}
+              options={{ title: "Recommendations" }}
+            />
+            <Drawer.Screen
+              name="ReportIssue"
+              component={ReportIssue}
+              options={{ title: "Report an Issue" }}
+            />
+            <Drawer.Screen
+              name="FindCommunity"
+              component={FindCommunity}
+              options={{ title: "Find Community" }}
+            />
+            <Drawer.Screen
+              name="Chat"
+              component={Chat}
+              options={{ title: "Chat" }}
+            />
+            <Drawer.Screen
+              name="CreateCommunity"
+              component={CreateCommunity}
+              options={{ title: "Create a Community" }}
+            />
+            <Drawer.Screen
+              name="FindCreate"
+              component={FindCreate}
+              options={{ title: "FindCreate" }}
+            />
+            <Drawer.Screen
+              name="PostAnnouncement"
+              component={PostAnnouncement}
+              options={{ title: "Post an Announcement" }}
+            />
+            <Drawer.Screen
+              name="AddEvent"
+              component={AddEvent}
+              options={{ title: "AddEvent" }}
+            />
+          </Drawer.Navigator>
         </NavigationContainer>
       </MyContext.Provider>
     </QueryClientProvider>
