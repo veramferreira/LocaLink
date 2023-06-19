@@ -8,6 +8,7 @@ import {
   query,
 } from "@firebase/firestore";
 
+
 interface CommunityInfo {
   description: string;
   contact1Name: string;

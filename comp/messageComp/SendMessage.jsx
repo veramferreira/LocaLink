@@ -16,9 +16,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    backgroundColor: "#1B73E7",
     padding: 10,
-    borderRadius: 5,
+    fontSize: 14,
+    borderRadius: 6,
+    margin: 15,
+    borderColor: "#1B73E7",
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   input: {
     width: "80%",
@@ -28,7 +36,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 10,
+    backgroundColor: "white",
+  
   },
+  btnText: {
+    color: "white",
+    fontFamily: "Poppins_500Medium",
+  }
 });
 
 const SendMessage = ({ scroll, chatDB }) => {
@@ -58,7 +72,7 @@ const SendMessage = ({ scroll, chatDB }) => {
         placeholder="Message"
       />
       <TouchableOpacity style={styles.button} onPress={sendMessage}>
-        <Text>Send</Text>
+        <Text style={styles.btnText}>Send!</Text>
       </TouchableOpacity>
     </View>
   );

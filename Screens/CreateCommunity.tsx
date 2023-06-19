@@ -13,9 +13,10 @@ import { Formik, FormikProps } from "formik";
 import * as yup from "yup";
 import { addDoc, collection } from "@firebase/firestore";
 import { auth, db } from "../config/firebase";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AddComToUser from "../Utils/AddComToUser";
+import { MyContext } from "../Context";
 
 // setting types for TS
 interface FormValues {
@@ -66,6 +67,7 @@ const buttonPressedStyle = {
 export default function CreateCommunity() {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
+  const { userContext, setUserContext } = useContext(MyContext);
 
   const navigation = useNavigation();
 
@@ -99,6 +101,7 @@ export default function CreateCommunity() {
       setSubmitted(true);
       showAlert();
       AddComToUser(auth.currentUser?.email, values.name);
+      setUserContext({ ...userContext, communityName: values.name });
       navigation.navigate("HomepageScreen");
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -415,6 +418,7 @@ export default function CreateCommunity() {
 
 const styles = StyleSheet.create({
   heading: {
+    fontFamily: "Poppins_700Bold",
     textAlign: "center",
     fontWeight: "bold",
     margin: 20,
@@ -425,6 +429,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 10,
+    fontFamily: "Poppins_500Medium",
   },
   input: {
     alignItems: "center",
@@ -435,7 +440,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     borderRadius: 6,
     margin: 10,
+    marginLeft: 15,
+    marginRight: 15,
     backgroundColor: "white",
+    fontFamily: 'Poppins_400Regular',
   },
   button: {
     alignItems: "center",
@@ -447,15 +455,22 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 10,
     borderColor: "#1B73E7",
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   optionalText: {
     color: "gray",
     marginLeft: 10,
     marginBottom: 10,
     marginTop: 0,
+    fontFamily: 'Poppins_400Regular',
   },
   buttonText: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
+
   },
   errorText: {
     color: "crimson",
@@ -463,5 +478,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     fontSize: 11,
+    fontFamily: "Poppins_500Medium",
   },
 });

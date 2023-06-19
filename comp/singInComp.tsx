@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,7 +14,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-
+import { MyContext } from "../Context";
 interface SignInCompProps {
   userList: {}[];
   onSignIn: () => void;
@@ -26,13 +26,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: "30%",
+    backgroundColor: "#F57C01",
   },
   logo: {
     width: 300,
     height: 300,
   },
   input: {
-    width: "80%",
+    width: "100%",
     height: 40,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -51,10 +52,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    textAlign: 'center'
   },
   switchText: {
     color: "white",
     marginTop: 10,
+    textAlign: 'center'
   },
   errorText: {
     color: "red",
@@ -68,6 +71,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState("");
+  const { userContext, setUserContext } = useContext(MyContext);
 
   const handleAuthAction = () => {
     setError("");
@@ -80,6 +84,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
+          setUserContext({ email: email });
           navigation.navigate("ProfileSetup");
           console.log("User creation successful");
         })
@@ -90,18 +95,47 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
     } else {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-          let exist = false;
+          let comExist = false;
+          let emailExist = false;
+          let userExist = false;
+          let comName = "";
+          let userName = "";
           console.log(userList);
           for (const user of userList) {
             if (user.email === email) {
-              exist = true;
+              emailExist = true;
+              if (user.userName) {
+                userName = user.userName;
+                userExist = true;
+              }
+              if (user.communityName) {
+                comName = user.communityName;
+                comExist = true;
+              }
             }
           }
-
+          if (emailExist && userExist && !comExist) {
+            setUserContext({
+              email: email,
+              userName: userName,
+            });
+          } else if (comExist) {
+            setUserContext({
+              email: email,
+              userName: userName,
+              communityName: comName,
+            });
+          } else {
+            setUserContext({
+              email: email,
+            });
+          }
           console.log("Sign-in successful");
           onSignIn();
-          if (!exist) {
+          if (!emailExist || !userExist) {
             navigation.navigate("ProfileSetup");
+          } else if (!comExist) {
+            navigation.navigate("FindCreate");
           } else {
             navigation.navigate("HomepageScreen");
           }
@@ -119,9 +153,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   };
 
   return (
-    <View>
+    <View style={styles.wrapper}>
       <ScrollView>
-        <View style={styles.wrapper}>
+        <View >
           <Image style={styles.logo} source={require("../assets/logo.png")} />
           {error !== "" && <Text style={styles.errorText}>{error}</Text>}
           <TextInput
