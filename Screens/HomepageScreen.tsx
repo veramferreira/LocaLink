@@ -26,7 +26,7 @@ type NavigationItem = {
   screen: string;
 };
 
-const routes: NavigationItem[] = [
+const ownerRoutes: NavigationItem[] = [
   { id: 1, title: "ℹ️ About", screen: "About" },
   {
     id: 2,
@@ -39,7 +39,10 @@ const routes: NavigationItem[] = [
   { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
   { id: 8, title: "Chat", screen: "Chat" },
+  { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
+  { id: 10, title: "Assign Admins", screen: "AssignAdmins" },
 ];
+
 const adminRoutes: NavigationItem[] = [
   { id: 1, title: "ℹ️ About", screen: "About" },
   {
@@ -54,7 +57,21 @@ const adminRoutes: NavigationItem[] = [
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
   { id: 8, title: "Chat", screen: "Chat" },
   { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
-  { id: 10, tittle: "assign Admins", screen: "assignAdmins" },
+];
+
+const routes: NavigationItem[] = [
+  { id: 1, title: "ℹ️ About", screen: "About" },
+  {
+    id: 2,
+    title: "📣 Management Announcements",
+    screen: "ManagementAnnouncements",
+  },
+  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 4, title: "📆 Calendar", screen: "Calendar" },
+  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
+  { id: 8, title: "Chat", screen: "Chat" },
 ];
 
 export const HomepageScreen: React.FC = () => {
@@ -105,6 +122,23 @@ export const HomepageScreen: React.FC = () => {
   };
 
   return userContext?.role === "owner" ? (
+    <ScrollView>
+      <View style={styles.container}>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
+        )}
+        <View style={styles.containerList}>
+          {ownerRoutes.map((item) => (
+            <React.Fragment key={item.id}>
+              {renderItem({ item })}
+            </React.Fragment>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  ) : userContext?.role === "admin" ? (
     <ScrollView>
       <View style={styles.container}>
         {userContext?.communityName && (

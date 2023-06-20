@@ -1,10 +1,8 @@
 import "react-native-gesture-handler";
-import { StyleSheet, Text, View } from "react-native";
 import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-// import SignUp from "./Screens/SignUp";
 import { HomepageScreen } from "./Screens/HomepageScreen";
 import About from "./Screens/About";
 import CalendarScreen from "./Screens/Calendar";
@@ -16,7 +14,7 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
-import assignAdmins from "./Screens/assignAdminsPage";
+import assignAdmins from "./Screens/AssignAdminsPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
@@ -33,8 +31,7 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import colours from "./constants/colours";
-import { useEffect, useState } from "react";
-import { block } from "react-native-reanimated";
+import { useState } from "react";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -138,7 +135,11 @@ export default function App() {
               component={FindCreate}
               options={{ title: "FindCreate" }}
             />
-
+            <Drawer.Screen
+              name="SignIn"
+              component={SignInPage}
+              options={{ title: "SignOut" }}
+            />
             <Drawer.Screen
               name="PostAnnouncement"
               component={PostAnnouncement}
@@ -148,12 +149,6 @@ export default function App() {
                   display: "none",
                 },
               }}
-            />
-
-            <Drawer.Screen
-              name="SignIn"
-              component={SignInPage}
-              options={{ title: "SignOut" }}
             />
             <Drawer.Screen
               name="assignAdmins"
