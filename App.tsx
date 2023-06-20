@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -21,6 +21,7 @@ import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
+import HeaderRight from "./comp/HeaderRight";
 import Chat from "./Screens/Chat";
 import { FindCreate } from "./Screens/FindCreate";
 import colours from "./constants/colours";
@@ -52,6 +53,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <QueryClientProvider client={queryClient}>
       <MyContext.Provider value={{ userContext, setUserContext }}>
@@ -60,6 +62,7 @@ export default function App() {
             initialRouteName="HomepageScreen"
             screenOptions={{
               headerTitle: () => <Header />,
+              headerRight: () => <HeaderRight />,
               headerStyle: {
                 backgroundColor: colours.primary,
               },
@@ -77,6 +80,14 @@ export default function App() {
           component={SignUp}
           options={{ title: "Create your account" }}
         /> */}
+            {/* {!userContext?.userName ? (
+              <Drawer.Screen
+                name="SignIn"
+                component={SignInPage}
+                options={{ title: "Welcome" }}
+              />
+            ) : ( */}
+
             <Drawer.Screen
               name="HomepageScreen"
               component={HomepageScreen}
