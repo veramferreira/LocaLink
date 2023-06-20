@@ -101,6 +101,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
           let comName = "";
           let userName = "";
           let userRole = "";
+          let postCount = 0;
           console.log(userList);
           for (const user of userList) {
             if (user.email.toLowerCase() === email.toLowerCase()) {
@@ -113,6 +114,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
                 comName = user.communityName;
                 userRole = user.role;
                 comExist = true;
+              }
+              if (user.postCount) {
+                postCount = user.postCount;
               }
             }
           }
@@ -128,6 +132,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               userName: userName,
               communityName: comName,
               role: userRole,
+              postCount: postCount,
             });
           } else {
             setUserContext({

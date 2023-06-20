@@ -19,6 +19,8 @@ import {
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
 import { MyContext } from "../Context";
+import updatePostCount from "../Utils/updatePostCount";
+import HandleNotifications from "../comp/handleNotifications";
 
 type NavigationItem = {
   id: number;
@@ -87,8 +89,41 @@ const routes: NavigationItem[] = [
 
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
+  const [community, setCommunity] = useState("");
+  const [hasNewPosts, setHasNewPosts] = useState(false);
+  const [previousPostCount, setPreviousPostCount] = useState(0);
+  const { userContext, setUserContext } = useContext(MyContext);
 
-  const { userContext } = useContext(MyContext);
+  useEffect(() => {
+    const checkForNewPosts = async () => {
+      const managementAnnouncementsQuerySnapshot = await getDocs(
+        collection(db, "postAdminAnnouncement")
+      );
+
+      const currentPostCount = managementAnnouncementsQuerySnapshot.docs.length;
+      let hasNewPosts;
+      if (!userContext.postCount) {
+        hasNewPosts = true;
+      } else {
+        hasNewPosts = currentPostCount > userContext.postCount;
+      }
+      setHasNewPosts(hasNewPosts);
+      updatePostCount(userContext.email.toLowerCase(), currentPostCount);
+      setUserContext({ ...userContext, postCount: currentPostCount });
+      // setPreviousPostCount(currentPostCount);
+    };
+
+    checkForNewPosts();
+
+    const unsubscribe = onSnapshot(
+      collection(db, "postAdminAnnouncement"),
+      () => {
+        checkForNewPosts();
+      }
+    );
+
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     const q = query(collection(db, "Users"));
@@ -100,8 +135,12 @@ export const HomepageScreen: React.FC = () => {
     });
   }, []);
 
+  useEffect(() => {}, [community]);
+
   const handleLinkPress = (item: NavigationItem) => {
-    // console.log(item.screen);
+    if (item.screen === "ManagementAnnouncements") {
+      setHasNewPosts(false);
+    }
     if (item.screen === "HomepageScreen") {
       navigation.dispatch(
         CommonActions.reset({
@@ -128,6 +167,11 @@ export const HomepageScreen: React.FC = () => {
         style={itemContainerStyle}
       >
         <Text style={styles.itemTitle}>{item.title}</Text>
+        {item.screen === "ManagementAnnouncements" && hasNewPosts && (
+          <View>
+            <Text style={styles.notificationText}>New posts!</Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   };
@@ -235,5 +279,22 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Poppins_500Medium",
     textAlign: "center",
+  },
+  notificationText: {
+    color: "white",
+    fontSize: 12,
+    fontFamily: "Poppins_500Medium",
+    textTransform: "lowercase",
+    backgroundColor: "red",
+    borderWidth: 1,
+    borderColor: "red",
+    borderRadius: 20,
+    paddingRight: 15,
+    paddingLeft: 15,
+    marginTop: 5,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
 });
