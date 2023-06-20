@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: "30%",
+    backgroundColor: "#F57C01",
   },
   logo: {
     width: 300,
@@ -51,10 +52,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    textAlign: "center",
   },
   switchText: {
     color: "white",
     marginTop: 10,
+    textAlign: "center",
   },
   errorText: {
     color: "red",
@@ -97,6 +100,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
           let userExist = false;
           let comName = "";
           let userName = "";
+          let userRole = "";
           console.log(userList);
           for (const user of userList) {
             if (user.email === email) {
@@ -107,6 +111,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               }
               if (user.communityName) {
                 comName = user.communityName;
+                userRole = user.role;
                 comExist = true;
               }
             }
@@ -121,6 +126,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               email: email,
               userName: userName,
               communityName: comName,
+              role: userRole,
             });
           } else {
             setUserContext({

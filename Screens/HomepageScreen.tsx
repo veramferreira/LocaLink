@@ -38,17 +38,23 @@ const routes: NavigationItem[] = [
   { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
   { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
-  { id: 8, title: "Sign In", screen: "SignIn" },
-  { id: 9, title: "Find Community", screen: "FindCommunity" },
-  { id: 10, title: "Create Community", screen: "CreateCommunity" },
-  { id: 11, title: "Chat", screen: "Chat" },
-  { id: 12, title: "Profile Setup", screen: "ProfileSetup" },
-  { id: 13, title: "Find Create", screen: "FindCreate" },
+  { id: 8, title: "Chat", screen: "Chat" },
+];
+const adminRoutes: NavigationItem[] = [
+  { id: 1, title: "ℹ️ About", screen: "About" },
   {
-    id: 14,
-    title: "Post Announcement (admins only)",
-    screen: "PostAnnouncement",
+    id: 2,
+    title: "📣 Management Announcements",
+    screen: "ManagementAnnouncements",
   },
+  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 4, title: "📆 Calendar", screen: "Calendar" },
+  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
+  { id: 8, title: "Chat", screen: "Chat" },
+  { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
+  { id: 10, tittle: "assign Admins", screen: "assignAdmins" },
 ];
 
 export const HomepageScreen: React.FC = () => {
@@ -98,7 +104,24 @@ export const HomepageScreen: React.FC = () => {
     );
   };
 
-  return (
+  return userContext?.role === "owner" ? (
+    <ScrollView>
+      <View style={styles.container}>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
+        )}
+        <View style={styles.containerList}>
+          {adminRoutes.map((item) => (
+            <React.Fragment key={item.id}>
+              {renderItem({ item })}
+            </React.Fragment>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  ) : (
     <ScrollView>
       <View style={styles.container}>
         {userContext?.communityName && (
@@ -119,9 +142,7 @@ export const HomepageScreen: React.FC = () => {
         {userContext?.communityName && (
           <Text style={styles.h2}>{userContext.communityName}</Text>
         )}
-        {userContext?.email && (
-          <Text style={styles.h2}>{userContext.email}</Text>
-        )}
+        {userContext?.role && <Text style={styles.h2}>{userContext.role}</Text>}
       </View>
     </ScrollView>
   );

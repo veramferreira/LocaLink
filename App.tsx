@@ -16,7 +16,7 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
-
+import assignAdmins from "./Screens/assignAdminsPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
@@ -33,7 +33,8 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import colours from "./constants/colours";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { block } from "react-native-reanimated";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -41,7 +42,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [userContext, setUserContext] = useState({});
-
+  // const [adminRole, setAdminRole] = useState("none");
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -51,6 +52,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <QueryClientProvider client={queryClient}>
       <MyContext.Provider value={{ userContext, setUserContext }}>
@@ -71,30 +73,20 @@ export default function App() {
               },
             }}
           >
-            {/* <Drawer.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{ title: "Create your account" }}
-        /> */}
             <Drawer.Screen
               name="HomepageScreen"
               component={HomepageScreen}
-              options={{ title: "Dashboard" }}
+              options={{ title: "Community Homepage" }}
             />
             <Drawer.Screen
               name="ProfileSetup"
               component={ProfileSetup}
-              options={{ title: "ProfileSetup" }}
-            />
-            <Drawer.Screen
-              name="SignIn"
-              component={SignInPage}
-              options={{ title: "Welcome" }}
+              options={{ title: "Profile" }}
             />
             <Drawer.Screen
               name="About"
               component={About}
-              options={{ title: "About" }}
+              options={{ title: "About Community" }}
             />
             <Drawer.Screen
               name="Calendar"
@@ -146,10 +138,32 @@ export default function App() {
               component={FindCreate}
               options={{ title: "FindCreate" }}
             />
+
             <Drawer.Screen
               name="PostAnnouncement"
               component={PostAnnouncement}
-              options={{ title: "Post an Announcement" }}
+              options={{
+                title: "Post an Announcement",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
+            />
+
+            <Drawer.Screen
+              name="SignIn"
+              component={SignInPage}
+              options={{ title: "SignOut" }}
+            />
+            <Drawer.Screen
+              name="assignAdmins"
+              component={assignAdmins}
+              options={{
+                title: "assignAdmins",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
           </Drawer.Navigator>
         </NavigationContainer>

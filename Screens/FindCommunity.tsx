@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import colours from "../constants/colours";
 import { MyContext } from "../Context";
+import AddRoleToUser from "../Utils/AddRoleToUser";
 
 // NEED TO TRY FIX TYPSCRIPT ISSUE WITH PREDEFINED TYPE FOR COMMUNITY IN MAP
 // type ExampleObject = {
@@ -59,7 +60,13 @@ export default function FindCommunity({ navigation }: any) {
 
   const handleYesClick = () => {
     AddComToUser(auth.currentUser?.email, communityClicked.name);
-    setUserContext({ ...userContext, communityName: communityClicked.name });
+    AddRoleToUser(auth.currentUser?.email, "resident");
+    setUserContext({
+      ...userContext,
+      communityName: communityClicked.name,
+      role: "resident",
+    });
+
     navigation.navigate("HomepageScreen");
   };
 
@@ -183,7 +190,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 6,
     fontSize: 14,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
   },
   searchButton: {
     alignItems: "center",
@@ -200,10 +207,10 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Poppins_500Medium",
     paddingRight: 20,
-    paddingLeft:20,
+    paddingLeft: 20,
   },
   communityName: {
     color: "white",
     fontFamily: "Poppins_500Medium",
-  }
+  },
 });
