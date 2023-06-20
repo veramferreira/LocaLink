@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   postImg: {
-    width: 300,
+    width: 370,
     height: 200,
     borderRadius: 8,
     borderWidth: 2,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     marginBottom: 10,
     fontFamily: "Poppins_400Regular",
-    textAlign: "center",
+    textAlign: "justify",
     marginTop: 10,
   },
 });

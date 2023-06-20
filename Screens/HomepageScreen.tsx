@@ -81,16 +81,14 @@ export const HomepageScreen: React.FC = () => {
   
   useEffect(() => {
     const q = query(collection(db, "Users"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const usersQuery = onSnapshot(q, (querySnapshot) => {
       let usersArr: any[] = [];
       querySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      if (usersArr.length > 0) {
-        setCommunity(usersArr[0].communityName);
-      }
+      setCommunity(usersArr[0].communityName);
+      return () => usersQuery();
     });
-  
-    return unsubscribe; 
   }, []);
+  
   useEffect(() => {
   }, [community]);
 
