@@ -19,6 +19,7 @@ import {
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
 import { MyContext } from "../Context";
+import HandleNotifications from "../comp/handleNotifications";
 
 type NavigationItem = {
   id: number;
@@ -54,43 +55,49 @@ export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const [community, setCommunity] = useState("");
   const [hasNewPosts, setHasNewPosts] = useState(false);
+  const [previousPostCount, setPreviousPostCount] = useState(0);
   const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     const checkForNewPosts = async () => {
       const managementAnnouncementsQuerySnapshot = await getDocs(
-        collection(db, "ManagementAnnouncements")
+        collection(db, "postAdminAnnouncement")
       );
 
-      const hasNewPosts = !managementAnnouncementsQuerySnapshot.empty;
+      const currentPostCount = managementAnnouncementsQuerySnapshot.docs.length;
+      const hasNewPosts = currentPostCount > previousPostCount;
       setHasNewPosts(hasNewPosts);
+      setPreviousPostCount(currentPostCount); 
     };
 
     checkForNewPosts();
 
-    // Subscribe to real-time updates for the "ManagementAnnouncements" collection
-    const unsubscribe = onSnapshot(collection(db, "ManagementAnnouncements"), () => {
+    const unsubscribe = onSnapshot(collection(db, "postAdminAnnouncement"), () => {
       checkForNewPosts();
     });
 
-    return unsubscribe; // Cleanup the subscription on unmount
+    return unsubscribe;
   }, []);
-
+  
   useEffect(() => {
     const q = query(collection(db, "Users"));
-    const usersQuery = onSnapshot(q, (querySnapshot) => {
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let usersArr: any[] = [];
       querySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[0].communityName);
-      return () => usersQuery();
+      if (usersArr.length > 0) {
+        setCommunity(usersArr[0].communityName);
+      }
     });
+  
+    return unsubscribe; 
   }, []);
   useEffect(() => {
-    // console.log(community);
   }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
-    // console.log(item.screen);
+    if (item.screen === "ManagementAnnouncements") {
+      setHasNewPosts(false);
+    }
     if (item.screen === "HomepageScreen") {
       navigation.dispatch(
         CommonActions.reset({
@@ -113,13 +120,15 @@ export const HomepageScreen: React.FC = () => {
 
     return (
       <TouchableOpacity
-      onPress={() => handleLinkPress(item)}
-      style={itemContainerStyle}
-    >
-      <Text style={styles.itemTitle}>{item.title}</Text>
-      {item.screen === 'ManagementAnnouncements' && hasNewPosts && (
-        <View style={styles.badgeDot} />
-      )}
+        onPress={() => handleLinkPress(item)}
+        style={itemContainerStyle}
+      >
+        <Text style={styles.itemTitle}>{item.title}</Text>
+        {item.screen === "ManagementAnnouncements" && hasNewPosts && (
+          <View >
+            <Text style={styles.notificationText}>New posts!</Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   };
@@ -194,13 +203,21 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     textAlign: "center",
   },
-  badgeDot: {
-    position: 'absolute',
-    top: 6,
-    right: 6,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'red',
+  notificationText: {
+    color: "white",
+    fontSize: 12,
+    fontFamily: "Poppins_500Medium",
+    textTransform: "lowercase",
+    backgroundColor: "red",
+    borderWidth:1,
+    borderColor: "red",
+    borderRadius: 20,
+    paddingRight: 15,
+    paddingLeft: 15,
+    marginTop: 5,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
 });
