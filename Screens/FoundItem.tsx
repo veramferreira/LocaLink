@@ -106,7 +106,6 @@ const FoundItem: React.FC = () => {
 
             // props.setFieldValue("photoUrl", downloadUrl);
             setDownloadUrl(downloadUrl);
-            setDownloadUrl("");
             setUploading(false);
             Alert.alert("Photo uploaded");
           });
@@ -141,6 +140,7 @@ const FoundItem: React.FC = () => {
       resetForm();
       setImage(null);
       setSubmitted(true);
+      setDownloadUrl("");
       showAlert();
     } catch (error) {
       console.error("Error adding document: ", error);
