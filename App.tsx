@@ -14,7 +14,6 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
-import assignAdmins from "./Screens/AssignAdminsPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
@@ -32,6 +31,7 @@ import {
 
 import colours from "./constants/colours";
 import { useState } from "react";
+import AssignAdmins from "./Screens/AssignAdminsPage";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -151,8 +151,8 @@ export default function App() {
               }}
             />
             <Drawer.Screen
-              name="assignAdmins"
-              component={assignAdmins}
+              name="AssignAdmins"
+              component={AssignAdmins}
               options={{
                 title: "assignAdmins",
                 drawerItemStyle: {

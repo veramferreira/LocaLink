@@ -11,7 +11,10 @@ import {
 import React, { useContext, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { auth, db } from "../config/firebase";
-import { addDoc, collection, doc, setDoc } from "@firebase/firestore";
+import {
+  doc,
+  updateDoc,
+} from "@firebase/firestore";
 import * as yup from "yup";
 import { MyContext } from "../Context";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
@@ -46,7 +49,7 @@ export default function ProfileSetup({ navigation }: any) {
       };
       const tempEmail = auth.currentUser?.email;
       const createUserRef = doc(db, "Users", `${tempEmail}`);
-      await setDoc(createUserRef, docData);
+      await updateDoc(createUserRef, docData);
       console.log("User added!");
       resetForm();
       setSubmitted(true);
