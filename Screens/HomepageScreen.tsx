@@ -29,69 +29,56 @@ type NavigationItem = {
 };
 
 const ownerRoutes: NavigationItem[] = [
-  { id: 1, title: "ℹ️ About", screen: "About" },
   {
-    id: 2,
+    id: 1,
     title: "📣 Management Announcements",
     screen: "ManagementAnnouncements",
   },
-  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 2, title: "ℹ️ About", screen: "About" },
+  { id: 3, title: "💬 General Chat", screen: "Chat" },
   { id: 4, title: "📆 Calendar", screen: "Calendar" },
-  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
-  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
-  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
-  { id: 8, title: "GeneralChat", screen: "GeneralChat" },
-  { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
-  { id: 10, title: "Assign Admins", screen: "AssignAdmins" },
+  { id: 5, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 6, title: "📝 Recommendations", screen: "Recommendations" },
+  { id: 7, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 8, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 9, title: "📣 Post Announcement", screen: "PostAnnouncement" },
+  { id: 10, title: "🎖️ Assign Admins", screen: "AssignAdmins" },
 ];
 
 const adminRoutes: NavigationItem[] = [
-  { id: 1, title: "ℹ️ About", screen: "About" },
   {
-    id: 2,
+    id: 1,
     title: "📣 Management Announcements",
     screen: "ManagementAnnouncements",
   },
-  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 2, title: "ℹ️ About", screen: "About" },
+  { id: 3, title: "💬 General Chat", screen: "Chat" },
   { id: 4, title: "📆 Calendar", screen: "Calendar" },
-  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
-  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
-  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
-
-  { id: 8, title: "GeneralChat", screen: "GeneralChat" },
-  { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
+  { id: 5, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 6, title: "📝 Recommendations", screen: "Recommendations" },
+  { id: 7, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 8, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 9, title: "📣 Post Announcement", screen: "PostAnnouncement" },
 ];
 
 const routes: NavigationItem[] = [
-  { id: 1, title: "ℹ️ About", screen: "About" },
   {
-    id: 2,
+    id: 1,
     title: "📣 Management Announcements",
     screen: "ManagementAnnouncements",
   },
-  { id: 8, title: "Find Community", screen: "FindCommunity" },
-  { id: 9, title: "Create Community", screen: "CreateCommunity" },
-  { id: 10, title: "Chat", screen: "Chat" },
-  { id: 11, title: "Profile Setup", screen: "ProfileSetup" },
-  { id: 12, title: "Find Create", screen: "FindCreate" },
-  {
-    id: 13,
-    title: "Post Announcement (admins only)",
-    screen: "PostAnnouncement",
-  },
-  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 2, title: "ℹ️ About", screen: "About" },
+  { id: 3, title: "💬 General Chat", screen: "Chat" },
   { id: 4, title: "📆 Calendar", screen: "Calendar" },
-  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
-  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
-  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
-  { id: 8, title: "Chat", screen: "Chat" },
+  { id: 5, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 6, title: "📝 Recommendations", screen: "Recommendations" },
+  { id: 7, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 8, title: "🔧 Report Issue", screen: "ReportIssue" },
 ];
 
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const [community, setCommunity] = useState("");
   const [hasNewPosts, setHasNewPosts] = useState(false);
-  const [previousPostCount, setPreviousPostCount] = useState(0);
   const { userContext, setUserContext } = useContext(MyContext);
 
   useEffect(() => {
@@ -134,8 +121,6 @@ export const HomepageScreen: React.FC = () => {
       return () => usersQuery();
     });
   }, []);
-
-  useEffect(() => {}, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
     if (item.screen === "ManagementAnnouncements") {
