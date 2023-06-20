@@ -38,14 +38,13 @@ const routes: NavigationItem[] = [
   { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
   { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
-  { id: 8, title: "Sign In", screen: "SignIn" },
-  { id: 9, title: "Find Community", screen: "FindCommunity" },
-  { id: 10, title: "Create Community", screen: "CreateCommunity" },
-  { id: 11, title: "Chat", screen: "Chat" },
-  { id: 12, title: "Profile Setup", screen: "ProfileSetup" },
-  { id: 13, title: "Find Create", screen: "FindCreate" },
+  { id: 8, title: "Find Community", screen: "FindCommunity" },
+  { id: 9, title: "Create Community", screen: "CreateCommunity" },
+  { id: 10, title: "Chat", screen: "Chat" },
+  { id: 11, title: "Profile Setup", screen: "ProfileSetup" },
+  { id: 12, title: "Find Create", screen: "FindCreate" },
   {
-    id: 14,
+    id: 13,
     title: "Post Announcement (admins only)",
     screen: "PostAnnouncement",
   },
@@ -87,11 +86,11 @@ export const HomepageScreen: React.FC = () => {
     });
   }, []);
   useEffect(() => {
-    console.log(community);
+    // console.log(community);
   }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
-    console.log(item.screen);
+    // console.log(item.screen);
     if (item.screen === "HomepageScreen") {
       navigation.dispatch(
         CommonActions.reset({
@@ -166,6 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 15,
   },
   containerList: {
     flexDirection: "row",
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },
