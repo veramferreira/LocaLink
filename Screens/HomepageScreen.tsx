@@ -65,11 +65,11 @@ export const HomepageScreen: React.FC = () => {
     });
   }, []);
   useEffect(() => {
-    console.log(community);
+    // console.log(community);
   }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
-    console.log(item.screen);
+    // console.log(item.screen);
     if (item.screen === "HomepageScreen") {
       navigation.dispatch(
         CommonActions.reset({

@@ -24,6 +24,8 @@ import Header from "./comp/Header";
 import HeaderRight from "./comp/HeaderRight";
 import Chat from "./Screens/Chat";
 import { FindCreate } from "./Screens/FindCreate";
+import colours from "./constants/colours";
+import { useFonts } from "expo-font";
 
 import { MyContext } from "./Context";
 
@@ -31,10 +33,8 @@ import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_700Bold,
-  useFonts,
 } from "@expo-google-fonts/poppins";
 
-import colours from "./constants/colours";
 import { useState } from "react";
 
 const Drawer = createDrawerNavigator();
