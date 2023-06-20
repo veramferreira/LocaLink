@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { Query, collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function ManagementAnnouncements({ navigation }: any) {
   useEffect(() => {
     const q = query(
       collection(db, "postAdminAnnouncement"),
-      orderBy("timestamp")
+      orderBy("timestamp", "desc")
     );
 
     const announcementQuery = onSnapshot(q, (querySnapshot) => {
