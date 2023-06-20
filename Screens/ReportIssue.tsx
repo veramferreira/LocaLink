@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
 import { addDoc, collection } from "@firebase/firestore";
 import * as yup from "yup";
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins"
+import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 // setting type for TS
 interface FormValues {
@@ -68,10 +68,10 @@ export default function ReportIssue({ navigation }: any) {
     Alert.alert(
       "Your form has been submitted!",
       "Someone from management will be in touch as soon as possible.",
-      [{ text: 'OK!', onPress: () => console.log('OK pressed')}],
+      [{ text: "OK!", onPress: () => console.log("OK pressed") }],
       { cancelable: false }
-    )
-  }
+    );
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -113,7 +113,7 @@ export default function ReportIssue({ navigation }: any) {
                 <Text style={styles.text}>Your email: </Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="example@example.com"
+                  placeholder="example@example.com "
                   onChangeText={(text) => props.handleChange("email")(text)}
                   value={props.values.email}
                   onBlur={props.handleBlur("email")}
@@ -154,7 +154,6 @@ export default function ReportIssue({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  
   heading: {
     fontFamily: "Poppins_700Bold",
     textAlign: "center",
@@ -164,18 +163,21 @@ const styles = StyleSheet.create({
   },
   form: {
     margin: 10,
+    fontFamily: "Poppins_500Medium",
   },
   text: {
     marginLeft: 10,
     marginBottom: 10,
     fontFamily: "Poppins_500Medium",
+  
   },
   optionalText: {
     color: "gray",
     marginLeft: 10,
     marginBottom: 10,
     marginTop: 0,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
+    fontSize: 12,
   },
   input: {
     alignItems: "center",
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#1B73E7",
     padding: 10,
-    fontSize: 14,
+    fontSize: 12,
     borderRadius: 6,
     marginLeft: 15,
     marginRight: 15,

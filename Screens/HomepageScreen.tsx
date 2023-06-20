@@ -55,6 +55,7 @@ const adminRoutes: NavigationItem[] = [
   { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
   { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
+
   { id: 8, title: "Chat", screen: "Chat" },
   { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
 ];
@@ -65,6 +66,17 @@ const routes: NavigationItem[] = [
     id: 2,
     title: "📣 Management Announcements",
     screen: "ManagementAnnouncements",
+
+  { id: 8, title: "Find Community", screen: "FindCommunity" },
+  { id: 9, title: "Create Community", screen: "CreateCommunity" },
+  { id: 10, title: "Chat", screen: "Chat" },
+  { id: 11, title: "Profile Setup", screen: "ProfileSetup" },
+  { id: 12, title: "Find Create", screen: "FindCreate" },
+  {
+    id: 13,
+    title: "Post Announcement (admins only)",
+    screen: "PostAnnouncement",
+
   },
   { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
   { id: 4, title: "📆 Calendar", screen: "Calendar" },
@@ -89,8 +101,9 @@ export const HomepageScreen: React.FC = () => {
     });
   }, []);
 
+
   const handleLinkPress = (item: NavigationItem) => {
-    console.log(item.screen);
+    // console.log(item.screen);
     if (item.screen === "HomepageScreen") {
       navigation.dispatch(
         CommonActions.reset({
@@ -196,6 +209,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 15,
   },
   containerList: {
     flexDirection: "row",
@@ -213,8 +227,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },

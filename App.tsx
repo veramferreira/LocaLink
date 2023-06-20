@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import { Button, StyleSheet, Text, View } from "react-native";
 import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -19,19 +20,19 @@ import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
-import Chat from "./Screens/GeneralChat";
+ticket23import Chat from "./Screens/GeneralChat";
+import HeaderRight from "./comp/HeaderRight";
+import Chat from "./Screens/Chat";
 import { FindCreate } from "./Screens/FindCreate";
-
+import colours from "./constants/colours";
+import { useFonts } from "expo-font";
 import { MyContext } from "./Context";
-
 import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_700Bold,
-  useFonts,
 } from "@expo-google-fonts/poppins";
 
-import colours from "./constants/colours";
 import { useState } from "react";
 import AssignAdmins from "./Screens/AssignAdminsPage";
 
@@ -60,6 +61,7 @@ export default function App() {
             initialRouteName="SignIn"
             screenOptions={{
               headerTitle: () => <Header />,
+              headerRight: () => <HeaderRight />,
               headerStyle: {
                 backgroundColor: colours.primary,
               },
@@ -72,6 +74,7 @@ export default function App() {
               },
             }}
           >
+
             <Drawer.Screen
               name="HomepageScreen"
               component={HomepageScreen}
