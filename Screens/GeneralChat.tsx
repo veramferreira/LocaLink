@@ -54,7 +54,7 @@ const Chat = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [userContext]);
 
   return (
     <ScrollView>
