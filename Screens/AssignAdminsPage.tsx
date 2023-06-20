@@ -45,20 +45,25 @@ export default function AssignAdmins() {
           <View>
             <Text>Username: {user.userName}</Text>
             <Text>Current Role: {user.role}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                AddRoleToUser(user.email, "admin");
-              }}
-            >
-              <Text>Assign Admin</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                AddRoleToUser(user.email, "resident");
-              }}
-            >
-              <Text>Remove Admin</Text>
-            </TouchableOpacity>
+
+            {user.role !== "owner" ? (
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    AddRoleToUser(user.email, "admin");
+                  }}
+                >
+                  <Text>Assign Admin</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    AddRoleToUser(user.email, "resident");
+                  }}
+                >
+                  <Text>Remove Admin</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </View>
         );
       })}

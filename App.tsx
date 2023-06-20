@@ -17,7 +17,7 @@ import PostAnnouncement from "./Screens/PostAnnouncement";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
-import Chat from "./Screens/Chat";
+import Chat from "./Screens/GeneralChat";
 import { FindCreate } from "./Screens/FindCreate";
 
 import { MyContext } from "./Context";
