@@ -4,7 +4,6 @@ import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-// import SignUp from "./Screens/SignUp";
 import { HomepageScreen } from "./Screens/HomepageScreen";
 import About from "./Screens/About";
 import CalendarScreen from "./Screens/Calendar";
@@ -21,14 +20,13 @@ import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
+ticket23import Chat from "./Screens/GeneralChat";
 import HeaderRight from "./comp/HeaderRight";
 import Chat from "./Screens/Chat";
 import { FindCreate } from "./Screens/FindCreate";
 import colours from "./constants/colours";
 import { useFonts } from "expo-font";
-
 import { MyContext } from "./Context";
-
 import {
   Poppins_400Regular,
   Poppins_500Medium,
@@ -36,6 +34,7 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import { useState } from "react";
+import AssignAdmins from "./Screens/AssignAdminsPage";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -43,7 +42,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [userContext, setUserContext] = useState({});
-
+  // const [adminRole, setAdminRole] = useState("none");
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -59,7 +58,7 @@ export default function App() {
       <MyContext.Provider value={{ userContext, setUserContext }}>
         <NavigationContainer>
           <Drawer.Navigator
-            initialRouteName="HomepageScreen"
+            initialRouteName="SignIn"
             screenOptions={{
               headerTitle: () => <Header />,
               headerRight: () => <HeaderRight />,
@@ -75,38 +74,21 @@ export default function App() {
               },
             }}
           >
-            {/* <Drawer.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{ title: "Create your account" }}
-        /> */}
-            {/* {!userContext?.userName ? (
-              <Drawer.Screen
-                name="SignIn"
-                component={SignInPage}
-                options={{ title: "Welcome" }}
-              />
-            ) : ( */}
 
             <Drawer.Screen
               name="HomepageScreen"
               component={HomepageScreen}
-              options={{ title: "Dashboard" }}
+              options={{ title: "Community Homepage" }}
             />
             <Drawer.Screen
               name="ProfileSetup"
               component={ProfileSetup}
-              options={{ title: "ProfileSetup" }}
-            />
-            <Drawer.Screen
-              name="SignIn"
-              component={SignInPage}
-              options={{ title: "Welcome" }}
+              options={{ title: "Profile" }}
             />
             <Drawer.Screen
               name="About"
               component={About}
-              options={{ title: "About" }}
+              options={{ title: "About Community" }}
             />
             <Drawer.Screen
               name="Calendar"
@@ -159,9 +141,29 @@ export default function App() {
               options={{ title: "FindCreate" }}
             />
             <Drawer.Screen
+              name="SignIn"
+              component={SignInPage}
+              options={{ title: "SignOut" }}
+            />
+            <Drawer.Screen
               name="PostAnnouncement"
               component={PostAnnouncement}
-              options={{ title: "Post an Announcement" }}
+              options={{
+                title: "Post an Announcement",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
+            />
+            <Drawer.Screen
+              name="AssignAdmins"
+              component={AssignAdmins}
+              options={{
+                title: "assignAdmins",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
             <Drawer.Screen
               name="AddEvent"
@@ -174,3 +176,4 @@ export default function App() {
     </QueryClientProvider>
   );
 }
+//push

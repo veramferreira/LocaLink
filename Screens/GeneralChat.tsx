@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Message from "../comp/messageComp/Message";
 import { db } from "../config/firebase";
 import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 import SendMessage from "../comp/messageComp/SendMessage";
-
+import { MyContext } from "../Context";
 import {
   View,
   StyleSheet,
@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
 });
 
 const Chat = () => {
-  const chatDB = "messages";
+  const { userContext } = useContext(MyContext);
+  const chatDB = `${userContext.communityName}GeneralChat`;
   const [messages, setMessages] = useState([]);
   const scroll = useRef();
 
@@ -64,7 +65,7 @@ const Chat = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [userContext]);
 
   return (
     <View style={styles.container}>

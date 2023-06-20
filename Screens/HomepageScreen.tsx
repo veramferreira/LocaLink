@@ -26,7 +26,7 @@ type NavigationItem = {
   screen: string;
 };
 
-const routes: NavigationItem[] = [
+const ownerRoutes: NavigationItem[] = [
   { id: 1, title: "ℹ️ About", screen: "About" },
   {
     id: 2,
@@ -38,6 +38,35 @@ const routes: NavigationItem[] = [
   { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
   { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
+  { id: 8, title: "Chat", screen: "Chat" },
+  { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
+  { id: 10, title: "Assign Admins", screen: "AssignAdmins" },
+];
+
+const adminRoutes: NavigationItem[] = [
+  { id: 1, title: "ℹ️ About", screen: "About" },
+  {
+    id: 2,
+    title: "📣 Management Announcements",
+    screen: "ManagementAnnouncements",
+  },
+  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 4, title: "📆 Calendar", screen: "Calendar" },
+  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
+
+  { id: 8, title: "Chat", screen: "Chat" },
+  { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
+];
+
+const routes: NavigationItem[] = [
+  { id: 1, title: "ℹ️ About", screen: "About" },
+  {
+    id: 2,
+    title: "📣 Management Announcements",
+    screen: "ManagementAnnouncements",
+
   { id: 8, title: "Find Community", screen: "FindCommunity" },
   { id: 9, title: "Create Community", screen: "CreateCommunity" },
   { id: 10, title: "Chat", screen: "Chat" },
@@ -47,12 +76,19 @@ const routes: NavigationItem[] = [
     id: 13,
     title: "Post Announcement (admins only)",
     screen: "PostAnnouncement",
+
   },
+  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 4, title: "📆 Calendar", screen: "Calendar" },
+  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
+  { id: 8, title: "Chat", screen: "Chat" },
 ];
 
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const [community, setCommunity] = useState("");
+
   const { userContext } = useContext(MyContext);
 
   useEffect(() => {
@@ -60,13 +96,11 @@ export const HomepageScreen: React.FC = () => {
     const usersQuery = onSnapshot(q, (querySnapshot) => {
       let usersArr: any[] = [];
       querySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[0].communityName);
+
       return () => usersQuery();
     });
   }, []);
-  useEffect(() => {
-    // console.log(community);
-  }, [community]);
+
 
   const handleLinkPress = (item: NavigationItem) => {
     // console.log(item.screen);
@@ -100,11 +134,47 @@ export const HomepageScreen: React.FC = () => {
     );
   };
 
-  return (
+  return userContext?.role === "owner" ? (
     <ScrollView>
       <View style={styles.container}>
-        {!community ? null : (
-          <Text style={styles.h2}>Welcome to {community}! 👋</Text>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
+        )}
+        <View style={styles.containerList}>
+          {ownerRoutes.map((item) => (
+            <React.Fragment key={item.id}>
+              {renderItem({ item })}
+            </React.Fragment>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  ) : userContext?.role === "admin" ? (
+    <ScrollView>
+      <View style={styles.container}>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
+        )}
+        <View style={styles.containerList}>
+          {adminRoutes.map((item) => (
+            <React.Fragment key={item.id}>
+              {renderItem({ item })}
+            </React.Fragment>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  ) : (
+    <ScrollView>
+      <View style={styles.container}>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
         )}
         <View style={styles.containerList}>
           {routes.map((item) => (
@@ -119,9 +189,7 @@ export const HomepageScreen: React.FC = () => {
         {userContext?.communityName && (
           <Text style={styles.h2}>{userContext.communityName}</Text>
         )}
-        {userContext?.email && (
-          <Text style={styles.h2}>{userContext.email}</Text>
-        )}
+        {userContext?.role && <Text style={styles.h2}>{userContext.role}</Text>}
       </View>
     </ScrollView>
   );
