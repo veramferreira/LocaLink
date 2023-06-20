@@ -11,6 +11,7 @@ import {
   Keyboard,
   Alert,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { Formik, FormikProps } from "formik";
 import { auth, db, storage } from "../config/firebase";
@@ -20,6 +21,9 @@ import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { MyContext } from "../Context";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import BackButton from "../comp/BackButton";
+import colours from "../constants/colours";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface FormValues {
   itemName: string;
@@ -40,6 +44,11 @@ const formSchema = yup.object({
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
   borderColor: "#F57C01",
+};
+
+const buttonDisabledStyle = {
+  backgroundColor: "#CCC",
+  borderColor: "#AAA",
 };
 
 const FoundItem: React.FC = () => {
@@ -65,6 +74,7 @@ const FoundItem: React.FC = () => {
       const source = { uri: result.assets[0].uri }; // Access the selected asset from the assets array
       console.log(source);
       setImage(source);
+      // handleUploadImage(source);
     }
   };
 
@@ -96,6 +106,7 @@ const FoundItem: React.FC = () => {
 
             // props.setFieldValue("photoUrl", downloadUrl);
             setDownloadUrl(downloadUrl);
+            setDownloadUrl("");
             setUploading(false);
             Alert.alert("Photo uploaded");
           });
@@ -128,6 +139,7 @@ const FoundItem: React.FC = () => {
 
       await addDoc(collection(db, "foundItems"), docData);
       resetForm();
+      setImage(null);
       setSubmitted(true);
       showAlert();
     } catch (error) {
@@ -142,117 +154,154 @@ const FoundItem: React.FC = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.heading}>Found Item</Text>
-        <Formik
-          initialValues={{
-            itemName: "",
-            description: "",
-            photoUrl: "",
-            date: "",
-            contactEmail: userEmail,
-          }}
-          validationSchema={formSchema}
-          onSubmit={handleSubmit}
-        >
-          {(props: FormikProps<FormValues>) => (
-            <View style={styles.form}>
-              <Text style={styles.text}>Item Name:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter item name..."
-                onChangeText={props.handleChange("itemName")}
-                value={props.values.itemName}
-                onBlur={props.handleBlur("itemName")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.itemName && props.errors.itemName}
-              </Text>
-              <Text style={styles.text}>Description:</Text>
-              <TextInput
-                multiline
-                minHeight={70}
-                style={styles.input}
-                placeholder="Enter item description..."
-                onChangeText={props.handleChange("description")}
-                value={props.values.description}
-                onBlur={props.handleBlur("description")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.description && props.errors.description}
-              </Text>
-              {/* <Text style={styles.text}>Photo URL:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter item photo URL..."
-                onChangeText={props.handleChange("photoUrl")}
-                value={props.values.photoUrl}
-                onBlur={props.handleBlur("photoUrl")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.photoUrl && props.errors.photoUrl}
-              </Text> */}
-              <Text style={styles.text}>Date:</Text>
+    <>
+      <BackButton path="LostFound" />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Text style={styles.heading}>Found Item</Text>
+          <Formik
+            initialValues={{
+              itemName: "",
+              description: "",
+              photoUrl: "",
+              date: "",
+              contactEmail: userEmail,
+            }}
+            validationSchema={formSchema}
+            onSubmit={handleSubmit}
+          >
+            {(props: FormikProps<FormValues>) => (
+              <View style={styles.form}>
+                <Text style={styles.text}>Item Name:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter item name..."
+                  onChangeText={props.handleChange("itemName")}
+                  value={props.values.itemName}
+                  onBlur={props.handleBlur("itemName")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.itemName && props.errors.itemName}
+                </Text>
+                <Text style={styles.text}>Description:</Text>
+                <TextInput
+                  multiline
+                  minHeight={70}
+                  style={styles.input}
+                  placeholder="Enter item description..."
+                  onChangeText={props.handleChange("description")}
+                  value={props.values.description}
+                  onBlur={props.handleBlur("description")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.description && props.errors.description}
+                </Text>
+                <Text style={styles.text}>Date:</Text>
 
-              <TextInput
-                style={styles.input}
-                placeholder="Enter event date..."
-                onChangeText={props.handleChange("date")}
-                value={props.values.date}
-                onBlur={props.handleBlur("date")}
-                onFocus={showDatePicker}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.date && props.errors.date}
-              </Text>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={(date) => {
-                  props.setFieldValue("date", date.toISOString().split("T")[0]);
-                  hideDatePicker();
-                }}
-                textColor="#000000"
-                onCancel={hideDatePicker}
-              />
-              <Text style={styles.text}>Contact Email:</Text>
-              <TextInput
-                style={styles.input}
-                // placeholder="Enter item photo URL..."
-                onChangeText={props.handleChange("contactEmail")}
-                value={props.values.contactEmail}
-                onBlur={props.handleBlur("contactEmail")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.contactEmail && props.errors.contactEmail}
-              </Text>
-              <TouchableOpacity onPress={pickImage}>
-                <Text>Pick Image</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleUploadImage}>
-                <Text>Upload Image</Text>
-              </TouchableOpacity>
-              {image && <Image source={image} style={styles.selectedImage} />}
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter event date..."
+                  onChangeText={props.handleChange("date")}
+                  value={props.values.date}
+                  onBlur={props.handleBlur("date")}
+                  onFocus={showDatePicker}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.date && props.errors.date}
+                </Text>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={(date) => {
+                    props.setFieldValue(
+                      "date",
+                      date.toISOString().split("T")[0]
+                    );
+                    hideDatePicker();
+                  }}
+                  textColor="#000000"
+                  onCancel={hideDatePicker}
+                />
+                <Text style={styles.text}>Contact Email:</Text>
+                <TextInput
+                  style={styles.input}
+                  // placeholder="Enter item photo URL..."
+                  onChangeText={props.handleChange("contactEmail")}
+                  value={props.values.contactEmail}
+                  onBlur={props.handleBlur("contactEmail")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.contactEmail && props.errors.contactEmail}
+                </Text>
+                <View style={styles.buttonsWrapper}>
+                  {!image && (
+                    <TouchableOpacity
+                      onPress={pickImage}
+                      style={styles.pickImage}
+                    >
+                      <MaterialCommunityIcons
+                        name="file-upload-outline"
+                        size={24}
+                        color={colours.font}
+                        style={styles.buttonIcon}
+                      />
+                      <Text style={styles.buttonTextUpload}>Pick Image</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+                <View style={styles.imageViewWrapper}>
+                  <View style={styles.imageViewUploadWrapper}>
+                    {image && (
+                      <Image source={image} style={styles.selectedImage} />
+                    )}
+                    {uploading && (
+                      <ActivityIndicator
+                        size="large"
+                        color={colours.secondary}
+                        style={styles.loading}
+                      />
+                    )}
+                  </View>
+                  {image && (
+                    <TouchableOpacity
+                      onPress={handleUploadImage}
+                      style={styles.pickImageView}
+                    >
+                      <MaterialCommunityIcons
+                        name="file-upload-outline"
+                        size={24}
+                        color={colours.font}
+                        style={styles.buttonIcon}
+                      />
+                      <Text style={styles.buttonTextUpload}>Upload Image</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
 
-              <TouchableOpacity
-                title="Add Item"
-                onPress={props.handleSubmit}
-                style={[
-                  styles.button,
-                  isButtonPressed ? buttonPressedStyle : null,
-                ]}
-                onPressIn={() => setButtonPressed(true)}
-                onPressOut={() => setButtonPressed(false)}
-                activeOpacity={1}
-              >
-                <Text style={styles.buttonText}>Add Item</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </Formik>
-      </View>
-    </TouchableWithoutFeedback>
+                <TouchableOpacity
+                  title="Add Item"
+                  onPress={props.handleSubmit}
+                  style={[
+                    styles.button,
+                    isButtonPressed
+                      ? buttonPressedStyle
+                      : uploading
+                      ? buttonDisabledStyle
+                      : null,
+                  ]}
+                  onPressIn={() => setButtonPressed(true)}
+                  onPressOut={() => setButtonPressed(false)}
+                  activeOpacity={1}
+                  disabled={uploading}
+                >
+                  <Text style={styles.buttonText}>Add Item</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
+        </View>
+      </TouchableWithoutFeedback>
+    </>
   );
 };
 
@@ -265,7 +314,6 @@ const styles = StyleSheet.create({
   heading: {
     textAlign: "center",
     fontWeight: "bold",
-    margin: 20,
     fontSize: 20,
   },
   form: {
@@ -310,9 +358,58 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   selectedImage: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     resizeMode: "contain",
+  },
+  pickImage: {
+    width: "100%",
+    height: 40,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 8,
+    borderStyle: "dashed",
+    borderColor: colours.font,
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  pickImageView: {
+    width: 200,
+    height: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 8,
+    borderColor: colours.font,
+    borderRadius: 4,
+    marginLeft: 8,
+  },
+  buttonIcon: {
+    marginRight: 4,
+  },
+  buttonTextUpload: {
+    color: colours.font,
+  },
+  buttonsWrapper: {
+    width: "100%",
+    alignItems: "center",
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  imageViewWrapper: {
+    flexDirection: "row",
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  imageViewUploadWrapper: {
+    position: "relative",
+  },
+  loading: {
+    position: "absolute",
+    left: 50,
+    top: 50,
+    transform: [{ translateX: -16 }, { translateY: -16 }],
   },
 });
 

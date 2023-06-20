@@ -10,6 +10,7 @@ import {
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useNavigation } from "@react-navigation/native";
+import BackButton from "../comp/BackButton";
 
 const LostItems: React.FC = () => {
   const [itemList, setItemList] = useState([]);
@@ -38,33 +39,36 @@ const LostItems: React.FC = () => {
   };
 
   return (
-    <ScrollView>
-      <View>
-        <Text style={styles.heading}>Lost Items</Text>
-        {isLoading ? (
-          <Text>Loading...</Text>
-        ) : (
-          itemList.map((item: any, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                style={styles.itemContainer}
-                onPress={() => handleItemPress(item)}
-              >
-                <Text style={styles.itemName}>{item.itemName}</Text>
-                <Image
-                  source={{ uri: item.photoUrl }}
-                  style={styles.itemImage}
-                />
-                {/* <Text style={styles.description}>{item.description}</Text> */}
-                <Text style={styles.date}>{item.date}</Text>
-                {/* <Text style={styles.contactEmail}>{item.contactEmail}</Text> */}
-              </TouchableOpacity>
-            );
-          })
-        )}
-      </View>
-    </ScrollView>
+    <>
+      <BackButton path="LostFound" />
+      <ScrollView>
+        <View>
+          <Text style={styles.heading}>Lost Items</Text>
+          {isLoading ? (
+            <Text>Loading...</Text>
+          ) : (
+            itemList.map((item: any, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.itemContainer}
+                  onPress={() => handleItemPress(item)}
+                >
+                  <Text style={styles.itemName}>{item.itemName}</Text>
+                  <Image
+                    source={{ uri: item.photoUrl }}
+                    style={styles.itemImage}
+                  />
+                  {/* <Text style={styles.description}>{item.description}</Text> */}
+                  <Text style={styles.date}>{item.date}</Text>
+                  {/* <Text style={styles.contactEmail}>{item.contactEmail}</Text> */}
+                </TouchableOpacity>
+              );
+            })
+          )}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
