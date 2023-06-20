@@ -38,6 +38,7 @@ import {
 import { useState } from "react";
 import LostItems from "./Screens/LostItems";
 import FoundItem from "./Screens/FoundItem";
+import LostItemCard from "./Screens/LostItemCard";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -179,6 +180,11 @@ export default function App() {
               name="FoundItem"
               component={FoundItem}
               options={{ title: "Found an item" }}
+            />
+            <Drawer.Screen
+              name="LostItemCard"
+              component={LostItemCard}
+              options={{ title: "Lost Item Card" }}
             />
           </Drawer.Navigator>
         </NavigationContainer>
