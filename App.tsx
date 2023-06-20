@@ -15,7 +15,7 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
-
+import EditProfile from "./Screens/EditProfile";
 import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
@@ -144,6 +144,12 @@ export default function App() {
               component={SignInPage}
               options={{ title: "SignOut" }}
             />
+            <Drawer.Screen
+              name="EditProfile"
+              component={EditProfile}
+              options={{ title: "EditProfile" }}
+            />
+
             <Drawer.Screen
               name="PostAnnouncement"
               component={PostAnnouncement}
