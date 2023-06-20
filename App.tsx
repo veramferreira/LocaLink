@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { Button, StyleSheet, Text, View } from "react-native";
+
 import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -15,14 +15,14 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
-import { Communities } from "./Screens/Communities";
+
 import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
-ticket23import Chat from "./Screens/GeneralChat";
+
 import HeaderRight from "./comp/HeaderRight";
-import Chat from "./Screens/Chat";
+import GeneralChat from "./Screens/GeneralChat";
 import { FindCreate } from "./Screens/FindCreate";
 import colours from "./constants/colours";
 import { useFonts } from "expo-font";
@@ -74,7 +74,6 @@ export default function App() {
               },
             }}
           >
-
             <Drawer.Screen
               name="HomepageScreen"
               component={HomepageScreen}
@@ -127,7 +126,7 @@ export default function App() {
             />
             <Drawer.Screen
               name="Chat"
-              component={Chat}
+              component={GeneralChat}
               options={{ title: "Chat" }}
             />
             <Drawer.Screen

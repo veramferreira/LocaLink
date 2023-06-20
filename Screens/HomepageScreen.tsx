@@ -38,7 +38,7 @@ const ownerRoutes: NavigationItem[] = [
   { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
   { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
-  { id: 8, title: "Chat", screen: "Chat" },
+  { id: 8, title: "GeneralChat", screen: "GeneralChat" },
   { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
   { id: 10, title: "Assign Admins", screen: "AssignAdmins" },
 ];
@@ -56,7 +56,7 @@ const adminRoutes: NavigationItem[] = [
   { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
   { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
 
-  { id: 8, title: "Chat", screen: "Chat" },
+  { id: 8, title: "GeneralChat", screen: "GeneralChat" },
   { id: 9, title: "Post announcement", screen: "PostAnnouncement" },
 ];
 
@@ -66,7 +66,7 @@ const routes: NavigationItem[] = [
     id: 2,
     title: "📣 Management Announcements",
     screen: "ManagementAnnouncements",
-
+  },
   { id: 8, title: "Find Community", screen: "FindCommunity" },
   { id: 9, title: "Create Community", screen: "CreateCommunity" },
   { id: 10, title: "Chat", screen: "Chat" },
@@ -76,7 +76,6 @@ const routes: NavigationItem[] = [
     id: 13,
     title: "Post Announcement (admins only)",
     screen: "PostAnnouncement",
-
   },
   { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
   { id: 4, title: "📆 Calendar", screen: "Calendar" },
@@ -100,7 +99,6 @@ export const HomepageScreen: React.FC = () => {
       return () => usersQuery();
     });
   }, []);
-
 
   const handleLinkPress = (item: NavigationItem) => {
     // console.log(item.screen);

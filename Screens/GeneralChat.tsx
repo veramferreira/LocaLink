@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderColor: "red",
   },
   // message: {
-    
+
   // }
 
   // wrapper: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   // },
 });
 
-const Chat = () => {
+const GeneralChat = () => {
   const { userContext } = useContext(MyContext);
   const chatDB = `${userContext.communityName}GeneralChat`;
   const [messages, setMessages] = useState([]);
@@ -83,4 +83,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default GeneralChat;
