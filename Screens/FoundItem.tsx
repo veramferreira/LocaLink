@@ -10,12 +10,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Image,
 } from "react-native";
 import { Formik, FormikProps } from "formik";
 import { auth, db, storage } from "../config/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-// import { ref } from "firebase/storage";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { MyContext } from "../Context";
@@ -233,6 +233,7 @@ const FoundItem: React.FC = () => {
               <TouchableOpacity onPress={handleUploadImage}>
                 <Text>Upload Image</Text>
               </TouchableOpacity>
+              {image && <Image source={image} style={styles.selectedImage} />}
 
               <TouchableOpacity
                 title="Add Item"
@@ -307,6 +308,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     fontSize: 11,
+  },
+  selectedImage: {
+    width: 150,
+    height: 150,
+    resizeMode: "contain",
   },
 });
 
