@@ -8,7 +8,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { db } from "../config/firebase";
 import { MyContext } from "../Context";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AddRoleToUser from "../Utils/AddRoleToUser";
 
@@ -39,36 +39,115 @@ export default function AssignAdmins() {
   }, [CommunityUserList]);
 
   return (
-    <View>
-      {CommunityUserList.map((user) => {
-        return (
-          <View>
-            <Text>Username: {user.userName}</Text>
-            <Text>Current Role: {user.role}</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.heading}>Community Roles</Text>
+        {CommunityUserList.map((user) => {
+          return (
+            <View style={styles.usersWrapper}>
+              <Text style={styles.boldText}>
+                👤 Username:{" "}
+                <Text style={styles.normalText}>{user.userName}</Text>
+              </Text>
+              <Text style={styles.boldText}>
+                🗂️ Current Role:{" "}
+                <Text style={styles.normalText}>{user.role}</Text>
+              </Text>
 
-            {user.role !== "owner" ? (
-              <View>
-                <TouchableOpacity
-                  onPress={() => {
-                    AddRoleToUser(user.email, "admin");
-                  }}
-                >
-                  <Text>Assign Admin</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    AddRoleToUser(user.email, "resident");
-                  }}
-                >
-                  <Text>Remove Admin</Text>
-                </TouchableOpacity>
-              </View>
-            ) : null}
-          </View>
-        );
-      })}
-    </View>
+              {user.role !== "owner" ? (
+                <View style={styles.btnWrapper}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      AddRoleToUser(user.email, "admin");
+                    }}
+                  >
+                    <View style={styles.buttonAdd}>
+                      <Text style={styles.buttonText}>Assign Admin</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      AddRoleToUser(user.email, "resident");
+                    }}
+                  >
+                    <View style={styles.buttonRemove}>
+                      <Text style={styles.buttonText}>Remove Admin</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
+          );
+        })}
+      </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+  },
+  heading: {
+    fontFamily: "Poppins_700Bold",
+    textAlign: "center",
+    fontWeight: "bold",
+    margin: 20,
+    fontSize: 20,
+  },
+  usersWrapper: {
+    display: "flex",
+    padding: 10,
+    backgroundColor: "white",
+    margin: 10,
+    borderRadius: 8,
+  },
+  boldText: {
+    fontFamily: "Poppins_500Medium",
+    textAlign: "center",
+    padding: 5,
+    paddingTop: 10,
+  },
+  normalText: {
+    fontFamily: "Poppins_400Regular",
+    textAlign: "center",
+  },
+  btnWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  buttonAdd: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1B73E7",
+    padding: 10,
+    fontSize: 14,
+    borderRadius: 6,
+    margin: 15,
+    borderColor: "#1B73E7",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    color: "white",
+  },
+  buttonRemove: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "crimson",
+    padding: 10,
+    fontSize: 14,
+    borderRadius: 6,
+    margin: 15,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    color: "white",
+  },
+  buttonText: {
+    color: "white",
+    fontFamily: "Poppins_500Medium",
+  },
+});
