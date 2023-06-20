@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import * as ImagePicker from "expo-image-picker";
 
 import {
   View,
@@ -11,8 +12,10 @@ import {
   Alert,
 } from "react-native";
 import { Formik, FormikProps } from "formik";
-import { db } from "../config/firebase";
+import { auth, db, storage } from "../config/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import { ref } from "firebase/storage";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { MyContext } from "../Context";
@@ -44,9 +47,44 @@ const FoundItem: React.FC = () => {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const navigation = useNavigation();
   const userEmail = userContext?.email || "";
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      const source = { uri: result.assets[0].uri }; // Access the selected asset from the assets array
+      console.log(source);
+      setImage(source);
+    }
+  };
+
+  const uploadImage = async () => {
+    setUploading(true);
+    const response = await fetch(image.uri);
+    const blob = await response.blob();
+    const filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+    var ref = storage().ref().child(filename).put(blob);
+
+    try {
+      await ref;
+    } catch (e) {
+      console.log(e);
+    }
+    setUploading(false);
+    Alert.alert("Photo uploaded");
+    setImage(null);
+  };
+
+  useEffect(() => {}, [image]);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -171,6 +209,13 @@ const FoundItem: React.FC = () => {
               <Text style={styles.errorText}>
                 {props.touched.contactEmail && props.errors.contactEmail}
               </Text>
+              <TouchableOpacity onPress={pickImage}>
+                <Text>Pick Image</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={uploadImage}>
+                <Text>Upload Image</Text>
+              </TouchableOpacity>
+
               <TouchableOpacity
                 title="Add Item"
                 onPress={props.handleSubmit}
