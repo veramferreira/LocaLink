@@ -225,13 +225,6 @@ export const HomepageScreen: React.FC = () => {
             </React.Fragment>
           ))}
         </View>
-        {userContext?.userName && (
-          <Text style={styles.h2}>{userContext.userName}!</Text>
-        )}
-        {userContext?.communityName && (
-          <Text style={styles.h2}>{userContext.communityName}</Text>
-        )}
-        {userContext?.role && <Text style={styles.h2}>{userContext.role}</Text>}
       </View>
     </ScrollView>
   );
