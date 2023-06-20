@@ -19,6 +19,7 @@ import {
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
 import { MyContext } from "../Context";
+import updatePostCount from "../Utils/updatePostCount";
 import HandleNotifications from "../comp/handleNotifications";
 
 type NavigationItem = {
@@ -56,7 +57,7 @@ export const HomepageScreen: React.FC = () => {
   const [community, setCommunity] = useState("");
   const [hasNewPosts, setHasNewPosts] = useState(false);
   const [previousPostCount, setPreviousPostCount] = useState(0);
-  const { userContext } = useContext(MyContext);
+  const { userContext, setUserContext } = useContext(MyContext);
 
   useEffect(() => {
     const checkForNewPosts = async () => {
@@ -65,20 +66,30 @@ export const HomepageScreen: React.FC = () => {
       );
 
       const currentPostCount = managementAnnouncementsQuerySnapshot.docs.length;
-      const hasNewPosts = currentPostCount > previousPostCount;
+      let hasNewPosts;
+      if (!userContext.postCount) {
+        hasNewPosts = true;
+      } else {
+        hasNewPosts = currentPostCount > userContext.postCount;
+      }
       setHasNewPosts(hasNewPosts);
-      setPreviousPostCount(currentPostCount); 
+      updatePostCount(userContext.email, currentPostCount);
+      setUserContext({ ...userContext, postCount: currentPostCount });
+      // setPreviousPostCount(currentPostCount);
     };
 
     checkForNewPosts();
 
-    const unsubscribe = onSnapshot(collection(db, "postAdminAnnouncement"), () => {
-      checkForNewPosts();
-    });
+    const unsubscribe = onSnapshot(
+      collection(db, "postAdminAnnouncement"),
+      () => {
+        checkForNewPosts();
+      }
+    );
 
     return unsubscribe;
   }, []);
-  
+
   useEffect(() => {
     const q = query(collection(db, "Users"));
     const usersQuery = onSnapshot(q, (querySnapshot) => {
@@ -88,9 +99,8 @@ export const HomepageScreen: React.FC = () => {
       return () => usersQuery();
     });
   }, []);
-  
-  useEffect(() => {
-  }, [community]);
+
+  useEffect(() => {}, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
     if (item.screen === "ManagementAnnouncements") {
@@ -123,7 +133,7 @@ export const HomepageScreen: React.FC = () => {
       >
         <Text style={styles.itemTitle}>{item.title}</Text>
         {item.screen === "ManagementAnnouncements" && hasNewPosts && (
-          <View >
+          <View>
             <Text style={styles.notificationText}>New posts!</Text>
           </View>
         )}
@@ -207,7 +217,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
     textTransform: "lowercase",
     backgroundColor: "red",
-    borderWidth:1,
+    borderWidth: 1,
     borderColor: "red",
     borderRadius: 20,
     paddingRight: 15,
