@@ -103,7 +103,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
           let userRole = "";
           console.log(userList);
           for (const user of userList) {
-            if (user.email === email) {
+            if (user.email.toLowerCase() === email.toLowerCase()) {
               emailExist = true;
               if (user.userName) {
                 userName = user.userName;
@@ -116,6 +116,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               }
             }
           }
+
           if (emailExist && userExist && !comExist) {
             setUserContext({
               email: email,
