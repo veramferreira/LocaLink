@@ -36,6 +36,8 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import { useState } from "react";
+import LostItems from "./Screens/LostItems";
+import FoundItem from "./Screens/FoundItem";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -167,6 +169,16 @@ export default function App() {
               name="AddEvent"
               component={AddEvent}
               options={{ title: "AddEvent" }}
+            />
+            <Drawer.Screen
+              name="LostItems"
+              component={LostItems}
+              options={{ title: "Looking for items" }}
+            />
+            <Drawer.Screen
+              name="FoundItem"
+              component={FoundItem}
+              options={{ title: "Found an item" }}
             />
           </Drawer.Navigator>
         </NavigationContainer>
