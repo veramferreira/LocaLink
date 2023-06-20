@@ -8,37 +8,46 @@ import {
   TextInput,
 } from "react-native";
 
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    backgroundColor: "red",
-    padding: 10,
-    borderRadius: 5,
-  },
-  input: {
-    width: "80%",
-    height: 40,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-});
 
 const Message = ({ message }) => {
   // message.uid === auth.currentUser.uid ? `${style.sent}` : `${style.received}`;
 
   return (
-    <View style={styles.wrapper}>
-      <Text>{message.name}</Text>
-      <Text>{message.text}</Text>
+    <View style={styles.container}>
+      <Text style={styles.name}>{message.name}</Text>
+      <Text style={styles.text}>{message.text}</Text>
     </View>
   );
 };
 
 export default Message;
+
+const styles = StyleSheet.create({
+  container: {
+    // display: "flex",
+    // flexDirection: "column",
+    // borderColor: "red",
+    // borderWidth: 1,
+    padding: 20,
+    backgroundColor: "white",
+    margin: 20,
+    borderRadius: 8,
+  },
+  name: {
+    fontFamily: "Poppins_500Medium",
+    marginBottom: 10
+  },
+  text: {
+    fontFamily: 'Poppins_400Regular',
+  }
+//   wrapper: {
+//     display: "flex",
+//     flexDirection: "column",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   name: {
+//     flex: 1,
+//     textAlign: "center"
+//   },
+});

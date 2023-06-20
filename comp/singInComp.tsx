@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: 300,
   },
   input: {
-    width: "80%",
+    width: "100%",
     height: 40,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -157,9 +157,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   };
 
   return (
-    <View>
+    <View style={styles.wrapper}>
       <ScrollView>
-        <View style={styles.wrapper}>
+        <View>
           <Image style={styles.logo} source={require("../assets/logo.png")} />
           {error !== "" && <Text style={styles.errorText}>{error}</Text>}
           <TextInput

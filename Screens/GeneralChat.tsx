@@ -14,25 +14,36 @@ import {
 } from "react-native";
 
 const styles = StyleSheet.create({
-  wrapper: {
+  container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
+    borderColor: "red",
   },
-  button: {
-    backgroundColor: "red",
-    padding: 10,
-    borderRadius: 5,
-  },
-  input: {
-    width: "80%",
-    height: 40,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
+  // message: {
+    
+  // }
+
+  // wrapper: {
+  //   display: "flex",
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+  // button: {
+  //   backgroundColor: "red",
+  //   padding: 10,
+  //   borderRadius: 5,
+  // },
+  // input: {
+  //   width: "80%",
+  //   height: 40,
+  //   borderWidth: 1,
+  //   borderColor: "#ccc",
+  //   borderRadius: 5,
+  //   marginBottom: 10,
+  //   paddingHorizontal: 10,
+  // },
 });
 
 const Chat = () => {
@@ -57,17 +68,18 @@ const Chat = () => {
   }, [userContext]);
 
   return (
-    <ScrollView>
-      <View style={styles.wrapper}>
-        <Text>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.message}>
           {messages &&
             messages.map((message) => {
               return <Message key={message.id} message={message} />;
             })}
-        </Text>
-        <SendMessage scroll={scroll} chatDB={chatDB} />
-      </View>
-    </ScrollView>
+
+          <SendMessage scroll={scroll} chatDB={chatDB} />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 

@@ -14,6 +14,8 @@ import ReportIssue from "./Screens/ReportIssue";
 import FindCommunity from "./Screens/FindCommunity";
 import CreateCommunity from "./Screens/CreateCommunity";
 import PostAnnouncement from "./Screens/PostAnnouncement";
+import { Communities } from "./Screens/Communities";
+import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
@@ -159,6 +161,11 @@ export default function App() {
                   display: "none",
                 },
               }}
+            />
+            <Drawer.Screen
+              name="AddEvent"
+              component={AddEvent}
+              options={{ title: "AddEvent" }}
             />
           </Drawer.Navigator>
         </NavigationContainer>
