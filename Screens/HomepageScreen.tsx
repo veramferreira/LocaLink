@@ -54,7 +54,28 @@ const routes: NavigationItem[] = [
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const [community, setCommunity] = useState("");
+  const [hasNewPosts, setHasNewPosts] = useState(false);
   const { userContext } = useContext(MyContext);
+
+  useEffect(() => {
+    const checkForNewPosts = async () => {
+      const managementAnnouncementsQuerySnapshot = await getDocs(
+        collection(db, "ManagementAnnouncements")
+      );
+
+      const hasNewPosts = !managementAnnouncementsQuerySnapshot.empty;
+      setHasNewPosts(hasNewPosts);
+    };
+
+    checkForNewPosts();
+
+    // Subscribe to real-time updates for the "ManagementAnnouncements" collection
+    const unsubscribe = onSnapshot(collection(db, "ManagementAnnouncements"), () => {
+      checkForNewPosts();
+    });
+
+    return unsubscribe; // Cleanup the subscription on unmount
+  }, []);
 
   useEffect(() => {
     const q = query(collection(db, "Users"));
@@ -93,10 +114,13 @@ export const HomepageScreen: React.FC = () => {
 
     return (
       <TouchableOpacity
-        onPress={() => handleLinkPress(item)}
-        style={itemContainerStyle}
-      >
-        <Text style={styles.itemTitle}>{item.title}</Text>
+      onPress={() => handleLinkPress(item)}
+      style={itemContainerStyle}
+    >
+      <Text style={styles.itemTitle}>{item.title}</Text>
+      {item.screen === 'ManagementAnnouncements' && hasNewPosts && (
+        <View style={styles.badgeDot} />
+      )}
       </TouchableOpacity>
     );
   };
@@ -169,5 +193,14 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Poppins_500Medium",
     textAlign: "center",
+  },
+  badgeDot: {
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'red',
   },
 });
