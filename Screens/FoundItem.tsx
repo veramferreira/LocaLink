@@ -24,7 +24,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 interface FormValues {
   itemName: string;
   description: string;
-  photoUrl: string;
+  // photoUrl: string;
   date: string;
   contactEmail: string;
 }
@@ -32,7 +32,7 @@ interface FormValues {
 const formSchema = yup.object({
   itemName: yup.string().required().min(4),
   description: yup.string().required().min(4),
-  photoUrl: yup.string().required().url(),
+  // photoUrl: yup.string().required().url(),
   date: yup.string().optional(),
   contactEmail: yup.string().required().email(),
 });
@@ -49,6 +49,7 @@ const FoundItem: React.FC = () => {
   const [isSubmitted, setSubmitted] = useState(false);
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState("");
 
   const navigation = useNavigation();
   const userEmail = userContext?.email || "";
@@ -67,24 +68,41 @@ const FoundItem: React.FC = () => {
     }
   };
 
-  const uploadImage = async () => {
-    setUploading(true);
-    const response = await fetch(image.uri);
-    const blob = await response.blob();
-    const filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
-    var ref = storage().ref().child(filename).put(blob);
+  const handleUploadImage = async () => {
+    if (image) {
+      setUploading(true);
+      const response = await fetch(image.uri);
+      const blob = await response.blob();
+      const filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+      const storageRef = ref(storage, filename);
+      const uploadTask = uploadBytesResumable(storageRef, blob);
 
-    try {
-      await ref;
-    } catch (e) {
-      console.log(e);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Handle progress updates
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          console.log(`Upload is ${progress}% complete`);
+        },
+        (error) => {
+          console.error("Error uploading image:", error);
+          setUploading(false);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+            console.log("File available at", downloadUrl);
+
+            // props.setFieldValue("photoUrl", downloadUrl);
+            setDownloadUrl(downloadUrl);
+            setUploading(false);
+            Alert.alert("Photo uploaded");
+          });
+        }
+      );
     }
-    setUploading(false);
-    Alert.alert("Photo uploaded");
-    setImage(null);
   };
-
-  useEffect(() => {}, [image]);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -102,7 +120,7 @@ const FoundItem: React.FC = () => {
       const docData = {
         itemName: values.itemName,
         description: values.description,
-        photoUrl: values.photoUrl,
+        photoUrl: downloadUrl,
         date: values.date,
         contactEmail: values.contactEmail,
         timestamp: serverTimestamp(),
@@ -164,7 +182,7 @@ const FoundItem: React.FC = () => {
               <Text style={styles.errorText}>
                 {props.touched.description && props.errors.description}
               </Text>
-              <Text style={styles.text}>Photo URL:</Text>
+              {/* <Text style={styles.text}>Photo URL:</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter item photo URL..."
@@ -174,7 +192,7 @@ const FoundItem: React.FC = () => {
               />
               <Text style={styles.errorText}>
                 {props.touched.photoUrl && props.errors.photoUrl}
-              </Text>
+              </Text> */}
               <Text style={styles.text}>Date:</Text>
 
               <TextInput
@@ -212,7 +230,7 @@ const FoundItem: React.FC = () => {
               <TouchableOpacity onPress={pickImage}>
                 <Text>Pick Image</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={uploadImage}>
+              <TouchableOpacity onPress={handleUploadImage}>
                 <Text>Upload Image</Text>
               </TouchableOpacity>
 
