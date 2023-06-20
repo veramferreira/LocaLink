@@ -56,7 +56,7 @@ const FoundItem: React.FC = () => {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
-  const [image, setImage] = useState(null);
+  const [currentImage, setCurrentImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
 
@@ -73,45 +73,45 @@ const FoundItem: React.FC = () => {
     if (!result.canceled) {
       const source = { uri: result.assets[0].uri }; // Access the selected asset from the assets array
       console.log(source);
-      setImage(source);
-      // handleUploadImage(source);
+      setCurrentImage(source);
+      handleUploadImage(source);
     }
   };
 
-  const handleUploadImage = async () => {
-    if (image) {
-      setUploading(true);
-      const response = await fetch(image.uri);
-      const blob = await response.blob();
-      const filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
-      const storageRef = ref(storage, filename);
-      const uploadTask = uploadBytesResumable(storageRef, blob);
+  const handleUploadImage = async (image) => {
+    if (!image) return;
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Handle progress updates
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          console.log(`Upload is ${progress}% complete`);
-        },
-        (error) => {
-          console.error("Error uploading image:", error);
+    setUploading(true);
+    const response = await fetch(image.uri);
+    const blob = await response.blob();
+    const filename = image.uri.substring(image.uri.lastIndexOf("/") + 1);
+    const storageRef = ref(storage, filename);
+    const uploadTask = uploadBytesResumable(storageRef, blob);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Handle progress updates
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        console.log(`Upload is ${progress}% complete`);
+      },
+      (error) => {
+        console.error("Error uploading image:", error);
+        setUploading(false);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+          console.log("File available at", downloadUrl);
+
+          // props.setFieldValue("photoUrl", downloadUrl);
+          setDownloadUrl(downloadUrl);
           setUploading(false);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-            console.log("File available at", downloadUrl);
-
-            // props.setFieldValue("photoUrl", downloadUrl);
-            setDownloadUrl(downloadUrl);
-            setUploading(false);
-            Alert.alert("Photo uploaded");
-          });
-        }
-      );
-    }
+          Alert.alert("Photo uploaded");
+        });
+      }
+    );
   };
 
   const showDatePicker = () => {
@@ -138,7 +138,7 @@ const FoundItem: React.FC = () => {
 
       await addDoc(collection(db, "foundItems"), docData);
       resetForm();
-      setImage(null);
+      setCurrentImage(null);
       setSubmitted(true);
       setDownloadUrl("");
       showAlert();
@@ -234,7 +234,7 @@ const FoundItem: React.FC = () => {
                   {props.touched.contactEmail && props.errors.contactEmail}
                 </Text>
                 <View style={styles.buttonsWrapper}>
-                  {!image && (
+                  {!currentImage && (
                     <TouchableOpacity
                       onPress={pickImage}
                       style={styles.pickImage}
@@ -251,8 +251,11 @@ const FoundItem: React.FC = () => {
                 </View>
                 <View style={styles.imageViewWrapper}>
                   <View style={styles.imageViewUploadWrapper}>
-                    {image && (
-                      <Image source={image} style={styles.selectedImage} />
+                    {currentImage && (
+                      <Image
+                        source={currentImage}
+                        style={styles.selectedImage}
+                      />
                     )}
                     {uploading && (
                       <ActivityIndicator
@@ -262,20 +265,6 @@ const FoundItem: React.FC = () => {
                       />
                     )}
                   </View>
-                  {image && (
-                    <TouchableOpacity
-                      onPress={handleUploadImage}
-                      style={styles.pickImageView}
-                    >
-                      <MaterialCommunityIcons
-                        name="file-upload-outline"
-                        size={24}
-                        color={colours.font}
-                        style={styles.buttonIcon}
-                      />
-                      <Text style={styles.buttonTextUpload}>Upload Image</Text>
-                    </TouchableOpacity>
-                  )}
                 </View>
 
                 <TouchableOpacity
