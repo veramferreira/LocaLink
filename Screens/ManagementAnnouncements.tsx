@@ -48,9 +48,11 @@ export default function ManagementAnnouncements({ navigation }: any) {
                   source={{ uri: announcement.img }}
                   style={styles.postImg}
                 />
+                <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>
                   {announcement.description}
                 </Text>
+                </View>
               </View>
             );
           })
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
   },
   postBody: {
     display: "flex",
-    alignContent: "center",
+    alignItems: "center",
   },
   title: {
     marginLeft: 15,
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     marginTop: 20,
+    
   },
   postImg: {
     width: 370,
@@ -93,11 +96,21 @@ const styles = StyleSheet.create({
   description: {
     marginLeft: 25,
     marginRight: 25,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 5,
+    paddingRight: 5,
     marginBottom: 10,
     fontFamily: "Poppins_400Regular",
     textAlign: "justify",
     marginTop: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
+  descriptionContainer: {
+    backgroundColor: "white",
+    width: "85%",
+    alignItems: "center",
+    alignSelf: "center",
+    marginTop: 10,
+    borderRadius: 8,
+  }
 });

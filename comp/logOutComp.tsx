@@ -8,13 +8,17 @@ interface LogOutCompProps {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#ff0000",
+    backgroundColor: "crimson",
     padding: 10,
     borderRadius: 5,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   buttonText: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "Poppins_500Medium",
   },
 });
 
