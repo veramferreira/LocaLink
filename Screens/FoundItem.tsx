@@ -303,7 +303,9 @@ const styles = StyleSheet.create({
   heading: {
     textAlign: "center",
     fontWeight: "bold",
+    margin: 20,
     fontSize: 20,
+    fontFamily: "Poppins_700Bold",
   },
   form: {
     alignSelf: "stretch",
@@ -312,6 +314,8 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 10,
     marginBottom: 10,
+    fontFamily: "Poppins_500Medium",
+
   },
   input: {
     alignItems: "center",
@@ -324,6 +328,8 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: "white",
+    fontFamily: "Poppins_400Regular",
+
   },
   button: {
     alignItems: "center",
@@ -335,9 +341,14 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 15,
     borderColor: "#1B73E7",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   buttonText: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
+
   },
   errorText: {
     color: "crimson",
@@ -345,6 +356,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     fontSize: 11,
+    fontFamily: "Poppins_500Medium",
   },
   selectedImage: {
     width: 100,
@@ -379,6 +391,8 @@ const styles = StyleSheet.create({
   },
   buttonTextUpload: {
     color: colours.font,
+    fontFamily: "Poppins_400Regular",
+
   },
   buttonsWrapper: {
     width: "100%",

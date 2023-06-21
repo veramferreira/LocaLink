@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import AddModeToUser from "../Utils/AddModeToUSer";
 import { collection, onSnapshot, query, where } from "@firebase/firestore";
 import { db } from "../config/firebase";
+import colours from "../constants/colours";
 export default function EditProfile() {
   const { userContext, setUserContext } = useContext(MyContext);
 
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 100,
     borderWidth: 2,
-    borderColor: "#F4C01D",
+    borderColor: colours.primary,
     alignSelf: "center",
     marginBottom: 20,
   },

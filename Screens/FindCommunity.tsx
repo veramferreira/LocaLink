@@ -117,6 +117,7 @@ export default function FindCommunity({ navigation }: any) {
                   onPress={() => {
                     setCommunityClicked(community);
                   }}
+                  
                 >
                   <Text style={styles.communityName}>{community.name}</Text>
                 </TouchableOpacity>
@@ -177,11 +178,14 @@ const styles = StyleSheet.create({
     width: "85%",
     padding: 10,
     borderBottomWidth: 1,
-    backgroundColor: colours.secondary,
+    backgroundColor: colours.primary,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   searchContainer: {
     alignItems: "center",
@@ -192,7 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: 300,
     borderWidth: 1,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
     padding: 10,
     borderRadius: 6,
     fontSize: 14,
@@ -202,12 +206,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    backgroundColor: "#1B73E7",
+    backgroundColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
     margin: 15,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   buttonText: {
     color: "white",
@@ -255,12 +263,12 @@ const styles = StyleSheet.create({
   buttonYes: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#1B73E7",
+    backgroundColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
     margin: 15,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,

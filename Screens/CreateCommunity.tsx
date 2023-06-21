@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import AddComToUser from "../Utils/AddComToUser";
 import { MyContext } from "../Context";
 import AddRoleToUser from "../Utils/AddRoleToUser";
+import colours from "../constants/colours";
 
 // setting types for TS
 interface FormValues {
@@ -441,7 +442,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
@@ -455,12 +456,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    backgroundColor: "#1B73E7",
+    backgroundColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
     margin: 10,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
     shadowColor: '#171717',
     shadowOffset: {width: -2, height: 2},
     shadowOpacity: 0.4,
