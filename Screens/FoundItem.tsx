@@ -136,7 +136,7 @@ const FoundItem: React.FC = () => {
         timestamp: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "foundItems"), docData);
+      await addDoc(collection(db, `${userContext?.communityName}foundItems`), docData);
       resetForm();
       setCurrentImage(null);
       setSubmitted(true);
