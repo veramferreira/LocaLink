@@ -8,14 +8,16 @@ import {
   TextInput,
 } from "react-native";
 import { MyContext } from "../../Context";
+import colours from "../../constants/colours";
 
 const Message = ({ message }) => {
   const { userContext } = useContext(MyContext);
+
   if (message.name === userContext.userName) {
     console.log("hello");
   }
+
   const sentReceivedText = () => {
-    console.log(message.name, userContext.userName);
     return message.name === userContext.userName
       ? {
           fontFamily: "Poppins_400Regular",
@@ -26,8 +28,8 @@ const Message = ({ message }) => {
           textAlign: "left",
         };
   };
+
   const sentReceivedName = () => {
-    console.log(message.name, userContext.userName);
     return message.name === userContext.userName
       ? {
           fontFamily: "Poppins_500Medium",
@@ -40,8 +42,11 @@ const Message = ({ message }) => {
           textAlign: "left",
         };
   };
+
+  const containerStyle = message.name === userContext.userName ? styles.sentContainer : styles.receivedContainer;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <Text style={sentReceivedName()}>{message.name}</Text>
       <Text style={sentReceivedText()}>{message.text}</Text>
     </View>
@@ -52,33 +57,21 @@ export default Message;
 
 const styles = StyleSheet.create({
   container: {
-    // display: "flex",
-    // flexDirection: "column",
-    // borderColor: "red",
-    // borderWidth: 1,
-    justifyContent: "flex-end",
     padding: 20,
     backgroundColor: "white",
-    margin: 20,
+    marginVertical: 10,
     borderRadius: 8,
+    width: "70%",
+    margin: 20,
+    borderWidth: 1,
   },
-
-  name: {
-    fontFamily: "Poppins_500Medium",
-    marginBottom: 10,
+  sentContainer: {
+    alignSelf: "flex-end",
+    borderColor: colours.yellow,
   },
-  text: {
-    fontFamily: "Poppins_400Regular",
+  receivedContainer: {
+    alignSelf: "flex-start",
+    borderColor: colours.pink,
   },
-
-  //   wrapper: {
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     justifyContent: "center",
-  //     alignItems: "center",
-  //   },
-  //   name: {
-  //     flex: 1,
-  //     textAlign: "center"
-  //   },
 });
+// merge error

@@ -7,6 +7,15 @@ export default {
   error: "crimson" /*errors*/,
 };
 
+//Dark Mode:
+//primary: #080808
+//secondary: #1e1e1e
+//yellow
+//pink
+//blue for links
+//orange
+//white for text
+
 // Orange: #F57C01
 // Yellow: #F4C01D
 // Blue: #1B73E7

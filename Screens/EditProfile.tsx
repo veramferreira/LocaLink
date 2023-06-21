@@ -1,11 +1,29 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../Context";
 import { Text, View, StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import AddModeToUser from "../Utils/AddModeToUSer";
+import { collection, onSnapshot, query, where } from "@firebase/firestore";
+import { db } from "../config/firebase";
 export default function EditProfile() {
-  const { userContext } = useContext(MyContext);
+  const { userContext, setUserContext } = useContext(MyContext);
+
+  const opMode = () => {
+    if (userContext.ldMode === "Dark") {
+      return "Light";
+    } else return "Dark";
+  };
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          const mode = opMode();
+          AddModeToUser(userContext.email, mode);
+          setUserContext({ ...userContext, ldMode: mode });
+        }}
+      >
+        <Text>light dark</Text>
+      </TouchableOpacity>
       <Text style={styles.heading}>My Profile</Text>
       <Image
         source={require("../assets/avatar.jpeg")}
@@ -14,17 +32,17 @@ export default function EditProfile() {
       <View style={styles.bodyContainer}>
         <Text style={styles.boldText}>
           User name:{" "}
-          <Text style={styles.normalText}>{userContext.userName}</Text>
+          <Text style={styles.normalText}>{userContext?.userName}</Text>
         </Text>
         <Text style={styles.boldText}>
-          Email: <Text style={styles.normalText}>{userContext.email}</Text>
+          Email: <Text style={styles.normalText}>{userContext?.email}</Text>
         </Text>
         <Text style={styles.boldText}>
           Community:{" "}
-          <Text style={styles.normalText}>{userContext.communityName}</Text>
+          <Text style={styles.normalText}>{userContext?.communityName}</Text>
         </Text>
         <Text style={styles.boldText}>
-          Role: <Text style={styles.normalText}>{userContext.role}</Text>
+          Role: <Text style={styles.normalText}>{userContext?.role}</Text>
         </Text>
       </View>
     </View>
