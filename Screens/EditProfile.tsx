@@ -6,33 +6,20 @@ import AddModeToUser from "../Utils/AddModeToUSer";
 import { collection, onSnapshot, query, where } from "@firebase/firestore";
 import { db } from "../config/firebase";
 export default function EditProfile() {
-  const [userList, setUserList] = useState([{}]);
   const { userContext, setUserContext } = useContext(MyContext);
-  useEffect(() => {
-    const q = query(
-      collection(db, "Users"),
-      where("userName", "==", userContext?.userName)
-    );
 
-    const userListQuery = onSnapshot(q, (querySnapshot) => {
-      let userListArr: Array<Object> = [];
-
-      querySnapshot.forEach((doc) => {
-        userListArr.push({ ...doc.data(), id: doc.id });
-      });
-      setUserList(userListArr);
-    });
-
-    return () => userListQuery();
-  }, []);
-  //need to check user mode to send the opersite back to update doc the update state then bobs ur fanny ur done
-
-  console.log(userList[0].ldMode);
+  const opMode = () => {
+    if (userContext.ldMode === "Dark") {
+      return "Light";
+    } else return "Dark";
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          AddModeToUser(userContext.email, "Dark");
+          const mode = opMode();
+          AddModeToUser(userContext.email, mode);
+          setUserContext({ ...userContext, ldMode: mode });
         }}
       >
         <Text>light dark</Text>
@@ -45,17 +32,17 @@ export default function EditProfile() {
       <View style={styles.bodyContainer}>
         <Text style={styles.boldText}>
           User name:{" "}
-          <Text style={styles.normalText}>{userContext.userName}</Text>
+          <Text style={styles.normalText}>{userContext?.userName}</Text>
         </Text>
         <Text style={styles.boldText}>
-          Email: <Text style={styles.normalText}>{userContext.email}</Text>
+          Email: <Text style={styles.normalText}>{userContext?.email}</Text>
         </Text>
         <Text style={styles.boldText}>
           Community:{" "}
-          <Text style={styles.normalText}>{userContext.communityName}</Text>
+          <Text style={styles.normalText}>{userContext?.communityName}</Text>
         </Text>
         <Text style={styles.boldText}>
-          Role: <Text style={styles.normalText}>{userContext.role}</Text>
+          Role: <Text style={styles.normalText}>{userContext?.role}</Text>
         </Text>
       </View>
     </View>
