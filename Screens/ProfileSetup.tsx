@@ -11,10 +11,7 @@ import {
 import React, { useContext, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { auth, db } from "../config/firebase";
-import {
-  doc,
-  updateDoc,
-} from "@firebase/firestore";
+import { doc, updateDoc } from "@firebase/firestore";
 import * as yup from "yup";
 import { MyContext } from "../Context";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
@@ -135,7 +132,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     marginTop: 0,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
   },
   input: {
     alignItems: "center",
@@ -148,7 +145,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: "white",
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
   },
   button: {
     alignItems: "center",
@@ -160,8 +157,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 15,
     borderColor: "#1B73E7",
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },
