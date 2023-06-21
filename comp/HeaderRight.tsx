@@ -15,7 +15,7 @@ export default function HeaderRight() {
   if (!userName) return null;
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("ProfileSetup")}>
+    <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
       <View style={styles.headerRight}>
         <Text style={styles.headerRightText}>{userName}</Text>
         <FontAwesome5 name="user" size={20} color="white" />
@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
   headerRightText: {
     color: "white",
     paddingRight: 5,
+    fontFamily: "Poppins_500Medium",
   },
 });

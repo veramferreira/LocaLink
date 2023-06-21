@@ -127,22 +127,26 @@ export default function FindCommunity({ navigation }: any) {
       </View>
     </ScrollView>
   ) : (
-    <View style={styles.container}>
-      <Text>{communityClicked.name}</Text>
-      <Text>{communityClicked.description}</Text>
-      <Text>{communityClicked.postcode}</Text>
-      <Text>Would you like to join this community?</Text>
-      <TouchableOpacity style={styles.searchButton} onPress={handleYesClick}>
-        <Text>Yes!</Text>
+    <View style={styles.confirmContainer}>
+      <Text style={styles.title}>{communityClicked.name}</Text>
+      <View style={styles.confirmDescriptionWrapper}>
+      <Text style={styles.confirmDescription}>{communityClicked.description}</Text>
+      <Text style={styles.confirmPostcode}>Postecode: {communityClicked.postcode}</Text>
+      </View>
+      <Text style={styles.normalText}>Would you like to join this community?</Text>
+      <View style={styles.btnWrapper}>
+      <TouchableOpacity  style={styles.buttonYes} onPress={handleYesClick}>
+        <Text style={styles.buttonText}>Yes!</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.searchButton}
         onPress={() => {
           setCommunityClicked("");
         }}
+        style={styles.buttonNo}
       >
-        <Text>No!</Text>
+        <Text style={styles.buttonText}>No!</Text>
       </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -154,6 +158,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 20,
     fontSize: 20,
+    paddingTop: 50,
   },
   container: {
     flex: 1,
@@ -176,6 +181,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "center",
   },
   searchContainer: {
     alignItems: "center",
@@ -212,5 +218,67 @@ const styles = StyleSheet.create({
   communityName: {
     color: "white",
     fontFamily: "Poppins_500Medium",
+  },
+  confirmContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  confirmDescriptionWrapper: {
+    display: "flex",
+    padding: 15,
+    backgroundColor: "white",
+    margin: 10,
+    borderRadius: 8,
+  },
+  confirmDescription:{
+    fontFamily: "Poppins_400Regular",
+    textAlign: "center",
+  },
+  confirmPostcode: {
+    fontFamily: "Poppins_500Medium",
+    textAlign: "center",
+    marginTop: 20,
+  },
+  normalText:{
+    fontFamily: "Poppins_500Medium",
+    textAlign: "center",
+    marginTop: 20,
+  },
+  btnWrapper:{
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  buttonYes: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1B73E7",
+    padding: 10,
+    fontSize: 14,
+    borderRadius: 6,
+    margin: 15,
+    borderColor: "#1B73E7",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    color: "white",
+  }, 
+  buttonNo: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "crimson",
+    padding: 10,
+    fontSize: 14,
+    borderRadius: 6,
+    margin: 15,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    color: "white",
   },
 });

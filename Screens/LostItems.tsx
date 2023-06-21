@@ -20,7 +20,7 @@ const LostItems: React.FC = () => {
   const {userContext} = useContext(MyContext);
 
   useEffect(() => {
-    const q = query(collection(db, `${userContext?.communityName}foundItems`), orderBy("timestamp"));
+    const q = query(collection(db, `${userContext?.communityName}foundItems`), orderBy("timestamp", "desc"));
 
     const itemsQuery = onSnapshot(q, (querySnapshot) => {
       const items = [];
