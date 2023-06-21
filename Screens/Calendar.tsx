@@ -1,6 +1,6 @@
 import { useQueryClient } from "react-query";
 import { Calendar } from "react-native-calendars";
-import { Button, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import getEvent from "../comp/getEvent";
@@ -57,6 +57,8 @@ const CalendarScreen = () => {
 
   return (
     <>
+    <ScrollView>
+    <Text style={styles.heading}>Community Calendar</Text>
       <Calendar onDayPress={handleDayPress} markedDates={markedDates} />
       <TouchableOpacity
         style={[styles.button, isButtonPressed ? buttonPressedStyle : null]}
@@ -92,13 +94,13 @@ const CalendarScreen = () => {
                       style={styles.eventName}
                       onPress={() => handleEventDescriptionPress(index)}
                     >
-                      <Text>{eventName}</Text>
+                      <Text style={styles.boldText}>{eventName}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
                 {selectedEventIndex === index && (
                   <View style={styles.eventDescription}>
-                    <Text>{description}</Text>
+                    <Text style={styles.normalText}>{description}</Text>
                   </View>
                 )}
               </React.Fragment>
@@ -106,6 +108,7 @@ const CalendarScreen = () => {
           </>
         )}
       </View>
+      </ScrollView>
     </>
   );
 };
@@ -115,6 +118,13 @@ export default CalendarScreen;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+  },
+  heading: {
+    textAlign: "center",
+    fontWeight: "bold",
+    margin: 20,
+    fontSize: 20,
+    fontFamily: "Poppins_700Bold",
   },
   h2: {
     alignItems: "center",
@@ -126,20 +136,25 @@ const styles = StyleSheet.create({
   },
   h2Text: {
     color: colours.secondary,
+    fontFamily: "Poppins_500Medium",
   },
   button: {
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    backgroundColor: "#1B73E7",
+    backgroundColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
     margin: 15,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
+    fontFamily: "Poppins_500Medium",
+
   },
   buttonText: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
+
   },
   eventItem: {
     flexDirection: "row",
@@ -150,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: colours.primary,
     borderRadius: 5,
     padding: 10,
-
+    fontFamily: "Poppins_500Medium",
     justifyContent: "center",
     alignItems: "center",
     width: "20%",
@@ -159,31 +174,43 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
-    backgroundColor: colours.additional,
+    backgroundColor: "white",
     marginLeft: 10,
     borderRadius: 5,
     width: "76%",
+    fontFamily: "Poppins_500Medium",
   },
   text: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
   },
   eventDetails: {
     flexDirection: "row",
-
+    fontFamily: "Poppins_400Regular",
     padding: 10,
     borderRadius: 5,
     color: "white",
   },
   eventDescription: {
     marginLeft: "22%",
+    marginRight: "5%",
     borderColor: colours.primary,
     borderWidth: 1,
     padding: 10,
     borderRadius: 5,
+    backgroundColor: "white",
+    fontFamily: "Poppins_400Regular",
   },
   noEvents: {
     margin: 10,
     justifyContent: "center",
     alignItems: "center",
+  },
+  normalText: {
+    fontFamily: "Poppins_400Regular",
+  },
+  boldText: {
+    fontFamily: "Poppins_500Medium",
+
   },
 });
