@@ -27,13 +27,15 @@ Once you have a database, you will need to create a ```.env``` file inside the p
 
 Once this is done, run ```npm start``` and the app should start. You may test or open this as you would with any mobile app.
 
-Inside the app, the database will be dynamically accessed through the Calendar, Lost & Found, Management Announcements, Marketplace, Recommendations, Find Community and Chat pages. The data these pages draw from can be populated through the Add Event, Lost & Found, Post an Announcement, Marketplace, Recommendations, Create Community and Chat pages
+Inside the app, the database will be dynamically accessed through the Calendar, Lost & Found, Management Announcements, Marketplace, Recommendations, Find Community and Chat pages. The data these pages draw from can be populated through the Add Event, Lost & Found, Post an Announcement, Marketplace, Recommendations, Create Community and Chat pages.
 
 ##
 
 Technologies used:
 
 node.js
+
+React
 
 React Native
 
@@ -42,3 +44,11 @@ React Query
 Typescript
 
 Firebase
+
+Expo
+
+Babel
+
+Formik
+
+Yup
