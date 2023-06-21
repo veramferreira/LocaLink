@@ -129,15 +129,15 @@ export default function App() {
               component={ReportIssue}
               options={{ title: "🔧 Report an Issue" }}
             />
+              <Drawer.Screen
+                name="Chat"
+                component={GeneralChat}
+                options={{ title: "💬 Chat" }}
+              />
             <Drawer.Screen
               name="FindCommunity"
               component={FindCommunity}
               options={{ title: "Find Community" }}
-            />
-            <Drawer.Screen
-              name="Chat"
-              component={GeneralChat}
-              options={{ title: "Chat" }}
             />
             <Drawer.Screen
               name="CreateCommunity"
