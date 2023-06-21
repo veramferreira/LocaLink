@@ -7,19 +7,21 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Linking,
+  ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
-import { addDoc, collection } from "@firebase/firestore";
+import { QuerySnapshot, addDoc, collection, onSnapshot, query, where } from "@firebase/firestore";
 import * as yup from "yup";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { MyContext } from "../Context";
 
 // setting type for TS
 interface FormValues {
   title: string;
   description: string;
-  email: string;
   img: string;
 }
 
@@ -27,7 +29,6 @@ interface FormValues {
 const formSchema = yup.object({
   title: yup.string().required().min(4),
   description: yup.string().required().min(4),
-  email: yup.string().email().required(),
   img: yup.string().min(4),
 });
 
@@ -40,27 +41,55 @@ const buttonPressedStyle = {
 export default function ReportIssue({ navigation }: any) {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
+  const { userContext } = useContext(MyContext);
+  const [communityInfo, setCommunityInfo] = useState({});
 
-  const handleSubmit = async (
+  // const handleSubmit = async (
+  //   values: FormValues,
+  //   { resetForm }: { resetForm: () => void }
+  // ) => {
+  //   try {
+  //     const docData = {
+  //       title: values.title,
+  //       description: values.description,
+  //       email: values.email,
+  //       img: values.img,
+  //     };
+
+  //     await addDoc(collection(db, "reportedIssues"), docData);
+  //     console.log("Document written successfully");
+  //     resetForm();
+  //     setSubmitted(true);
+  //     showAlert();
+  //   } catch (error) {
+  //     console.error("Error adding document: ", error);
+  //   }
+  // };
+
+  useEffect(() => {
+    if (userContext?.communityName) {
+      const q = query(
+        collection(db, "CommunityList"),
+        where("name", "==", userContext.communityName)
+      );
+      const communityQuery = onSnapshot(q, (querySnapshot: QuerySnapshot) => {
+        const communityArr: any[] = [];
+        querySnapshot.forEach((doc) => communityArr.push(doc.data()));
+        if (communityArr.length > 0) {
+          setCommunityInfo(communityArr[0]);
+        }
+      });
+      return () => communityQuery();
+    }
+  }, [userContext]);
+
+  const handleSubmit = (
     values: FormValues,
     { resetForm }: { resetForm: () => void }
   ) => {
-    try {
-      const docData = {
-        title: values.title,
-        description: values.description,
-        email: values.email,
-        img: values.img,
-      };
-
-      await addDoc(collection(db, "reportedIssues"), docData);
-      console.log("Document written successfully");
-      resetForm();
-      setSubmitted(true);
-      showAlert();
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
+    return Linking.openURL(
+      `mailto:${communityInfo?.email}?subject=${values.title}&body=Issue Description: ${values.description} \n Issue Image URL: ${values.img}`
+    );
   };
 
   // Setting up the alert message after the form has been submitted
@@ -74,11 +103,12 @@ export default function ReportIssue({ navigation }: any) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.heading}>Report an Issue</Text>
+    <ScrollView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Text style={styles.heading}>Report an Issue</Text>
           <Formik
-            initialValues={{ title: "", description: "", email: "",  img: "" }}
+            initialValues={{ title: "", description: "", img: "" }}
             validationSchema={formSchema}
             onSubmit={handleSubmit}
           >
@@ -110,18 +140,9 @@ export default function ReportIssue({ navigation }: any) {
                 <Text style={styles.errorText}>
                   {props.touched.description && props.errors.description}
                 </Text>
-                <Text style={styles.text}>Your email: </Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="example@example.com "
-                  onChangeText={(text) => props.handleChange("email")(text)}
-                  value={props.values.email}
-                  onBlur={props.handleBlur("email")}
-                />
-                <Text style={styles.errorText}>
-                  {props.touched.email && props.errors.email}
+                <Text style={styles.text}>
+                  Image URL <Text style={styles.optionalText}>(optional)</Text>:
                 </Text>
-                <Text style={styles.text}>Image URL <Text style={styles.optionalText}>(optional)</Text>:</Text>
                 <TextInput
                   style={styles.input}
                   placeholder="Image URL..."
@@ -148,8 +169,9 @@ export default function ReportIssue({ navigation }: any) {
               </View>
             )}
           </Formik>
-      </View>
-    </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </ScrollView>
   );
 }
 
@@ -169,7 +191,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     fontFamily: "Poppins_500Medium",
-  
   },
   optionalText: {
     color: "gray",
@@ -190,7 +211,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: "white",
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
   },
   button: {
     alignItems: "center",
@@ -202,8 +223,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 15,
     borderColor: "#1B73E7",
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },
@@ -218,7 +239,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 11,
     fontFamily: "Poppins_500Medium",
-
   },
   textSubmitted: {
     textAlign: "center",

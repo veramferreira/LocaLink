@@ -25,6 +25,7 @@ interface FormValues {
   description: string;
   postcode: string;
   img: string;
+  email: string;
   management1Name: string;
   management1Img: string;
   management2Name: string;
@@ -45,6 +46,7 @@ const formSchema = yup.object({
   description: yup.string().required().min(4),
   postcode: yup.string().required().min(3),
   img: yup.string().required().min(4),
+  email: yup.string().required().min(4),
   management1Name: yup.string().required().min(3),
   management1Img: yup.string().required().min(4),
   management2Name: yup.string().min(3),
@@ -82,6 +84,7 @@ export default function CreateCommunity() {
         description: values.description,
         postcode: values.postcode,
         img: values.img,
+        email: values.email,
         management1Name: values.management1Name,
         management1Img: values.management1Img,
         management2Name: values.management2Name,
@@ -135,6 +138,7 @@ export default function CreateCommunity() {
               description: "",
               postcode: "",
               img: "",
+              email: "",
               management1Name: "",
               management1Img: "",
               management2Name: "",
@@ -200,6 +204,19 @@ export default function CreateCommunity() {
                 />
                 <Text style={styles.errorText}>
                   {props.touched.img && props.errors.img}
+                </Text>
+                <Text style={styles.text}>
+                  Main Contact Email for Residents:
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email..."
+                  onChangeText={(text) => props.handleChange("email")(text)}
+                  value={props.values.email}
+                  onBlur={props.handleBlur("email")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.email && props.errors.email}
                 </Text>
                 <View>
                   <Text style={styles.text}>Manager 1 Name:</Text>
@@ -449,7 +466,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: "white",
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
   },
   button: {
     alignItems: "center",
@@ -461,8 +478,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 10,
     borderColor: "#1B73E7",
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },
@@ -471,12 +488,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     marginTop: 0,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: "Poppins_400Regular",
   },
   buttonText: {
     color: "white",
     fontFamily: "Poppins_500Medium",
-
   },
   errorText: {
     color: "crimson",
