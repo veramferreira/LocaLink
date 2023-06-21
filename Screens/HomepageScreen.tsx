@@ -31,7 +31,7 @@ type NavigationItem = {
 const ownerRoutes: NavigationItem[] = [
   {
     id: 1,
-    title: "📣 Management Announcements",
+    title: "📯 Management Announcements",
     screen: "ManagementAnnouncements",
   },
   { id: 2, title: "ℹ️ About", screen: "About" },
@@ -138,7 +138,7 @@ export const HomepageScreen: React.FC = () => {
     }
   };
 
-  const colours = ["#1B73E7", "#F4C01D", "#FF8A64"];
+  const colours = ["#1B73E7", "#eab20b", "#FF8A64"];
   const renderItem = ({ item }: { item: NavigationItem }) => {
     const backgroundColor = colours[item.id % colours.length];
     const itemContainerStyle = {

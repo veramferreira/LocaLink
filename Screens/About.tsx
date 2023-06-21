@@ -9,6 +9,7 @@ import {
   where,
 } from "@firebase/firestore";
 import { MyContext } from "../Context";
+import colours from "../constants/colours";
 
 interface CommunityInfo {
   description: string;
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
   normalText: {
     fontFamily: "Poppins_400Regular",
     fontSize: 12,
-    color: "#707070",
+    color: colours.font,
   },
   heading: {
     textAlign: "center",
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     rowGap: 4,
     borderRadius: 8,
     backgroundColor: "white",
-    borderColor: "#F4C01D",
+    borderColor: colours.yellow,
     borderWidth: 1,
     paddingRight: 20,
     paddingLeft: 20,
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
   contactsBody: {
     borderRadius: 8,
     backgroundColor: "white",
-    borderColor: "#F4C01D",
+    borderColor: colours.yellow,
     borderWidth: 1,
     paddingRight: 20,
     paddingLeft: 20,
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     fontFamily: "Poppins_400Regular",
-    color: "#707070",
+    color: colours.font,
   },
   title: {
     marginBottom: 10,
@@ -207,6 +208,6 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: "#F4C01D",
+    borderColor: colours.yellow,
   },
 });
