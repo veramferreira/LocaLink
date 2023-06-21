@@ -35,6 +35,9 @@ import {
 
 import { useState } from "react";
 import AssignAdmins from "./Screens/AssignAdminsPage";
+import LostItems from "./Screens/LostItems";
+import FoundItem from "./Screens/FoundItem";
+import LostItemCard from "./Screens/LostItemCard";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -174,6 +177,21 @@ export default function App() {
               name="AddEvent"
               component={AddEvent}
               options={{ title: "AddEvent" }}
+            />
+            <Drawer.Screen
+              name="LostItems"
+              component={LostItems}
+              options={{ title: "Looking for items" }}
+            />
+            <Drawer.Screen
+              name="FoundItem"
+              component={FoundItem}
+              options={{ title: "Found an item" }}
+            />
+            <Drawer.Screen
+              name="LostItemCard"
+              component={LostItemCard}
+              options={{ title: "Lost Item Card" }}
             />
           </Drawer.Navigator>
         </NavigationContainer>
