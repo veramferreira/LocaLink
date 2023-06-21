@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     backgroundColor: "white",
+    fontFamily: "Poppins_400Regular",
   },
   button: {
     backgroundColor: "#1B73E7",
@@ -53,15 +54,19 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "Poppins_500Medium",
   },
   switchText: {
     color: "white",
     marginTop: 10,
     textAlign: "center",
+    fontFamily: "Poppins_400Regular",
   },
   errorText: {
-    color: "red",
+    color: "crimson",
     marginBottom: 10,
+    fontFamily: "Poppins_500Medium",
+    textAlign: "center",
   },
 });
 
