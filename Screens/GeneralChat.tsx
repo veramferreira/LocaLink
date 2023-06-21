@@ -16,10 +16,10 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
+
     borderColor: "red",
   },
+
   // message: {
 
   // }
@@ -73,9 +73,9 @@ const GeneralChat = () => {
         <View style={styles.message}>
           {messages &&
             messages.map((message) => {
+              console.log(message.name, "this sis the driod");
               return <Message key={message.id} message={message} />;
             })}
-
           <SendMessage scroll={scroll} chatDB={chatDB} />
         </View>
       </ScrollView>

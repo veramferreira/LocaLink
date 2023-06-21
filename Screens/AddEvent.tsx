@@ -15,6 +15,7 @@ import { addDoc, collection } from "firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import colours from "../constants/colours";
 
 interface FormValues {
   eventName: string;
@@ -31,8 +32,8 @@ const formSchema = yup.object({
 });
 
 const buttonPressedStyle = {
-  backgroundColor: "#F57C01",
-  borderColor: "#F57C01",
+  backgroundColor: colours.primary,
+  borderColor: colours.primary,
 };
 
 const AddEvent: React.FC = () => {
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
@@ -228,18 +229,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    backgroundColor: "#1B73E7",
+    backgroundColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
     margin: 15,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
   },
   buttonText: {
     color: "white",
   },
   errorText: {
-    color: "crimson",
+    color: colours.error,
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",

@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     backgroundColor: "white",
+    fontFamily: "Poppins_400Regular",
   },
   button: {
     backgroundColor: "#1B73E7",
@@ -53,15 +54,19 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "Poppins_500Medium",
   },
   switchText: {
     color: "white",
     marginTop: 10,
     textAlign: "center",
+    fontFamily: "Poppins_400Regular",
   },
   errorText: {
-    color: "red",
+    color: "crimson",
     marginBottom: 10,
+    fontFamily: "Poppins_500Medium",
+    textAlign: "center",
   },
 });
 
@@ -84,7 +89,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          setUserContext({ email: email });
+          setUserContext({ email: email.toLowerCase() });
           navigation.navigate("ProfileSetup");
           console.log("User creation successful");
         })
@@ -98,10 +103,12 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
           let comExist = false;
           let emailExist = false;
           let userExist = false;
+          let ldMode = "Light";
           let comName = "";
           let userName = "";
           let userRole = "";
           let postCount = 0;
+
           console.log(userList);
           for (const user of userList) {
             if (user.email.toLowerCase() === email.toLowerCase()) {
@@ -118,25 +125,29 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               if (user.postCount) {
                 postCount = user.postCount;
               }
+              if (user.ldMode) {
+                ldMode = user.ldMode;
+              }
             }
           }
 
           if (emailExist && userExist && !comExist) {
             setUserContext({
-              email: email,
+              email: email.toLowerCase(),
               userName: userName,
             });
           } else if (comExist) {
             setUserContext({
-              email: email,
+              email: email.toLowerCase(),
               userName: userName,
               communityName: comName,
               role: userRole,
               postCount: postCount,
+              ldMode: ldMode,
             });
           } else {
             setUserContext({
-              email: email,
+              email: email.toLowerCase(),
             });
           }
           console.log("Sign-in successful");

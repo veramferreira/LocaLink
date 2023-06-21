@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { auth } from "../../config/firebase";
 import {
   View,
@@ -7,15 +7,48 @@ import {
   Text,
   TextInput,
 } from "react-native";
-
+import { MyContext } from "../../Context";
+import colours from "../../constants/colours";
 
 const Message = ({ message }) => {
-  // message.uid === auth.currentUser.uid ? `${style.sent}` : `${style.received}`;
+  const { userContext } = useContext(MyContext);
+
+  if (message.name === userContext.userName) {
+    console.log("hello");
+  }
+
+  const sentReceivedText = () => {
+    return message.name === userContext.userName
+      ? {
+          fontFamily: "Poppins_400Regular",
+          textAlign: "right",
+        }
+      : {
+          fontFamily: "Poppins_400Regular",
+          textAlign: "left",
+        };
+  };
+
+  const sentReceivedName = () => {
+    return message.name === userContext.userName
+      ? {
+          fontFamily: "Poppins_500Medium",
+          marginBottom: 10,
+          textAlign: "right",
+        }
+      : {
+          fontFamily: "Poppins_500Medium",
+          marginBottom: 10,
+          textAlign: "left",
+        };
+  };
+
+  const containerStyle = message.name === userContext.userName ? styles.sentContainer : styles.receivedContainer;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.name}>{message.name}</Text>
-      <Text style={styles.text}>{message.text}</Text>
+    <View style={[styles.container, containerStyle]}>
+      <Text style={sentReceivedName()}>{message.name}</Text>
+      <Text style={sentReceivedText()}>{message.text}</Text>
     </View>
   );
 };
@@ -24,30 +57,21 @@ export default Message;
 
 const styles = StyleSheet.create({
   container: {
-    // display: "flex",
-    // flexDirection: "column",
-    // borderColor: "red",
-    // borderWidth: 1,
     padding: 20,
     backgroundColor: "white",
-    margin: 20,
+    marginVertical: 10,
     borderRadius: 8,
+    width: "70%",
+    margin: 20,
+    borderWidth: 1,
   },
-  name: {
-    fontFamily: "Poppins_500Medium",
-    marginBottom: 10
+  sentContainer: {
+    alignSelf: "flex-end",
+    borderColor: colours.yellow,
   },
-  text: {
-    fontFamily: 'Poppins_400Regular',
-  }
-//   wrapper: {
-//     display: "flex",
-//     flexDirection: "column",
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   name: {
-//     flex: 1,
-//     textAlign: "center"
-//   },
+  receivedContainer: {
+    alignSelf: "flex-start",
+    borderColor: colours.pink,
+  },
 });
+// merge error

@@ -33,13 +33,16 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import AssignAdmins from "./Screens/AssignAdminsPage";
 import LostItems from "./Screens/LostItems";
 import FoundItem from "./Screens/FoundItem";
 import LostItemCard from "./Screens/LostItemCard";
+
 import MarketplaceItemCard from "./Screens/MarketplaceItemCard";
 import ListItem from "./Screens/ListItem";
+
+import { Ionicons } from "@expo/vector-icons";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -75,64 +78,70 @@ export default function App() {
                 fontWeight: "bold",
               },
               drawerLabelStyle: {
-                fontFamily: "Poppins_400Regular",
+                fontFamily: "Poppins_500Medium",
               },
+              drawerContentContainerStyle: {
+                backgroundColor: colours.primary,
+              },
+              drawerActiveTintColor: "black",
+              drawerInactiveTintColor: "white",
+              drawerActiveBackgroundColor: "white",
             }}
           >
             <Drawer.Screen
               name="HomepageScreen"
               component={HomepageScreen}
-              options={{ title: "Community Homepage" }}
+              options={{ title: "🏠 Community Homepage" }}
             />
             <Drawer.Screen
               name="ProfileSetup"
               component={ProfileSetup}
-              options={{ title: "Profile" }}
+              options={{ title: "👤 Profile" }}
             />
             <Drawer.Screen
               name="About"
               component={About}
-              options={{ title: "About Community" }}
+              options={{ title: "ℹ️ About Community" }}
             />
             <Drawer.Screen
               name="Calendar"
               component={CalendarScreen}
-              options={{ title: "Calendar" }}
+              options={{ title: "📆 Calendar" }}
             />
             <Drawer.Screen
               name="LostFound"
               component={LostFound}
-              options={{ title: "Lost & Found" }}
+              options={{ title: "🔎 Lost & Found" }}
             />
             <Drawer.Screen
               name="ManagementAnnouncements"
               component={ManagementAnnouncements}
-              options={{ title: "Management Announcements" }}
+              options={{ title: "📯 Announcements" }}
             />
             <Drawer.Screen
               name="Marketplace"
               component={Marketplace}
-              options={{ title: "Marketplace" }}
+              options={{ title: "🛍️ Marketplace" }}
             />
             <Drawer.Screen
               name="Recommendations"
               component={Recommendations}
-              options={{ title: "Recommendations" }}
+              options={{ title: "📝 Recommendations" }}
             />
             <Drawer.Screen
               name="ReportIssue"
               component={ReportIssue}
-              options={{ title: "Report an Issue" }}
+              options={{ title: "🔧 Report an Issue" }}
+            />
+            <Drawer.Screen
+              name="Chat"
+              component={GeneralChat}
+              options={{ title: "💬 Chat" }}
             />
             <Drawer.Screen
               name="FindCommunity"
               component={FindCommunity}
               options={{ title: "Find Community" }}
-            />
-            <Drawer.Screen
-              name="Chat"
-              component={GeneralChat}
-              options={{ title: "Chat" }}
             />
             <Drawer.Screen
               name="CreateCommunity"

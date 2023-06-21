@@ -1,9 +1,20 @@
 export default {
   primary: "#F57C01" /*orange*/,
   secondary: "#1B73E7" /*blue*/,
-  additional: "#F4C01D" /*yellow*/,
+  yellow: "#eab20b" /*yellow*/,
+  pink: "#FF8A64",
   font: "#707070" /*grey*/,
+  error: "crimson" /*errors*/,
 };
+
+//Dark Mode:
+//primary: #080808
+//secondary: #1e1e1e
+//yellow
+//pink
+//blue for links
+//orange
+//white for text
 
 // Orange: #F57C01
 // Yellow: #F4C01D
