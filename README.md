@@ -35,20 +35,20 @@ Technologies used:
 
 node.js
 
-React
+React - https://react.dev/
 
-React Native
+React Native - https://github.com/facebook/react-native#readme
 
-React Query
+React Query - https://github.com/TanStack/query#readme
 
-Typescript
+Typescript - https://www.typescriptlang.org/
 
-Firebase
+Firebase - https://firebase.google.com/
 
-Expo
+Expo - https://github.com/expo/expo/tree/main/packages/expo
 
-Babel
+Babel - https://babel.dev/docs/en/next/babel-core
 
-Formik
+Formik - https://formik.org
 
-Yup
+Yup - https://github.com/jquense/yup
