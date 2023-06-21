@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
   headerRightText: {
     color: "white",
     paddingRight: 5,
+    fontFamily: "Poppins_500Medium",
   },
 });
