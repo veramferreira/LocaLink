@@ -1,17 +1,31 @@
 import { useContext } from "react";
 import { MyContext } from "../Context";
 import { Text, View, StyleSheet, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 export default function EditProfile() {
   const { userContext } = useContext(MyContext);
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>My Profile</Text>
-      <Image source={require('../assets/avatar.jpeg')} style={styles.avatarImg}/>
+      <Image
+        source={require("../assets/avatar.jpeg")}
+        style={styles.avatarImg}
+      />
       <View style={styles.bodyContainer}>
-        <Text style={styles.boldText}>User name: <Text style={styles.normalText}>{userContext.userName}</Text></Text>
-        <Text style={styles.boldText}>Email: <Text style={styles.normalText}>{userContext.email}</Text></Text>
-        <Text style={styles.boldText}>Community: <Text style={styles.normalText}>{userContext.communityName}</Text></Text>
-        <Text style={styles.boldText}>Role: <Text style={styles.normalText}>{userContext.role}</Text></Text>
+        <Text style={styles.boldText}>
+          User name:{" "}
+          <Text style={styles.normalText}>{userContext.userName}</Text>
+        </Text>
+        <Text style={styles.boldText}>
+          Email: <Text style={styles.normalText}>{userContext.email}</Text>
+        </Text>
+        <Text style={styles.boldText}>
+          Community:{" "}
+          <Text style={styles.normalText}>{userContext.communityName}</Text>
+        </Text>
+        <Text style={styles.boldText}>
+          Role: <Text style={styles.normalText}>{userContext.role}</Text>
+        </Text>
       </View>
     </View>
   );
@@ -53,6 +67,6 @@ const styles = StyleSheet.create({
   normalText: {
     fontFamily: "Poppins_400Regular",
     textAlign: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 });

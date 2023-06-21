@@ -18,7 +18,7 @@ const LostItems: React.FC = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const q = query(collection(db, "foundItems"), orderBy("timestamp"));
+    const q = query(collection(db, "foundItems"), orderBy("timestamp", "desc"));
 
     const itemsQuery = onSnapshot(q, (querySnapshot) => {
       const items = [];
