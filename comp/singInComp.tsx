@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
-    textAlign: 'center'
+    textAlign: "center",
   },
   switchText: {
     color: "white",
     marginTop: 10,
-    textAlign: 'center'
+    textAlign: "center",
   },
   errorText: {
     color: "red",
@@ -100,9 +100,11 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
           let userExist = false;
           let comName = "";
           let userName = "";
+          let userRole = "";
+          let postCount = 0;
           console.log(userList);
           for (const user of userList) {
-            if (user.email === email) {
+            if (user.email.toLowerCase() === email.toLowerCase()) {
               emailExist = true;
               if (user.userName) {
                 userName = user.userName;
@@ -110,10 +112,15 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               }
               if (user.communityName) {
                 comName = user.communityName;
+                userRole = user.role;
                 comExist = true;
+              }
+              if (user.postCount) {
+                postCount = user.postCount;
               }
             }
           }
+
           if (emailExist && userExist && !comExist) {
             setUserContext({
               email: email,
@@ -124,6 +131,8 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               email: email,
               userName: userName,
               communityName: comName,
+              role: userRole,
+              postCount: postCount,
             });
           } else {
             setUserContext({
@@ -155,7 +164,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   return (
     <View style={styles.wrapper}>
       <ScrollView>
-        <View >
+        <View>
           <Image style={styles.logo} source={require("../assets/logo.png")} />
           {error !== "" && <Text style={styles.errorText}>{error}</Text>}
           <TextInput

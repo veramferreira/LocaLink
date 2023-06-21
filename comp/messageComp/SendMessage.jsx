@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { auth, db } from "../../config/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {
@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
 } from "react-native";
-
+import { MyContext } from "../../Context";
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
 });
 
 const SendMessage = ({ scroll, chatDB }) => {
+  const { userContext } = useContext(MyContext);
   const [input, setInput] = useState("");
 
   const sendMessage = async (e) => {
@@ -54,10 +55,10 @@ const SendMessage = ({ scroll, chatDB }) => {
       alert("Please enter a valid message");
       return;
     }
-    const { email } = auth.currentUser;
+
     await addDoc(collection(db, `${chatDB}`), {
       text: input,
-      name: email,
+      name: userContext?.userName,
       timestamp: serverTimestamp(),
     });
     setInput("");

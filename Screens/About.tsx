@@ -33,9 +33,8 @@ export default function About({ navigation }: any) {
   );
   const { userContext, setUserContext } = useContext(MyContext);
 
-
   useEffect(() => {
-    if (userContext.communityName) {
+    if (userContext?.communityName) {
       const q = query(
         collection(db, "CommunityList"),
         where("name", "==", userContext.communityName)
@@ -49,11 +48,13 @@ export default function About({ navigation }: any) {
       });
       return () => communityQuery();
     }
-  }, [userContext.communityName]);
+  }, [userContext]);
 
   useEffect(() => {
-    setCommunity(userContext.communityName);
-  }, [userContext.communityName]);
+    if (userContext?.communityName) {
+      setCommunity(userContext.communityName);
+    }
+  }, [userContext]);
 
   if (!community || !communityInfo) {
     return null;

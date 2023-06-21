@@ -19,6 +19,8 @@ import {
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
 import { MyContext } from "../Context";
+import updatePostCount from "../Utils/updatePostCount";
+import HandleNotifications from "../comp/handleNotifications";
 
 type NavigationItem = {
   id: number;
@@ -26,50 +28,104 @@ type NavigationItem = {
   screen: string;
 };
 
-const routes: NavigationItem[] = [
-  { id: 1, title: "ℹ️ About", screen: "About" },
+const ownerRoutes: NavigationItem[] = [
   {
-    id: 2,
+    id: 1,
     title: "📣 Management Announcements",
     screen: "ManagementAnnouncements",
   },
-  { id: 3, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 2, title: "ℹ️ About", screen: "About" },
+  { id: 3, title: "💬 General Chat", screen: "Chat" },
   { id: 4, title: "📆 Calendar", screen: "Calendar" },
-  { id: 5, title: "🔎 Lost & Found", screen: "LostFound" },
-  { id: 6, title: "🛍️ Marketplace", screen: "Marketplace" },
-  { id: 7, title: "💬 Recommendations", screen: "Recommendations" },
-  { id: 8, title: "Find Community", screen: "FindCommunity" },
-  { id: 9, title: "Create Community", screen: "CreateCommunity" },
-  { id: 10, title: "Chat", screen: "Chat" },
-  { id: 11, title: "Profile Setup", screen: "ProfileSetup" },
-  { id: 12, title: "Find Create", screen: "FindCreate" },
+  { id: 5, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 6, title: "📝 Recommendations", screen: "Recommendations" },
+  { id: 7, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 8, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 9, title: "📣 Post Announcement", screen: "PostAnnouncement" },
+  { id: 10, title: "🎖️ Assign Admins", screen: "AssignAdmins" },
+];
+
+const adminRoutes: NavigationItem[] = [
   {
-    id: 13,
-    title: "Post Announcement (admins only)",
-    screen: "PostAnnouncement",
+    id: 1,
+    title: "📣 Management Announcements",
+    screen: "ManagementAnnouncements",
   },
+  { id: 2, title: "ℹ️ About", screen: "About" },
+  { id: 3, title: "💬 General Chat", screen: "Chat" },
+  { id: 4, title: "📆 Calendar", screen: "Calendar" },
+  { id: 5, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 6, title: "📝 Recommendations", screen: "Recommendations" },
+  { id: 7, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 8, title: "🔧 Report Issue", screen: "ReportIssue" },
+  { id: 9, title: "📣 Post Announcement", screen: "PostAnnouncement" },
+];
+
+const routes: NavigationItem[] = [
+  {
+    id: 1,
+    title: "📣 Management Announcements",
+    screen: "ManagementAnnouncements",
+  },
+  { id: 2, title: "ℹ️ About", screen: "About" },
+  { id: 3, title: "💬 General Chat", screen: "Chat" },
+  { id: 4, title: "📆 Calendar", screen: "Calendar" },
+  { id: 5, title: "🛍️ Marketplace", screen: "Marketplace" },
+  { id: 6, title: "📝 Recommendations", screen: "Recommendations" },
+  { id: 7, title: "🔎 Lost & Found", screen: "LostFound" },
+  { id: 8, title: "🔧 Report Issue", screen: "ReportIssue" },
 ];
 
 export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const [community, setCommunity] = useState("");
-  const { userContext } = useContext(MyContext);
+  const [hasNewPosts, setHasNewPosts] = useState(false);
+  const { userContext, setUserContext } = useContext(MyContext);
+
+  useEffect(() => {
+    const checkForNewPosts = async () => {
+      const managementAnnouncementsQuerySnapshot = await getDocs(
+        collection(db, "postAdminAnnouncement")
+      );
+
+      const currentPostCount = managementAnnouncementsQuerySnapshot.docs.length;
+      let hasNewPosts;
+      if (!userContext.postCount) {
+        hasNewPosts = true;
+      } else {
+        hasNewPosts = currentPostCount > userContext.postCount;
+      }
+      setHasNewPosts(hasNewPosts);
+      updatePostCount(userContext.email.toLowerCase(), currentPostCount);
+      setUserContext({ ...userContext, postCount: currentPostCount });
+      // setPreviousPostCount(currentPostCount);
+    };
+
+    checkForNewPosts();
+
+    const unsubscribe = onSnapshot(
+      collection(db, "postAdminAnnouncement"),
+      () => {
+        checkForNewPosts();
+      }
+    );
+
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     const q = query(collection(db, "Users"));
     const usersQuery = onSnapshot(q, (querySnapshot) => {
       let usersArr: any[] = [];
       querySnapshot.forEach((doc) => usersArr.push(doc.data()));
-      setCommunity(usersArr[0].communityName);
+
       return () => usersQuery();
     });
   }, []);
-  useEffect(() => {
-    // console.log(community);
-  }, [community]);
 
   const handleLinkPress = (item: NavigationItem) => {
-    // console.log(item.screen);
+    if (item.screen === "ManagementAnnouncements") {
+      setHasNewPosts(false);
+    }
     if (item.screen === "HomepageScreen") {
       navigation.dispatch(
         CommonActions.reset({
@@ -96,15 +152,56 @@ export const HomepageScreen: React.FC = () => {
         style={itemContainerStyle}
       >
         <Text style={styles.itemTitle}>{item.title}</Text>
+        {item.screen === "ManagementAnnouncements" && hasNewPosts && (
+          <View>
+            <Text style={styles.notificationText}>New posts!</Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   };
 
-  return (
+  return userContext?.role === "owner" ? (
     <ScrollView>
       <View style={styles.container}>
-        {!community ? null : (
-          <Text style={styles.h2}>Welcome to {community}! 👋</Text>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
+        )}
+        <View style={styles.containerList}>
+          {ownerRoutes.map((item) => (
+            <React.Fragment key={item.id}>
+              {renderItem({ item })}
+            </React.Fragment>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  ) : userContext?.role === "admin" ? (
+    <ScrollView>
+      <View style={styles.container}>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
+        )}
+        <View style={styles.containerList}>
+          {adminRoutes.map((item) => (
+            <React.Fragment key={item.id}>
+              {renderItem({ item })}
+            </React.Fragment>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  ) : (
+    <ScrollView>
+      <View style={styles.container}>
+        {userContext?.communityName && (
+          <Text style={styles.h2}>
+            Welcome to {userContext.communityName}! 👋
+          </Text>
         )}
         <View style={styles.containerList}>
           {routes.map((item) => (
@@ -113,15 +210,6 @@ export const HomepageScreen: React.FC = () => {
             </React.Fragment>
           ))}
         </View>
-        {userContext?.userName && (
-          <Text style={styles.h2}>{userContext.userName}!</Text>
-        )}
-        {userContext?.communityName && (
-          <Text style={styles.h2}>{userContext.communityName}</Text>
-        )}
-        {userContext?.email && (
-          <Text style={styles.h2}>{userContext.email}</Text>
-        )}
       </View>
     </ScrollView>
   );
@@ -169,5 +257,22 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Poppins_500Medium",
     textAlign: "center",
+  },
+  notificationText: {
+    color: "white",
+    fontSize: 12,
+    fontFamily: "Poppins_500Medium",
+    textTransform: "lowercase",
+    backgroundColor: "red",
+    borderWidth: 1,
+    borderColor: "red",
+    borderRadius: 20,
+    paddingRight: 15,
+    paddingLeft: 15,
+    marginTop: 5,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
 });

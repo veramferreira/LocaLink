@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { Query, collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function ManagementAnnouncements({ navigation }: any) {
   useEffect(() => {
     const q = query(
       collection(db, "postAdminAnnouncement"),
-      orderBy("timestamp")
+      orderBy("timestamp", "desc")
     );
 
     const announcementQuery = onSnapshot(q, (querySnapshot) => {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   postImg: {
-    width: 300,
+    width: 370,
     height: 200,
     borderRadius: 8,
     borderWidth: 2,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     marginBottom: 10,
     fontFamily: "Poppins_400Regular",
-    textAlign: "center",
+    textAlign: "justify",
     marginTop: 10,
   },
 });
