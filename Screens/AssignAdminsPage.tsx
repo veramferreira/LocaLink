@@ -11,6 +11,7 @@ import { MyContext } from "../Context";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AddRoleToUser from "../Utils/AddRoleToUser";
+import colours from "../constants/colours";
 
 export default function AssignAdmins() {
   const [CommunityUserList, setCommunityUserList] = useState([{}]);
@@ -120,12 +121,12 @@ const styles = StyleSheet.create({
   buttonAdd: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#1B73E7",
+    backgroundColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
     margin: 15,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   buttonRemove: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "crimson",
+    backgroundColor: colours.error,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
