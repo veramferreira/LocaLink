@@ -6,17 +6,25 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { Query, collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  Query,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MyContext } from "../Context";
 
 export default function ManagementAnnouncements({ navigation }: any) {
   const [announcementList, setAnnouncementList] = useState([{}]);
   const [isLoading, setIsLoading] = useState(true);
+  const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     const q = query(
-      collection(db, "postAdminAnnouncement"),
+      collection(db, `${userContext?.communityName}postAdminAnnouncement`),
       orderBy("timestamp", "desc")
     );
 
@@ -49,9 +57,9 @@ export default function ManagementAnnouncements({ navigation }: any) {
                   style={styles.postImg}
                 />
                 <View style={styles.descriptionContainer}>
-                <Text style={styles.description}>
-                  {announcement.description}
-                </Text>
+                  <Text style={styles.description}>
+                    {announcement.description}
+                  </Text>
                 </View>
               </View>
             );
@@ -83,7 +91,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     marginTop: 20,
-    
   },
   postImg: {
     width: 370,
@@ -112,5 +119,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 10,
     borderRadius: 8,
-  }
+  },
 });
