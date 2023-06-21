@@ -84,7 +84,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          setUserContext({ email: email });
+          setUserContext({ email: email.toLowerCase() });
           navigation.navigate("ProfileSetup");
           console.log("User creation successful");
         })
@@ -123,12 +123,12 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
 
           if (emailExist && userExist && !comExist) {
             setUserContext({
-              email: email,
+              email: email.toLowerCase(),
               userName: userName,
             });
           } else if (comExist) {
             setUserContext({
-              email: email,
+              email: email.toLowerCase(),
               userName: userName,
               communityName: comName,
               role: userRole,
@@ -136,7 +136,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
             });
           } else {
             setUserContext({
-              email: email,
+              email: email.toLowerCase(),
             });
           }
           console.log("Sign-in successful");
