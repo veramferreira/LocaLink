@@ -38,6 +38,8 @@ import AssignAdmins from "./Screens/AssignAdminsPage";
 import LostItems from "./Screens/LostItems";
 import FoundItem from "./Screens/FoundItem";
 import LostItemCard from "./Screens/LostItemCard";
+import MarketplaceItemCard from "./Screens/MarketplaceItemCard";
+import ListItem from "./Screens/ListItem";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -176,22 +178,62 @@ export default function App() {
             <Drawer.Screen
               name="AddEvent"
               component={AddEvent}
-              options={{ title: "AddEvent" }}
+              options={{
+                title: "AddEvent",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
             <Drawer.Screen
               name="LostItems"
               component={LostItems}
-              options={{ title: "Looking for items" }}
+              options={{
+                title: "Looking for items",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
             <Drawer.Screen
               name="FoundItem"
               component={FoundItem}
-              options={{ title: "Found an item" }}
+              options={{
+                title: "Found an item",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
             <Drawer.Screen
               name="LostItemCard"
               component={LostItemCard}
-              options={{ title: "Lost Item Card" }}
+              options={{
+                title: "Lost Item Card",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
+            />
+            <Drawer.Screen
+              name="MarketplaceItemCard"
+              component={MarketplaceItemCard}
+              options={{
+                title: "MarketplaceItemCard",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
+            />
+            <Drawer.Screen
+              name="ListItem"
+              component={ListItem}
+              options={{
+                title: "ListItem",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
           </Drawer.Navigator>
         </NavigationContainer>
