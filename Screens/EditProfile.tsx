@@ -23,7 +23,7 @@ export default function EditProfile() {
           setUserContext({ ...userContext, ldMode: mode });
         }}
       >
-        <Text>light dark</Text>
+        {/* <Text>light dark</Text> */}
       </TouchableOpacity>
       <Text style={styles.heading}>My Profile</Text>
       <Image

@@ -25,6 +25,7 @@ interface CommunityInfo {
   management2Img: string;
   management3Name: string;
   management3Img: string;
+  img: string;
 }
 
 export default function About({ navigation }: any) {
@@ -65,6 +66,10 @@ export default function About({ navigation }: any) {
     <>
       {!community ? null : (
         <ScrollView>
+          <Image source={{
+                      uri: communityInfo.img,
+                    }} 
+                    style={styles.coverImg}/>
           <View>
             <Text style={styles.heading}>About {community}</Text>
             <View style={styles.main}>
@@ -158,6 +163,10 @@ const styles = StyleSheet.create({
     margin: 20,
     fontSize: 20,
     fontFamily: "Poppins_700Bold",
+  },
+  coverImg: {
+    width: 450,
+    height: 200,
   },
   main: {
     marginRight: 30,
