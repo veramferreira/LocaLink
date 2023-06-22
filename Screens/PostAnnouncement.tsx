@@ -22,21 +22,18 @@ import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { MyContext } from "../Context";
 
-// setting type for TS
 interface FormValues {
   title: string;
   description: string;
   img: string;
 }
 
-// Setting the rules for form validation
 const formSchema = yup.object({
   title: yup.string().required().min(4),
   description: yup.string().required().min(4),
   img: yup.string().min(4),
 });
 
-//Setting the button colour when it's pressed
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
   borderColor: "#F57C01",
@@ -75,7 +72,6 @@ export default function PostAnnouncement() {
     }
   };
 
-  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "Your form has been submitted!",

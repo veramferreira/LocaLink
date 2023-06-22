@@ -97,7 +97,6 @@ export const HomepageScreen: React.FC = () => {
       setHasNewPosts(hasNewPosts);
       updatePostCount(userContext.email.toLowerCase(), currentPostCount);
       setUserContext({ ...userContext, postCount: currentPostCount });
-      // setPreviousPostCount(currentPostCount);
     };
 
     checkForNewPosts();

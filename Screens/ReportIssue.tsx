@@ -32,21 +32,18 @@ import { MyContext } from "../Context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colours from "../constants/colours";
 
-// setting type for TS
 interface FormValues {
   title: string;
   description: string;
   img: string;
 }
 
-// Setting the rules for form validation
 const formSchema = yup.object({
   title: yup.string().required().min(4),
   description: yup.string().required().min(4),
   img: yup.string().min(4),
 });
 
-//Setting the button colour when it's pressed
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
   borderColor: "#F57C01",
@@ -59,7 +56,6 @@ const buttonDisabledStyle = {
 
 export default function ReportIssue({ navigation }: any) {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
   const { userContext } = useContext(MyContext);
   const [communityInfo, setCommunityInfo] = useState({});
   const [currentImage, setCurrentImage] = useState(null);
@@ -74,8 +70,8 @@ export default function ReportIssue({ navigation }: any) {
       quality: 1,
     });
     if (!result.canceled) {
-      const source = { uri: result.assets[0].uri }; // Access the selected asset from the assets array
-      console.log(source);
+      const source = { uri: result.assets[0].uri };
+
       setCurrentImage(source);
       handleUploadImage(source);
     }
@@ -94,7 +90,6 @@ export default function ReportIssue({ navigation }: any) {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Handle progress updates
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
@@ -106,9 +101,6 @@ export default function ReportIssue({ navigation }: any) {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-          console.log("File available at", downloadUrl);
-
-          // props.setFieldValue("photoUrl", downloadUrl);
           setDownloadUrl(downloadUrl);
           setUploading(false);
           Alert.alert("Photo uploaded");
@@ -162,7 +154,6 @@ export default function ReportIssue({ navigation }: any) {
   ) => {
     resetForm();
     setCurrentImage(null);
-    setSubmitted(true);
     setDownloadUrl("");
     showAlert();
     return Linking.openURL(
@@ -170,7 +161,6 @@ export default function ReportIssue({ navigation }: any) {
     );
   };
 
-  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "Thank you for your report!",

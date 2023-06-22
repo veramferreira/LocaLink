@@ -50,7 +50,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [userContext, setUserContext] = useState({});
-  // const [adminRole, setAdminRole] = useState("none");
+
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -250,4 +250,3 @@ export default function App() {
     </QueryClientProvider>
   );
 }
-//push

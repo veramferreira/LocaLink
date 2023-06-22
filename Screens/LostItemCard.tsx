@@ -16,8 +16,8 @@ const LostItemCard: React.FC<{ route: any }> = ({ route }) => {
         <Text style={styles.heading}>{itemName}</Text>
         <Image source={{ uri: photoUrl }} style={styles.itemImage} />
         <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>{description}</Text>
-        <Text style={styles.date}>Date found: {date}</Text>
+          <Text style={styles.description}>{description}</Text>
+          <Text style={styles.date}>Date found: {date}</Text>
         </View>
         <TouchableOpacity
           onPress={() => Linking.openURL(`mailto:${contactEmail}`)}
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   contactText: {
     color: "white",
     fontFamily: "Poppins_500Medium",
-
   },
   button: {
     width: "100%",

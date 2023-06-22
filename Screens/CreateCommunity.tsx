@@ -20,7 +20,6 @@ import { MyContext } from "../Context";
 import AddRoleToUser from "../Utils/AddRoleToUser";
 import colours from "../constants/colours";
 
-// setting types for TS
 interface FormValues {
   name: string;
   description: string;
@@ -41,7 +40,6 @@ interface FormValues {
   contact3Info: string;
 }
 
-// Setting the rules for form validation
 const formSchema = yup.object({
   name: yup.string().required().min(4),
   description: yup.string().required().min(4),
@@ -62,7 +60,6 @@ const formSchema = yup.object({
   contact3Info: yup.string().min(4),
 });
 
-//Setting the button colour when it's pressed
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
   borderColor: "#F57C01",
@@ -101,7 +98,7 @@ export default function CreateCommunity() {
       };
 
       await addDoc(collection(db, "CommunityList"), docData);
-      console.log("Document written successfully");
+
       resetForm();
       setSubmitted(true);
       showAlert();
@@ -118,7 +115,6 @@ export default function CreateCommunity() {
     }
   };
 
-  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "Your Community has been created!",
@@ -479,8 +475,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 10,
     borderColor: colours.secondary,
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },

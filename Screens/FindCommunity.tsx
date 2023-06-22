@@ -14,13 +14,6 @@ import colours from "../constants/colours";
 import { MyContext } from "../Context";
 import AddRoleToUser from "../Utils/AddRoleToUser";
 
-// NEED TO TRY FIX TYPSCRIPT ISSUE WITH PREDEFINED TYPE FOR COMMUNITY IN MAP
-// type ExampleObject = {
-//   name: string;
-//   location: string;
-//   description: string;
-// };
-
 export default function FindCommunity({ navigation }: any) {
   const [communityList, setCommunityList] = useState([{}]);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +42,6 @@ export default function FindCommunity({ navigation }: any) {
   const handleClick = () => {
     setFilteredArr(
       communityList.filter((community: any) => {
-        console.log(searchInput);
         if (community.name.includes(searchInput)) {
           return community;
         }
@@ -94,7 +86,6 @@ export default function FindCommunity({ navigation }: any) {
             ) : (
               filteredArr.map((community: any, index) => {
                 return (
-                  // NEED TO ADD ONCLICK HERE TO NAVIGATE
                   <TouchableOpacity
                     key={index}
                     style={styles.itemContainer}
@@ -110,14 +101,12 @@ export default function FindCommunity({ navigation }: any) {
           ) : (
             communityList.map((community: any, index) => {
               return (
-                // NEED TO ADD ONCLICK HERE TO NAVIGATE
                 <TouchableOpacity
                   key={index}
                   style={styles.itemContainer}
                   onPress={() => {
                     setCommunityClicked(community);
                   }}
-                  
                 >
                   <Text style={styles.communityName}>{community.name}</Text>
                 </TouchableOpacity>
@@ -131,22 +120,28 @@ export default function FindCommunity({ navigation }: any) {
     <View style={styles.confirmContainer}>
       <Text style={styles.title}>{communityClicked.name}</Text>
       <View style={styles.confirmDescriptionWrapper}>
-      <Text style={styles.confirmDescription}>{communityClicked.description}</Text>
-      <Text style={styles.confirmPostcode}>Postecode: {communityClicked.postcode}</Text>
+        <Text style={styles.confirmDescription}>
+          {communityClicked.description}
+        </Text>
+        <Text style={styles.confirmPostcode}>
+          Postecode: {communityClicked.postcode}
+        </Text>
       </View>
-      <Text style={styles.normalText}>Would you like to join this community?</Text>
+      <Text style={styles.normalText}>
+        Would you like to join this community?
+      </Text>
       <View style={styles.btnWrapper}>
-      <TouchableOpacity  style={styles.buttonYes} onPress={handleYesClick}>
-        <Text style={styles.buttonText}>Yes!</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          setCommunityClicked("");
-        }}
-        style={styles.buttonNo}
-      >
-        <Text style={styles.buttonText}>No!</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonYes} onPress={handleYesClick}>
+          <Text style={styles.buttonText}>Yes!</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setCommunityClicked("");
+          }}
+          style={styles.buttonNo}
+        >
+          <Text style={styles.buttonText}>No!</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -240,7 +235,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 8,
   },
-  confirmDescription:{
+  confirmDescription: {
     fontFamily: "Poppins_400Regular",
     textAlign: "center",
   },
@@ -249,12 +244,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
   },
-  normalText:{
+  normalText: {
     fontFamily: "Poppins_500Medium",
     textAlign: "center",
     marginTop: 20,
   },
-  btnWrapper:{
+  btnWrapper: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -274,7 +269,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 2,
     color: "white",
-  }, 
+  },
   buttonNo: {
     alignItems: "center",
     justifyContent: "center",
