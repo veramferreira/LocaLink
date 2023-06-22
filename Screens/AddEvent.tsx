@@ -89,7 +89,7 @@ const AddEvent: React.FC = () => {
 
   const showAlert = () => {
     Alert.alert("Event Added", "The event has been added successfully.", [
-      { text: "OK", onPress: () => navigation.goBack() },
+      { text: "OK", onPress: () => navigation.navigate("Calendar") },
     ]);
   };
 
