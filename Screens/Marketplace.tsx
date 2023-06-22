@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -11,15 +11,17 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "../comp/BackButton";
+import { MyContext } from "../Context";
 
 const Marketplace: React.FC = () => {
   const [itemList, setItemList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
+  const {userContext} = useContext(MyContext);
 
   useEffect(() => {
     const q = query(
-      collection(db, "marketplace"),
+      collection(db, `${userContext?.communityName}marketplace`),
       orderBy("timestamp", "desc")
     );
 
