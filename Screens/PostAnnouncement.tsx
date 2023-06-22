@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  ScrollView
 } from "react-native";
 import React, { useState } from "react";
 import { Formik, FormikProps } from "formik";
@@ -94,6 +95,7 @@ export default function PostAnnouncement() {
           onSubmit={handleSubmit}
         >
           {(props: FormikProps<FormValues>) => (
+            <ScrollView scrollIndicatorInsets={{right: 1}}>
             <View style={styles.form}>
               <Text style={styles.text}>Title: </Text>
               <TextInput
@@ -146,6 +148,7 @@ export default function PostAnnouncement() {
                 <Text style={styles.buttonText}>Post!</Text>
               </TouchableOpacity>
             </View>
+            </ScrollView>
           )}
         </Formik>
       </View>
