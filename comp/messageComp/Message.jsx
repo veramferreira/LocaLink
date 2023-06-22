@@ -13,10 +13,6 @@ import colours from "../../constants/colours";
 const Message = ({ message }) => {
   const { userContext } = useContext(MyContext);
 
-  if (message.name === userContext.userName) {
-    console.log("hello");
-  }
-
   const sentReceivedText = () => {
     return message.name === userContext.userName
       ? {
@@ -43,7 +39,10 @@ const Message = ({ message }) => {
         };
   };
 
-  const containerStyle = message.name === userContext.userName ? styles.sentContainer : styles.receivedContainer;
+  const containerStyle =
+    message.name === userContext.userName
+      ? styles.sentContainer
+      : styles.receivedContainer;
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -74,4 +73,3 @@ const styles = StyleSheet.create({
     borderColor: colours.pink,
   },
 });
-// merge error

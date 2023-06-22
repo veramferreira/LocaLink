@@ -8,34 +8,26 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
-import {
-  addDoc,
-  collection,
-  orderBy,
-  query,
-  serverTimestamp,
-} from "@firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
+import { MyContext } from "../Context";
 
-// setting type for TS
 interface FormValues {
   title: string;
   description: string;
   img: string;
 }
 
-// Setting the rules for form validation
 const formSchema = yup.object({
   title: yup.string().required().min(4),
   description: yup.string().required().min(4),
   img: yup.string().min(4),
 });
 
-//Setting the button colour when it's pressed
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
   borderColor: "#F57C01",
@@ -43,7 +35,8 @@ const buttonPressedStyle = {
 
 export default function PostAnnouncement() {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
+
+  const { userContext } = useContext(MyContext);
 
   const navigation = useNavigation();
 
@@ -59,18 +52,19 @@ export default function PostAnnouncement() {
         timestamp: serverTimestamp(),
       };
 
-      const collectionRef = collection(db, "postAdminAnnouncement");
+      const collectionRef = collection(
+        db,
+        `${userContext?.communityName}postAdminAnnouncement`
+      );
 
       await addDoc(collectionRef, docData);
       resetForm();
-      setSubmitted(true);
       showAlert();
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   };
 
-  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "Your form has been submitted!",

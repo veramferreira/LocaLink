@@ -22,11 +22,7 @@ export const FindCreate: React.FC = () => {
     navigation.navigate(item.screen);
   };
 
-  const colours = [
-    "#1B73E7", "#FF8A64"
-  ]
-
-
+  const colours = ["#1B73E7", "#FF8A64"];
 
   const renderItem = ({ item }: { item: NavigationItem }) => {
     const backgroundColor = colours[item.id % colours.length];
@@ -36,22 +32,22 @@ export const FindCreate: React.FC = () => {
     };
 
     return (
-    <TouchableOpacity
-      onPress={() => handleLinkPress(item)}
-      style={itemContainer}
-    >
-      <Text style={styles.itemTitle}>{item.title}</Text>
-    </TouchableOpacity>
-  
-  )};
-  
+      <TouchableOpacity
+        onPress={() => handleLinkPress(item)}
+        style={itemContainer}
+      >
+        <Text style={styles.itemTitle}>{item.title}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.h2}> Choose an option: </Text>
       <View style={styles.containerList}>
         {routes.map((item) => (
           <React.Fragment key={item.id}>{renderItem({ item })}</React.Fragment>
-          ))}
+        ))}
       </View>
     </View>
   );
@@ -61,20 +57,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 30,
-    marginTop: "40%"
+    marginTop: "40%",
   },
 
   h2: {
-    // flex: 0.5,
     fontFamily: "Poppins_700Bold",
     textAlign: "center",
     fontWeight: "bold",
     margin: 20,
     fontSize: 20,
   },
-  
+
   containerList: {
-    // flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
@@ -90,8 +84,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 2},
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },
@@ -99,6 +93,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "white",
     fontFamily: "Poppins_500Medium",
-    textAlign: "center"
+    textAlign: "center",
   },
 });

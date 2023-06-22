@@ -28,7 +28,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface FormValues {
   itemName: string;
   description: string;
-  // photoUrl: string;
+
   date: string;
   contactEmail: string;
 }
@@ -36,7 +36,7 @@ interface FormValues {
 const formSchema = yup.object({
   itemName: yup.string().required().min(4),
   description: yup.string().required().min(4),
-  // photoUrl: yup.string().required().url(),
+
   date: yup.string().optional(),
   contactEmail: yup.string().required().email(),
 });
@@ -55,7 +55,7 @@ const FoundItem: React.FC = () => {
   const { userContext } = useContext(MyContext);
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
+
   const [currentImage, setCurrentImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -71,8 +71,8 @@ const FoundItem: React.FC = () => {
       quality: 1,
     });
     if (!result.canceled) {
-      const source = { uri: result.assets[0].uri }; // Access the selected asset from the assets array
-      console.log(source);
+      const source = { uri: result.assets[0].uri };
+
       setCurrentImage(source);
       handleUploadImage(source);
     }
@@ -91,7 +91,6 @@ const FoundItem: React.FC = () => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Handle progress updates
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
@@ -105,7 +104,6 @@ const FoundItem: React.FC = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
           console.log("File available at", downloadUrl);
 
-          // props.setFieldValue("photoUrl", downloadUrl);
           setDownloadUrl(downloadUrl);
           setUploading(false);
           Alert.alert("Photo uploaded");
@@ -136,10 +134,10 @@ const FoundItem: React.FC = () => {
         timestamp: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "foundItems"), docData);
+      await addDoc(collection(db, `${userContext?.communityName}foundItems`), docData);
       resetForm();
       setCurrentImage(null);
-      setSubmitted(true);
+
       setDownloadUrl("");
       showAlert();
     } catch (error) {
@@ -225,7 +223,6 @@ const FoundItem: React.FC = () => {
                 <Text style={styles.text}>Contact Email:</Text>
                 <TextInput
                   style={styles.input}
-                  // placeholder="Enter item photo URL..."
                   onChangeText={props.handleChange("contactEmail")}
                   value={props.values.contactEmail}
                   onBlur={props.handleBlur("contactEmail")}
@@ -315,7 +312,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     fontFamily: "Poppins_500Medium",
-
   },
   input: {
     alignItems: "center",
@@ -329,7 +325,6 @@ const styles = StyleSheet.create({
     marginRight: 15,
     backgroundColor: "white",
     fontFamily: "Poppins_400Regular",
-
   },
   button: {
     alignItems: "center",
@@ -348,7 +343,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontFamily: "Poppins_500Medium",
-
   },
   errorText: {
     color: "crimson",
@@ -392,7 +386,6 @@ const styles = StyleSheet.create({
   buttonTextUpload: {
     color: colours.font,
     fontFamily: "Poppins_400Regular",
-
   },
   buttonsWrapper: {
     width: "100%",

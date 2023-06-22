@@ -95,11 +95,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
         .then(() => {
           setUserContext({ email: email.toLowerCase() });
           navigation.navigate("ProfileSetup");
-          console.log("User creation successful");
         })
         .catch((error) => {
           setError(error.message);
-          console.log("User creation error:", error);
         });
     } else {
       signInWithEmailAndPassword(auth, email, password)
@@ -113,7 +111,6 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
           let userRole = "";
           let postCount = 0;
 
-          console.log(userList);
           for (const user of userList) {
             if (user.email.toLowerCase() === email.toLowerCase()) {
               emailExist = true;
@@ -154,7 +151,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               email: email.toLowerCase(),
             });
           }
-          console.log("Sign-in successful");
+
           onSignIn();
           if (!emailExist || !userExist) {
             navigation.navigate("ProfileSetup");

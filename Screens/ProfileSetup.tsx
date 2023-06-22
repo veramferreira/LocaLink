@@ -11,21 +11,18 @@ import {
 import React, { useContext, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { auth, db } from "../config/firebase";
-import { doc, setDoc, updateDoc } from "@firebase/firestore";
+import { doc, setDoc } from "@firebase/firestore";
 import * as yup from "yup";
 import { MyContext } from "../Context";
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
-// setting type for TS
+
 interface FormValues {
   userName: string;
 }
 
-// Setting the rules for form validation
 const formSchema = yup.object({
   userName: yup.string().required().min(3),
 });
 
-//Setting the button colour when it's pressed
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
   borderColor: "#F57C01",
@@ -33,7 +30,6 @@ const buttonPressedStyle = {
 
 export default function ProfileSetup({ navigation }: any) {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
   const { userContext, setUserContext } = useContext(MyContext);
   const handleSubmit = async (
     values: FormValues,
@@ -47,9 +43,7 @@ export default function ProfileSetup({ navigation }: any) {
       const tempEmail = auth.currentUser?.email;
       const createUserRef = doc(db, "Users", `${tempEmail}`);
       await setDoc(createUserRef, docData);
-      console.log("User added!");
       resetForm();
-      setSubmitted(true);
       showAlert();
       setUserContext({ ...userContext, userName: values.userName });
       navigation.navigate("FindCreate");
