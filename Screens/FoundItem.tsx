@@ -135,7 +135,10 @@ const FoundItem: React.FC = () => {
         timestamp: serverTimestamp(),
       };
 
-      await addDoc(collection(db, `${userContext?.communityName}foundItems`), docData);
+      await addDoc(
+        collection(db, `${userContext?.communityName}foundItems`),
+        docData
+      );
       resetForm();
       setCurrentImage(null);
 
@@ -147,7 +150,7 @@ const FoundItem: React.FC = () => {
   };
 
   const showAlert = () => {
-    Alert.alert("Item Found", "The item has been added successfully.", [
+    Alert.alert("Item posted", "The item has been added successfully.", [
       { text: "OK", onPress: () => navigation.goBack() },
     ]);
   };
@@ -170,121 +173,121 @@ const FoundItem: React.FC = () => {
             onSubmit={handleSubmit}
           >
             {(props: FormikProps<FormValues>) => (
-              <ScrollView scrollIndicatorInsets={{right: 1}}>
-              <View style={styles.form}>
-                <Text style={styles.text}>Item Name:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter item name..."
-                  onChangeText={props.handleChange("itemName")}
-                  value={props.values.itemName}
-                  onBlur={props.handleBlur("itemName")}
-                />
-                <Text style={styles.errorText}>
-                  {props.touched.itemName && props.errors.itemName}
-                </Text>
-                <Text style={styles.text}>Description:</Text>
-                <TextInput
-                  multiline
-                  minHeight={70}
-                  style={styles.input}
-                  placeholder="Enter item description..."
-                  onChangeText={props.handleChange("description")}
-                  value={props.values.description}
-                  onBlur={props.handleBlur("description")}
-                />
-                <Text style={styles.errorText}>
-                  {props.touched.description && props.errors.description}
-                </Text>
-                <Text style={styles.text}>Date:</Text>
+              <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+                <View style={styles.form}>
+                  <Text style={styles.text}>Item Name:</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter item name..."
+                    onChangeText={props.handleChange("itemName")}
+                    value={props.values.itemName}
+                    onBlur={props.handleBlur("itemName")}
+                  />
+                  <Text style={styles.errorText}>
+                    {props.touched.itemName && props.errors.itemName}
+                  </Text>
+                  <Text style={styles.text}>Description:</Text>
+                  <TextInput
+                    multiline
+                    minHeight={70}
+                    style={styles.input}
+                    placeholder="Enter item description..."
+                    onChangeText={props.handleChange("description")}
+                    value={props.values.description}
+                    onBlur={props.handleBlur("description")}
+                  />
+                  <Text style={styles.errorText}>
+                    {props.touched.description && props.errors.description}
+                  </Text>
+                  <Text style={styles.text}>Date:</Text>
 
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter event date..."
-                  onChangeText={props.handleChange("date")}
-                  value={props.values.date}
-                  onBlur={props.handleBlur("date")}
-                  onFocus={showDatePicker}
-                />
-                <Text style={styles.errorText}>
-                  {props.touched.date && props.errors.date}
-                </Text>
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  mode="date"
-                  onConfirm={(date) => {
-                    props.setFieldValue(
-                      "date",
-                      date.toISOString().split("T")[0]
-                    );
-                    hideDatePicker();
-                  }}
-                  textColor="#000000"
-                  onCancel={hideDatePicker}
-                />
-                <Text style={styles.text}>Contact Email:</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={props.handleChange("contactEmail")}
-                  value={props.values.contactEmail}
-                  onBlur={props.handleBlur("contactEmail")}
-                />
-                <Text style={styles.errorText}>
-                  {props.touched.contactEmail && props.errors.contactEmail}
-                </Text>
-                <View style={styles.buttonsWrapper}>
-                  {!currentImage && (
-                    <TouchableOpacity
-                      onPress={pickImage}
-                      style={styles.pickImage}
-                    >
-                      <MaterialCommunityIcons
-                        name="file-upload-outline"
-                        size={24}
-                        color={colours.font}
-                        style={styles.buttonIcon}
-                      />
-                      <Text style={styles.buttonTextUpload}>Pick Image</Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
-                <View style={styles.imageViewWrapper}>
-                  <View style={styles.imageViewUploadWrapper}>
-                    {currentImage && (
-                      <Image
-                        source={currentImage}
-                        style={styles.selectedImage}
-                      />
-                    )}
-                    {uploading && (
-                      <ActivityIndicator
-                        size="large"
-                        color={colours.secondary}
-                        style={styles.loading}
-                      />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter event date..."
+                    onChangeText={props.handleChange("date")}
+                    value={props.values.date}
+                    onBlur={props.handleBlur("date")}
+                    onFocus={showDatePicker}
+                  />
+                  <Text style={styles.errorText}>
+                    {props.touched.date && props.errors.date}
+                  </Text>
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={(date) => {
+                      props.setFieldValue(
+                        "date",
+                        date.toISOString().split("T")[0]
+                      );
+                      hideDatePicker();
+                    }}
+                    textColor="#000000"
+                    onCancel={hideDatePicker}
+                  />
+                  <Text style={styles.text}>Contact Email:</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={props.handleChange("contactEmail")}
+                    value={props.values.contactEmail}
+                    onBlur={props.handleBlur("contactEmail")}
+                  />
+                  <Text style={styles.errorText}>
+                    {props.touched.contactEmail && props.errors.contactEmail}
+                  </Text>
+                  <View style={styles.buttonsWrapper}>
+                    {!currentImage && (
+                      <TouchableOpacity
+                        onPress={pickImage}
+                        style={styles.pickImage}
+                      >
+                        <MaterialCommunityIcons
+                          name="file-upload-outline"
+                          size={24}
+                          color={colours.font}
+                          style={styles.buttonIcon}
+                        />
+                        <Text style={styles.buttonTextUpload}>Pick Image</Text>
+                      </TouchableOpacity>
                     )}
                   </View>
-                </View>
+                  <View style={styles.imageViewWrapper}>
+                    <View style={styles.imageViewUploadWrapper}>
+                      {currentImage && (
+                        <Image
+                          source={currentImage}
+                          style={styles.selectedImage}
+                        />
+                      )}
+                      {uploading && (
+                        <ActivityIndicator
+                          size="large"
+                          color={colours.secondary}
+                          style={styles.loading}
+                        />
+                      )}
+                    </View>
+                  </View>
 
-                <TouchableOpacity
-                  title="Add Item"
-                  onPress={props.handleSubmit}
-                  style={[
-                    styles.button,
-                    isButtonPressed
-                      ? buttonPressedStyle
-                      : uploading
-                      ? buttonDisabledStyle
-                      : null,
-                  ]}
-                  onPressIn={() => setButtonPressed(true)}
-                  onPressOut={() => setButtonPressed(false)}
-                  activeOpacity={1}
-                  disabled={uploading}
-                >
-                  <Text style={styles.buttonText}>Add Item</Text>
-                </TouchableOpacity>
-              </View>
+                  <TouchableOpacity
+                    title="Add Item"
+                    onPress={props.handleSubmit}
+                    style={[
+                      styles.button,
+                      isButtonPressed
+                        ? buttonPressedStyle
+                        : uploading
+                        ? buttonDisabledStyle
+                        : null,
+                    ]}
+                    onPressIn={() => setButtonPressed(true)}
+                    onPressOut={() => setButtonPressed(false)}
+                    activeOpacity={1}
+                    disabled={uploading}
+                  >
+                    <Text style={styles.buttonText}>Add Item</Text>
+                  </TouchableOpacity>
+                </View>
               </ScrollView>
             )}
           </Formik>
