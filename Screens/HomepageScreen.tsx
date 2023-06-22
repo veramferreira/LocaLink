@@ -8,19 +8,11 @@ import {
 } from "react-native";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  doc,
-  getDocs,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
 import { MyContext } from "../Context";
 import updatePostCount from "../Utils/updatePostCount";
-import HandleNotifications from "../comp/handleNotifications";
 
 type NavigationItem = {
   id: number;

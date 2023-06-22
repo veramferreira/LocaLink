@@ -17,8 +17,7 @@ import { db, storage } from "../config/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "@firebase/firestore";
 import * as yup from "yup";
-import { useNavigation } from "@react-navigation/native";
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colours from "../constants/colours";
 
@@ -48,7 +47,7 @@ const buttonDisabledStyle = {
 
 export default function ReportIssue({ navigation }: any) {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
+
   const [currentImage, setCurrentImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -116,7 +115,6 @@ export default function ReportIssue({ navigation }: any) {
 
       resetForm();
       setCurrentImage(null);
-      setSubmitted(true);
       setDownloadUrl("");
       showAlert();
     } catch (error) {

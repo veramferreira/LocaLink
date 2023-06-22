@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
-import { auth, db } from "../config/firebase";
+import { db } from "../config/firebase";
 import {
   QuerySnapshot,
   collection,
@@ -33,7 +33,7 @@ export default function About({ navigation }: any) {
   const [communityInfo, setCommunityInfo] = useState<CommunityInfo | null>(
     null
   );
-  const { userContext, setUserContext } = useContext(MyContext);
+  const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     if (userContext?.communityName) {

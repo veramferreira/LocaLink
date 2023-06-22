@@ -4,7 +4,6 @@ import SignIn from "../comp/singInComp";
 import LogOutComp from "../comp/logOutComp";
 import { auth, db } from "../config/firebase";
 import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
-import { MyContext } from "../Context";
 
 const styles = StyleSheet.create({
   nav: {

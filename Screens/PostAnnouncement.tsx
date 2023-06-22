@@ -11,13 +11,7 @@ import {
 import React, { useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
-import {
-  addDoc,
-  collection,
-  orderBy,
-  query,
-  serverTimestamp,
-} from "@firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 
@@ -40,7 +34,6 @@ const buttonPressedStyle = {
 
 export default function PostAnnouncement() {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
 
   const navigation = useNavigation();
 
@@ -60,7 +53,6 @@ export default function PostAnnouncement() {
 
       await addDoc(collectionRef, docData);
       resetForm();
-      setSubmitted(true);
       showAlert();
     } catch (error) {
       console.error("Error adding document: ", error);

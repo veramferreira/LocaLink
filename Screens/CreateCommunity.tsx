@@ -65,7 +65,7 @@ const buttonPressedStyle = {
 
 export default function CreateCommunity() {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
+
   const { userContext, setUserContext } = useContext(MyContext);
 
   const navigation = useNavigation();
@@ -97,7 +97,7 @@ export default function CreateCommunity() {
       await addDoc(collection(db, "CommunityList"), docData);
 
       resetForm();
-      setSubmitted(true);
+
       showAlert();
       AddComToUser(auth.currentUser?.email, values.name);
       AddRoleToUser(auth.currentUser?.email, "owner");

@@ -11,10 +11,9 @@ import {
 import React, { useContext, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { auth, db } from "../config/firebase";
-import { doc, setDoc, updateDoc } from "@firebase/firestore";
+import { doc, setDoc } from "@firebase/firestore";
 import * as yup from "yup";
 import { MyContext } from "../Context";
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 interface FormValues {
   userName: string;
@@ -31,7 +30,6 @@ const buttonPressedStyle = {
 
 export default function ProfileSetup({ navigation }: any) {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
   const { userContext, setUserContext } = useContext(MyContext);
   const handleSubmit = async (
     values: FormValues,
@@ -45,9 +43,7 @@ export default function ProfileSetup({ navigation }: any) {
       const tempEmail = auth.currentUser?.email;
       const createUserRef = doc(db, "Users", `${tempEmail}`);
       await setDoc(createUserRef, docData);
-
       resetForm();
-      setSubmitted(true);
       showAlert();
       setUserContext({ ...userContext, userName: values.userName });
       navigation.navigate("FindCreate");

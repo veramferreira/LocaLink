@@ -1,7 +1,6 @@
 import { useQueryClient } from "react-query";
 import { Calendar } from "react-native-calendars";
 import {
-  Button,
   Text,
   View,
   StyleSheet,
@@ -9,11 +8,10 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import getEvent from "../comp/getEvent";
 import getEventTime from "../comp/getEventTime";
 import colours from "../constants/colours";
-import AddEvent from "./AddEvent";
 import React from "react";
 
 const buttonPressedStyle = {

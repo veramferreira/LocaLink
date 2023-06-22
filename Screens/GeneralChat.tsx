@@ -4,14 +4,7 @@ import { db } from "../config/firebase";
 import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 import SendMessage from "../comp/messageComp/SendMessage";
 import { MyContext } from "../Context";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 
 const styles = StyleSheet.create({
   container: {

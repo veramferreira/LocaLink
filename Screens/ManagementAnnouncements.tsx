@@ -1,18 +1,5 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  Button,
-  Image,
-  ScrollView,
-} from "react-native";
-import {
-  Query,
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
 

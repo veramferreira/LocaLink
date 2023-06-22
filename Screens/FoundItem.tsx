@@ -55,7 +55,7 @@ const FoundItem: React.FC = () => {
   const { userContext } = useContext(MyContext);
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
+
   const [currentImage, setCurrentImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -137,7 +137,7 @@ const FoundItem: React.FC = () => {
       await addDoc(collection(db, "foundItems"), docData);
       resetForm();
       setCurrentImage(null);
-      setSubmitted(true);
+
       setDownloadUrl("");
       showAlert();
     } catch (error) {

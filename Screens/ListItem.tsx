@@ -14,13 +14,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Formik, FormikProps } from "formik";
-import { auth, db, storage } from "../config/firebase";
+import { db, storage } from "../config/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { MyContext } from "../Context";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import BackButton from "../comp/BackButton";
 import colours from "../constants/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -54,7 +53,6 @@ const buttonDisabledStyle = {
 const ListItem: React.FC = () => {
   const { userContext } = useContext(MyContext);
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -127,7 +125,7 @@ const ListItem: React.FC = () => {
       await addDoc(collection(db, "marketplace"), docData);
       resetForm();
       setCurrentImage(null);
-      setSubmitted(true);
+
       setDownloadUrl("");
       showAlert();
     } catch (error) {
