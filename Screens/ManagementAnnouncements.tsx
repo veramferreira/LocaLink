@@ -40,7 +40,7 @@ export default function ManagementAnnouncements({ navigation }: any) {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <View>
         <Text style={styles.heading}> Management Announcements</Text>
         {isLoading ? (

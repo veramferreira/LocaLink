@@ -61,7 +61,7 @@ const CalendarScreen = () => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{right: 1}}>
         <Text style={styles.heading}>Community Calendar</Text>
         <Calendar onDayPress={handleDayPress} markedDates={markedDates} />
         <TouchableOpacity

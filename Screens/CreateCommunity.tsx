@@ -122,7 +122,7 @@ export default function CreateCommunity() {
   };
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
           <Text style={styles.heading}>Create Community</Text>

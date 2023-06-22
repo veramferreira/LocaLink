@@ -48,7 +48,7 @@ const Marketplace: React.FC = () => {
   return (
     <>
       <BackButton path="HomepageScreen" />
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{right: 1}}>
         <View>
           <Text style={styles.heading}>Marketplace</Text>
           <TouchableOpacity

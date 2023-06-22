@@ -41,7 +41,7 @@ const LostItems: React.FC = () => {
   return (
     <>
       <BackButton path="LostFound" />
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{right: 1}}>
         <View>
           <Text style={styles.heading}>Lost Items</Text>
           {isLoading ? (

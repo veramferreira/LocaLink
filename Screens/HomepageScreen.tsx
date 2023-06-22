@@ -161,7 +161,7 @@ export const HomepageScreen: React.FC = () => {
   };
 
   return userContext?.role === "owner" ? (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <View style={styles.container}>
         {userContext?.communityName && (
           <Text style={styles.h2}>
@@ -178,7 +178,7 @@ export const HomepageScreen: React.FC = () => {
       </View>
     </ScrollView>
   ) : userContext?.role === "admin" ? (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <View style={styles.container}>
         {userContext?.communityName && (
           <Text style={styles.h2}>
@@ -195,7 +195,7 @@ export const HomepageScreen: React.FC = () => {
       </View>
     </ScrollView>
   ) : (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <View style={styles.container}>
         {userContext?.communityName && (
           <Text style={styles.h2}>
