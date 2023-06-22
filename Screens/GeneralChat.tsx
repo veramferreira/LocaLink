@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 const GeneralChat = () => {
   const { userContext } = useContext(MyContext);
-  const chatDB = `${userContext.communityName}GeneralChat`;
+  const chatDB = `${userContext?.communityName}GeneralChat`;
   const [messages, setMessages] = useState([]);
   const scroll = useRef();
 
