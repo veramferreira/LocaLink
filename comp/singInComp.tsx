@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
   ScrollView,
+  LogBox,
 } from "react-native";
 import { auth } from "../config/firebase";
 import {
@@ -19,6 +20,8 @@ interface SignInCompProps {
   userList: {}[];
   onSignIn: () => void;
 }
+
+LogBox.ignoreAllLogs()
 
 const styles = StyleSheet.create({
   wrapper: {
