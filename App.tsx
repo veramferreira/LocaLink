@@ -41,6 +41,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { LogBox } from "react-native";
 
 LogBox.ignoreAllLogs();
+import AddRecommendation from "./Screens/AddRecommendation";
+import RecommendationsItemCard from "./Screens/RecommendationsItemCard";
 
 const Drawer = createDrawerNavigator();
 const queryClient = new QueryClient();
@@ -237,6 +239,26 @@ export default function App() {
               component={ListItem}
               options={{
                 title: "ListItem",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
+            />
+            <Drawer.Screen
+              name="AddRecommendation"
+              component={AddRecommendation}
+              options={{
+                title: "RAddRecommendation",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
+            />
+            <Drawer.Screen
+              name="RecommendationsItemCard"
+              component={RecommendationsItemCard}
+              options={{
+                title: "RecommendationsItemCard",
                 drawerItemStyle: {
                   display: "none",
                 },
