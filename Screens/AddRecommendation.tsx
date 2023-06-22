@@ -28,6 +28,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface FormValues {
   name: string;
   description: string;
+  photoUrl: string;
   contacts: string;
   website: string;
 }
@@ -35,7 +36,7 @@ interface FormValues {
 const formSchema = yup.object({
   name: yup.string().required().min(4),
   description: yup.string().required().min(4),
-
+  photoUrl: yup.string().optional(),
   contacts: yup.string().required(),
   website: yup.string().optional(),
 });
@@ -59,7 +60,7 @@ const AddRecommendation: React.FC = () => {
   const [downloadUrl, setDownloadUrl] = useState("");
 
   const navigation = useNavigation();
-  //   const userEmail = userContext?.email || "";
+  const userEmail = userContext?.email || "";
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -156,7 +157,7 @@ const AddRecommendation: React.FC = () => {
               description: "",
               photoUrl: "",
               website: "",
-              contacts: userEmail,
+              contacts: "",
             }}
             validationSchema={formSchema}
             onSubmit={handleSubmit}
