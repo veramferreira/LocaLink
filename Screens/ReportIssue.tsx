@@ -11,7 +11,6 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
-  ScrollView
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, FormikProps } from "formik";
@@ -159,81 +158,86 @@ export default function ReportIssue({ navigation }: any) {
           onSubmit={handleSubmit}
         >
           {(props: FormikProps<FormValues>) => (
-            <ScrollView scrollIndicatorInsets={{right: 1}}>
-            <View style={styles.form}>
-              <Text style={styles.text}>Title: </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="issue title..."
-                onChangeText={(text) => props.handleChange("title")(text)}
-                value={props.values.title}
-                onBlur={props.handleBlur("title")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.title && props.errors.title}
-              </Text>
-              <Text style={styles.text}>Issue Description: </Text>
-              <TextInput
-                multiline
-                minHeight={70}
-                style={styles.input}
-                placeholder="describe the issue... "
-                onChangeText={(text) => props.handleChange("description")(text)}
-                value={props.values.description}
-                onBlur={props.handleBlur("description")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.description && props.errors.description}
-              </Text>
-              <View style={styles.buttonsWrapper}>
-                {!currentImage && (
-                  <TouchableOpacity
-                    onPress={pickImage}
-                    style={styles.pickImage}
-                  >
-                    <MaterialCommunityIcons
-                      name="file-upload-outline"
-                      size={24}
-                      color={colours.font}
-                      style={styles.buttonIcon}
-                    />
-                    <Text style={styles.buttonTextUpload}>Pick Image</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-              <View style={styles.imageViewWrapper}>
-                <View style={styles.imageViewUploadWrapper}>
-                  {currentImage && (
-                    <Image source={currentImage} style={styles.selectedImage} />
-                  )}
-                  {uploading && (
-                    <ActivityIndicator
-                      size="large"
-                      color={colours.secondary}
-                      style={styles.loading}
-                    />
+            <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+              <View style={styles.form}>
+                <Text style={styles.text}>Title: </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="issue title..."
+                  onChangeText={(text) => props.handleChange("title")(text)}
+                  value={props.values.title}
+                  onBlur={props.handleBlur("title")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.title && props.errors.title}
+                </Text>
+                <Text style={styles.text}>Issue Description: </Text>
+                <TextInput
+                  multiline
+                  minHeight={70}
+                  style={styles.input}
+                  placeholder="describe the issue... "
+                  onChangeText={(text) =>
+                    props.handleChange("description")(text)
+                  }
+                  value={props.values.description}
+                  onBlur={props.handleBlur("description")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.description && props.errors.description}
+                </Text>
+                <View style={styles.buttonsWrapper}>
+                  {!currentImage && (
+                    <TouchableOpacity
+                      onPress={pickImage}
+                      style={styles.pickImage}
+                    >
+                      <MaterialCommunityIcons
+                        name="file-upload-outline"
+                        size={24}
+                        color={colours.font}
+                        style={styles.buttonIcon}
+                      />
+                      <Text style={styles.buttonTextUpload}>Pick Image</Text>
+                    </TouchableOpacity>
                   )}
                 </View>
+                <View style={styles.imageViewWrapper}>
+                  <View style={styles.imageViewUploadWrapper}>
+                    {currentImage && (
+                      <Image
+                        source={currentImage}
+                        style={styles.selectedImage}
+                      />
+                    )}
+                    {uploading && (
+                      <ActivityIndicator
+                        size="large"
+                        color={colours.secondary}
+                        style={styles.loading}
+                      />
+                    )}
+                  </View>
+                </View>
+                <TouchableOpacity
+                  title="submit!"
+                  onPress={props.handleSubmit}
+                  style={[
+                    styles.button,
+                    isButtonPressed
+                      ? buttonPressedStyle
+                      : uploading
+                      ? buttonDisabledStyle
+                      : null,
+                  ]}
+                  onPressIn={() => setButtonPressed(true)}
+                  onPressOut={() => setButtonPressed(false)}
+                  activeOpacity={1}
+                  disabled={uploading}
+                >
+                  <Text style={styles.buttonText}>Submit!</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                title="submit!"
-                onPress={props.handleSubmit}
-                style={[
-                  styles.button,
-                  isButtonPressed
-                    ? buttonPressedStyle
-                    : uploading
-                    ? buttonDisabledStyle
-                    : null,
-                ]}
-                onPressIn={() => setButtonPressed(true)}
-                onPressOut={() => setButtonPressed(false)}
-                activeOpacity={1}
-                disabled={uploading}
-              >
-                <Text style={styles.buttonText}>Submit!</Text>
-              </TouchableOpacity>
-            </View>
             </ScrollView>
           )}
         </Formik>
