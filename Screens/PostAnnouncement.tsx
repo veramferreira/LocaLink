@@ -8,7 +8,7 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db } from "../config/firebase";
 import {
@@ -20,6 +20,7 @@ import {
 } from "@firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
+import { MyContext } from "../Context";
 
 interface FormValues {
   title: string;
@@ -41,6 +42,7 @@ const buttonPressedStyle = {
 export default function PostAnnouncement() {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
+  const { userContext } = useContext(MyContext);
 
   const navigation = useNavigation();
 
@@ -56,7 +58,10 @@ export default function PostAnnouncement() {
         timestamp: serverTimestamp(),
       };
 
-      const collectionRef = collection(db, "postAdminAnnouncement");
+      const collectionRef = collection(
+        db,
+        `${userContext?.communityName}postAdminAnnouncement`
+      );
 
       await addDoc(collectionRef, docData);
       resetForm();

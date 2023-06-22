@@ -14,15 +14,17 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MyContext } from "../Context";
 
 export default function ManagementAnnouncements({ navigation }: any) {
   const [announcementList, setAnnouncementList] = useState([{}]);
   const [isLoading, setIsLoading] = useState(true);
+  const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     const q = query(
-      collection(db, "postAdminAnnouncement"),
+      collection(db, `${userContext?.communityName}postAdminAnnouncement`),
       orderBy("timestamp", "desc")
     );
 

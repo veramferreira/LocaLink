@@ -124,7 +124,7 @@ const ListItem: React.FC = () => {
         timestamp: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "marketplace"), docData);
+      await addDoc(collection(db, `${userContext?.communityName}marketplace`), docData);
       resetForm();
       setCurrentImage(null);
       setSubmitted(true);

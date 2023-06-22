@@ -84,7 +84,7 @@ export const HomepageScreen: React.FC = () => {
   useEffect(() => {
     const checkForNewPosts = async () => {
       const managementAnnouncementsQuerySnapshot = await getDocs(
-        collection(db, "postAdminAnnouncement")
+        collection(db, `${userContext.communityName}postAdminAnnouncement`)
       );
 
       const currentPostCount = managementAnnouncementsQuerySnapshot.docs.length;
@@ -102,7 +102,7 @@ export const HomepageScreen: React.FC = () => {
     checkForNewPosts();
 
     const unsubscribe = onSnapshot(
-      collection(db, "postAdminAnnouncement"),
+      collection(db, `${userContext?.communityName}postAdminAnnouncement`),
       () => {
         checkForNewPosts();
       }

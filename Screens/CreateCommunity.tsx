@@ -25,6 +25,7 @@ interface FormValues {
   description: string;
   postcode: string;
   img: string;
+  email: string;
   management1Name: string;
   management1Img: string;
   management2Name: string;
@@ -44,6 +45,7 @@ const formSchema = yup.object({
   description: yup.string().required().min(4),
   postcode: yup.string().required().min(3),
   img: yup.string().required().min(4),
+  email: yup.string().required().min(4),
   management1Name: yup.string().required().min(3),
   management1Img: yup.string().required().min(4),
   management2Name: yup.string().min(3),
@@ -80,6 +82,7 @@ export default function CreateCommunity() {
         description: values.description,
         postcode: values.postcode,
         img: values.img,
+        email: values.email,
         management1Name: values.management1Name,
         management1Img: values.management1Img,
         management2Name: values.management2Name,
@@ -132,6 +135,7 @@ export default function CreateCommunity() {
               description: "",
               postcode: "",
               img: "",
+              email: "",
               management1Name: "",
               management1Img: "",
               management2Name: "",
@@ -197,6 +201,19 @@ export default function CreateCommunity() {
                 />
                 <Text style={styles.errorText}>
                   {props.touched.img && props.errors.img}
+                </Text>
+                <Text style={styles.text}>
+                  Main Contact Email for Residents:
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email..."
+                  onChangeText={(text) => props.handleChange("email")(text)}
+                  value={props.values.email}
+                  onBlur={props.handleBlur("email")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.email && props.errors.email}
                 </Text>
                 <View>
                   <Text style={styles.text}>Manager 1 Name:</Text>

@@ -7,32 +7,40 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Linking,
+  ScrollView,
   Image,
   ActivityIndicator,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db, storage } from "../config/firebase";
+import {
+  QuerySnapshot,
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "@firebase/firestore";
+import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection } from "@firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { MyContext } from "../Context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colours from "../constants/colours";
 
 interface FormValues {
   title: string;
   description: string;
-  email: string;
   img: string;
 }
 
 const formSchema = yup.object({
   title: yup.string().required().min(4),
   description: yup.string().required().min(4),
-  email: yup.string().email().required(),
   img: yup.string().min(4),
 });
 
@@ -48,7 +56,8 @@ const buttonDisabledStyle = {
 
 export default function ReportIssue({ navigation }: any) {
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
+  const { userContext } = useContext(MyContext);
+  const [communityInfo, setCommunityInfo] = useState({});
   const [currentImage, setCurrentImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -100,34 +109,62 @@ export default function ReportIssue({ navigation }: any) {
     );
   };
 
-  const handleSubmit = async (
+  // const handleSubmit = async (
+  //   values: FormValues,
+  //   { resetForm }: { resetForm: () => void }
+  // ) => {
+  //   try {
+  //     const docData = {
+  //       title: values.title,
+  //       description: values.description,
+  //       email: values.email,
+  //       img: values.img,
+  //     };
+
+  //     await addDoc(collection(db, "reportedIssues"), docData);
+  //     console.log("Document written successfully");
+  //     resetForm();
+  //     setSubmitted(true);
+  //     showAlert();
+  //   } catch (error) {
+  //     console.error("Error adding document: ", error);
+  //   }
+  // };
+
+  useEffect(() => {
+    if (userContext?.communityName) {
+      const q = query(
+        collection(db, "CommunityList"),
+        where("name", "==", userContext.communityName)
+      );
+      const communityQuery = onSnapshot(q, (querySnapshot: QuerySnapshot) => {
+        const communityArr: any[] = [];
+        querySnapshot.forEach((doc) => communityArr.push(doc.data()));
+        if (communityArr.length > 0) {
+          setCommunityInfo(communityArr[0]);
+        }
+      });
+      return () => communityQuery();
+    }
+  }, [userContext]);
+
+  const handleSubmit = (
     values: FormValues,
     { resetForm }: { resetForm: () => void }
   ) => {
-    try {
-      const docData = {
-        title: values.title,
-        description: values.description,
-        email: values.email,
-        photoUrl: downloadUrl,
-      };
-
-      await addDoc(collection(db, "reportedIssues"), docData);
-
-      resetForm();
-      setCurrentImage(null);
-      setSubmitted(true);
-      setDownloadUrl("");
-      showAlert();
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
+    resetForm();
+    setCurrentImage(null);
+    setDownloadUrl("");
+    showAlert();
+    return Linking.openURL(
+      `mailto:${communityInfo?.email}?subject=${values.title}&body=Issue Description: ${values.description} \n Issue Image URL: ${downloadUrl}`
+    );
   };
 
   const showAlert = () => {
     Alert.alert(
-      "Your form has been submitted!",
-      "Someone from management will be in touch as soon as possible.",
+      "Thank you for your report!",
+      "If you have submitted an email, someone from management will be in touch as soon as possible.",
       [{ text: "OK!", onPress: () => console.log("OK pressed") }],
       { cancelable: false }
     );
@@ -138,7 +175,7 @@ export default function ReportIssue({ navigation }: any) {
       <View style={styles.container}>
         <Text style={styles.heading}>Report an Issue</Text>
         <Formik
-          initialValues={{ title: "", description: "", email: "", img: "" }}
+          initialValues={{ title: "", description: "", img: "" }}
           validationSchema={formSchema}
           onSubmit={handleSubmit}
         >
@@ -168,18 +205,6 @@ export default function ReportIssue({ navigation }: any) {
               <Text style={styles.errorText}>
                 {props.touched.description && props.errors.description}
               </Text>
-              <Text style={styles.text}>Your email: </Text>
-              <TextInput
-                style={styles.input}
-                placeholder="example@example.com "
-                onChangeText={(text) => props.handleChange("email")(text)}
-                value={props.values.email}
-                onBlur={props.handleBlur("email")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.email && props.errors.email}
-              </Text>
-
               <View style={styles.buttonsWrapper}>
                 {!currentImage && (
                   <TouchableOpacity
