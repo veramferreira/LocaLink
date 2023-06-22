@@ -119,6 +119,7 @@ export default function FindCommunity({ navigation }: any) {
   ) : (
     <View style={styles.confirmContainer}>
       <Text style={styles.title}>{communityClicked.name}</Text>
+      <ScrollView scrollIndicatorInsets={{right: 1}}>
       <View style={styles.confirmDescriptionWrapper}>
         <Text style={styles.confirmDescription}>
           {communityClicked.description}
@@ -127,6 +128,7 @@ export default function FindCommunity({ navigation }: any) {
           Postecode: {communityClicked.postcode}
         </Text>
       </View>
+      </ScrollView>
       <Text style={styles.normalText}>
         Would you like to join this community?
       </Text>

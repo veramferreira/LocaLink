@@ -44,7 +44,7 @@ const GeneralChat = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{right: 1}}>
         <View style={styles.message}>
           {messages &&
             messages.map((message) => {
