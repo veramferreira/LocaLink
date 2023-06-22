@@ -8,15 +8,16 @@ import {
   Keyboard,
   Alert,
   Linking,
+  ScrollView,
   Image,
   ActivityIndicator,
-  ScrollView,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, FormikProps } from "formik";
 import { db, storage } from "../config/firebase";
 import {
   QuerySnapshot,
+  addDoc,
   collection,
   onSnapshot,
   query,

@@ -141,17 +141,32 @@ export default function App() {
             <Drawer.Screen
               name="FindCommunity"
               component={FindCommunity}
-              options={{ title: "Find Community" }}
+              options={{
+                title: "Find Community",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
             <Drawer.Screen
               name="CreateCommunity"
               component={CreateCommunity}
-              options={{ title: "Create a Community" }}
+              options={{
+                title: "Create a Community",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
             <Drawer.Screen
               name="FindCreate"
               component={FindCreate}
-              options={{ title: "FindCreate" }}
+              options={{
+                title: "FindCreate",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
             <Drawer.Screen
               name="SignIn"
@@ -161,7 +176,12 @@ export default function App() {
             <Drawer.Screen
               name="EditProfile"
               component={EditProfile}
-              options={{ title: "EditProfile" }}
+              options={{
+                title: "EditProfile",
+                drawerItemStyle: {
+                  display: "none",
+                },
+              }}
             />
 
             <Drawer.Screen
