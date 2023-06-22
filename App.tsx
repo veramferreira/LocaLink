@@ -82,6 +82,7 @@ export default function App() {
               },
               drawerContentContainerStyle: {
                 backgroundColor: colours.primary,
+                flexGrow: 1
               },
               drawerActiveTintColor: "black",
               drawerInactiveTintColor: "white",
@@ -171,7 +172,7 @@ export default function App() {
             <Drawer.Screen
               name="SignIn"
               component={SignInPage}
-              options={{ title: "SignOut" }}
+              options={{ title: "👋 SignOut" }}
             />
             <Drawer.Screen
               name="EditProfile"
