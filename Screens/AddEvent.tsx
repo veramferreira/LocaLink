@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import { addDoc, collection } from "firebase/firestore";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { MyContext } from "../Context";
 import colours from "../constants/colours";
 
 interface FormValues {
@@ -41,6 +42,7 @@ const AddEvent: React.FC = () => {
   const [isSubmitted, setSubmitted] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const {userContext} = useContext(MyContext);
 
   const navigation = useNavigation();
 
@@ -72,7 +74,7 @@ const AddEvent: React.FC = () => {
         time: values.time,
       };
 
-      await addDoc(collection(db, "calendarEvent"), docData);
+      await addDoc(collection(db, `${userContext?.communityName}calendarEvent`), docData);
       resetForm();
       setSubmitted(true);
       showAlert();
