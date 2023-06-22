@@ -32,7 +32,7 @@ export default function AssignAdmins() {
   useEffect(() => {}, [CommunityUserList]);
 
   return (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <View style={styles.container}>
         <Text style={styles.heading}>Community Roles</Text>
         {CommunityUserList.map((user) => {
