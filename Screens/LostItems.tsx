@@ -62,7 +62,7 @@ const LostItems: React.FC = () => {
                     style={styles.itemImage}
                   />
                   {/* <Text style={styles.description}>{item.description}</Text> */}
-                  <Text style={styles.date}>{item.date}</Text>
+                  <Text style={styles.date}>Found on: {item.date}</Text>
                   {/* <Text style={styles.contactEmail}>{item.contactEmail}</Text> */}
                 </TouchableOpacity>
               );
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontStyle: "italic",
     marginBottom: 5,
+    marginTop: 10,
   },
   contactEmail: {
     fontFamily: "Poppins_400Regular",

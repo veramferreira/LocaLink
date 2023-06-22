@@ -50,15 +50,15 @@ const Marketplace: React.FC = () => {
   return (
     <>
       <BackButton path="HomepageScreen" />
-      <TouchableOpacity
-        onPress={() => handleListItemPress()}
-        style={styles.button}
-      >
-        <Text style={styles.listItemText}>List your item</Text>
-      </TouchableOpacity>
       <ScrollView>
         <View>
           <Text style={styles.heading}>Marketplace</Text>
+          <TouchableOpacity
+            onPress={() => handleListItemPress()}
+            style={styles.button}
+          >
+            <Text style={styles.listItemText}>List your item</Text>
+          </TouchableOpacity>
           {isLoading ? (
             <Text>Loading...</Text>
           ) : (
@@ -130,10 +130,11 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
   },
   button: {
-    // width: "100%",
-    alignSelf: "stretch",
+    width: "70%",
+    alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
@@ -141,8 +142,12 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
-    margin: 15,
+    marginBottom: 25,
     borderColor: "#1B73E7",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
 });
 

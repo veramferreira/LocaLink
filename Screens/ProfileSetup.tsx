@@ -70,7 +70,7 @@ export default function ProfileSetup({ navigation }: any) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.heading}>Profile Setup</Text>
+        <Text style={styles.heading}>Setup Your Profile</Text>
         <Formik
           initialValues={{ userName: "" }}
           validationSchema={formSchema}

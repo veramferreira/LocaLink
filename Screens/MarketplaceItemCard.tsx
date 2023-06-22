@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, Image, Linking } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BackButton from "../comp/BackButton";
+import colours from "../constants/colours";
 
 const MarketplaceItemCard: React.FC<{ route: any }> = ({ route }) => {
   const { item } = route.params;
@@ -14,8 +15,10 @@ const MarketplaceItemCard: React.FC<{ route: any }> = ({ route }) => {
       <View style={styles.container}>
         <Text style={styles.heading}>{itemName}</Text>
         <Image source={{ uri: photoUrl }} style={styles.itemImage} />
+        <View style={styles.descriptionContainer}>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.date}>Price: £{price}</Text>
+        </View>
         <TouchableOpacity
           onPress={() => Linking.openURL(`mailto:${contactEmail}`)}
           style={styles.button}
@@ -47,6 +50,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#F4C01D",
   },
+  descriptionContainer: {
+    backgroundColor: "white",
+    width: "85%",
+    alignItems: "center",
+    alignSelf: "center",
+    marginTop: 10,
+    borderRadius: 8,
+  },
   description: {
     fontFamily: "Poppins_400Regular",
     marginHorizontal: 25,
@@ -54,10 +65,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   date: {
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "Poppins_500Medium",
     textAlign: "left",
     fontStyle: "italic",
-    marginBottom: 5,
+    marginBottom: 10,
+    paddingBottom: 5,
+    paddingTop: 10,
   },
   contactEmail: {
     fontFamily: "Poppins_400Regular",
@@ -65,6 +78,8 @@ const styles = StyleSheet.create({
   },
   contactText: {
     color: "white",
+    fontFamily: "Poppins_500Medium",
+
   },
   button: {
     width: "100%",
@@ -72,12 +87,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    backgroundColor: "#1B73E7",
+    backgroundColor: colours.secondary,
     padding: 10,
     fontSize: 14,
     borderRadius: 6,
     margin: 15,
-    borderColor: "#1B73E7",
+    borderColor: colours.secondary,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
 });
 
