@@ -65,7 +65,7 @@ export default function FindCommunity({ navigation }: any) {
   return isLoading ? (
     <Text>Loading...</Text>
   ) : communityClicked.length === 0 ? (
-    <ScrollView>
+    <ScrollView scrollIndicatorInsets={{right: 1}}>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <Text style={styles.title}>Find your Community</Text>
