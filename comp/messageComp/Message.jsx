@@ -40,7 +40,7 @@ const Message = ({ message }) => {
   };
 
   const containerStyle =
-    message.name === userContext.userName
+    message.name === userContext?.userName
       ? styles.sentContainer
       : styles.receivedContainer;
 

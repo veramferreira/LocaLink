@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import * as ImagePicker from "expo-image-picker";
 
 import {
@@ -125,7 +125,10 @@ const AddRecommendation: React.FC = () => {
         timestamp: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "recommendations"), docData);
+      await addDoc(
+        collection(db, `${userContext?.userName}recommendations`),
+        docData
+      );
       resetForm();
       setCurrentImage(null);
       setSubmitted(true);
