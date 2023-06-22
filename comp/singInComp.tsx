@@ -30,7 +30,11 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 300,
-    height: 300,
+    height: 200,
+
+  },
+  inputWrapper: {
+    flex: 1,
   },
   input: {
     width: "100%",
@@ -175,9 +179,10 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   return (
     <View style={styles.wrapper}>
       <ScrollView>
-        <View>
+        <View style={styles.inputWrapper}>
           <Image style={styles.logo} source={require("../assets/logo.png")} />
           {error !== "" && <Text style={styles.errorText}>{error}</Text>}
+          <View>
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -203,6 +208,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
                 : "Don't have an account? Sign Up"}
             </Text>
           </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
