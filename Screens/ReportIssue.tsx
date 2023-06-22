@@ -11,6 +11,7 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  ScrollView
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, FormikProps } from "formik";
@@ -158,6 +159,7 @@ export default function ReportIssue({ navigation }: any) {
           onSubmit={handleSubmit}
         >
           {(props: FormikProps<FormValues>) => (
+            <ScrollView scrollIndicatorInsets={{right: 1}}>
             <View style={styles.form}>
               <Text style={styles.text}>Title: </Text>
               <TextInput
@@ -232,6 +234,7 @@ export default function ReportIssue({ navigation }: any) {
                 <Text style={styles.buttonText}>Submit!</Text>
               </TouchableOpacity>
             </View>
+            </ScrollView>
           )}
         </Formik>
       </View>

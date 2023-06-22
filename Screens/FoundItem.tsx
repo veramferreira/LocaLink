@@ -24,6 +24,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import BackButton from "../comp/BackButton";
 import colours from "../constants/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ScrollView } from "react-native-gesture-handler";
 
 interface FormValues {
   itemName: string;
@@ -169,6 +170,7 @@ const FoundItem: React.FC = () => {
             onSubmit={handleSubmit}
           >
             {(props: FormikProps<FormValues>) => (
+              <ScrollView scrollIndicatorInsets={{right: 1}}>
               <View style={styles.form}>
                 <Text style={styles.text}>Item Name:</Text>
                 <TextInput
@@ -283,6 +285,7 @@ const FoundItem: React.FC = () => {
                   <Text style={styles.buttonText}>Add Item</Text>
                 </TouchableOpacity>
               </View>
+              </ScrollView>
             )}
           </Formik>
         </View>
