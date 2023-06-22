@@ -35,9 +35,7 @@ export default function AssignAdmins() {
     return () => communityUserQuery();
   }, []);
 
-  useEffect(() => {
-    console.log(CommunityUserList);
-  }, [CommunityUserList]);
+  useEffect(() => {}, [CommunityUserList]);
 
   return (
     <ScrollView>

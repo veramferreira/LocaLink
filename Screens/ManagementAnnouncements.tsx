@@ -6,7 +6,13 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { Query, collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  Query,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
 
@@ -49,9 +55,9 @@ export default function ManagementAnnouncements({ navigation }: any) {
                   style={styles.postImg}
                 />
                 <View style={styles.descriptionContainer}>
-                <Text style={styles.description}>
-                  {announcement.description}
-                </Text>
+                  <Text style={styles.description}>
+                    {announcement.description}
+                  </Text>
                 </View>
               </View>
             );
@@ -83,7 +89,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     marginTop: 20,
-    
   },
   postImg: {
     width: 370,
@@ -112,5 +117,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 10,
     borderRadius: 8,
-  }
+  },
 });

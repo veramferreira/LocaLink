@@ -1,6 +1,13 @@
 import { useQueryClient } from "react-query";
 import { Calendar } from "react-native-calendars";
-import { Button, Text, View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import getEvent from "../comp/getEvent";
@@ -45,9 +52,6 @@ const CalendarScreen = () => {
   const handleAddEvent = () => {
     navigation.navigate("AddEvent", {});
   };
-  // const handleEventDescriptionPress = (description: string) => {
-  //   setDescription((prevDescription) => (prevDescription ? null : description));
-  // };
 
   const handleEventDescriptionPress = (eventIndex: number) => {
     setSelectedEventIndex((prevIndex) =>
@@ -57,57 +61,57 @@ const CalendarScreen = () => {
 
   return (
     <>
-    <ScrollView>
-    <Text style={styles.heading}>Community Calendar</Text>
-      <Calendar onDayPress={handleDayPress} markedDates={markedDates} />
-      <TouchableOpacity
-        style={[styles.button, isButtonPressed ? buttonPressedStyle : null]}
-        onPressIn={() => setButtonPressed(true)}
-        onPressOut={() => setButtonPressed(false)}
-        onPress={handleAddEvent}
-        activeOpacity={1}
-      >
-        <Text style={styles.buttonText}>Add Event</Text>
-      </TouchableOpacity>
-      <View style={styles.wrapper}>
-        {events.length === 0 ? (
-          <View style={styles.noEvents}>
-            <Text>No events for selected date</Text>
-          </View>
-        ) : (
-          <>
-            <View style={styles.h2}>
-              <Text style={styles.h2Text}>Events on {events[0].date}</Text>
+      <ScrollView>
+        <Text style={styles.heading}>Community Calendar</Text>
+        <Calendar onDayPress={handleDayPress} markedDates={markedDates} />
+        <TouchableOpacity
+          style={[styles.button, isButtonPressed ? buttonPressedStyle : null]}
+          onPressIn={() => setButtonPressed(true)}
+          onPressOut={() => setButtonPressed(false)}
+          onPress={handleAddEvent}
+          activeOpacity={1}
+        >
+          <Text style={styles.buttonText}>Add Event</Text>
+        </TouchableOpacity>
+        <View style={styles.wrapper}>
+          {events.length === 0 ? (
+            <View style={styles.noEvents}>
+              <Text>No events for selected date</Text>
             </View>
-            {events.map(({ eventName, date, description, time }, index) => (
-              <React.Fragment key={index}>
-                <View style={styles.eventItem}>
-                  <View style={styles.eventDetails}>
-                    <View style={styles.eventTime}>
-                      {time ? (
-                        <Text style={styles.text}>{time}</Text>
-                      ) : (
-                        <Text style={styles.text}>All day</Text>
-                      )}
+          ) : (
+            <>
+              <View style={styles.h2}>
+                <Text style={styles.h2Text}>Events on {events[0].date}</Text>
+              </View>
+              {events.map(({ eventName, date, description, time }, index) => (
+                <React.Fragment key={index}>
+                  <View style={styles.eventItem}>
+                    <View style={styles.eventDetails}>
+                      <View style={styles.eventTime}>
+                        {time ? (
+                          <Text style={styles.text}>{time}</Text>
+                        ) : (
+                          <Text style={styles.text}>All day</Text>
+                        )}
+                      </View>
+                      <TouchableOpacity
+                        style={styles.eventName}
+                        onPress={() => handleEventDescriptionPress(index)}
+                      >
+                        <Text style={styles.boldText}>{eventName}</Text>
+                      </TouchableOpacity>
                     </View>
-                    <TouchableOpacity
-                      style={styles.eventName}
-                      onPress={() => handleEventDescriptionPress(index)}
-                    >
-                      <Text style={styles.boldText}>{eventName}</Text>
-                    </TouchableOpacity>
                   </View>
-                </View>
-                {selectedEventIndex === index && (
-                  <View style={styles.eventDescription}>
-                    <Text style={styles.normalText}>{description}</Text>
-                  </View>
-                )}
-              </React.Fragment>
-            ))}
-          </>
-        )}
-      </View>
+                  {selectedEventIndex === index && (
+                    <View style={styles.eventDescription}>
+                      <Text style={styles.normalText}>{description}</Text>
+                    </View>
+                  )}
+                </React.Fragment>
+              ))}
+            </>
+          )}
+        </View>
       </ScrollView>
     </>
   );
@@ -130,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 5,
-    // backgroundColor: colours.primary,
+
     borderRadius: 5,
     padding: 10,
   },
@@ -149,17 +153,14 @@ const styles = StyleSheet.create({
     margin: 15,
     borderColor: colours.secondary,
     fontFamily: "Poppins_500Medium",
-
   },
   buttonText: {
     color: "white",
     fontFamily: "Poppins_500Medium",
-
   },
   eventItem: {
     flexDirection: "row",
     width: "100%",
-    // padding: 10,
   },
   eventTime: {
     backgroundColor: colours.primary,
@@ -211,6 +212,5 @@ const styles = StyleSheet.create({
   },
   boldText: {
     fontFamily: "Poppins_500Medium",
-
   },
 });

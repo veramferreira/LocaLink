@@ -153,7 +153,7 @@ const AddEvent: React.FC = () => {
                 onChangeText={props.handleChange("time")}
                 value={props.values.time}
                 onBlur={props.handleBlur("time")}
-                onFocus={showTimePicker} // Changed the onFocus handler to showTimePicker
+                onFocus={showTimePicker}
               />
               <Text style={styles.errorText}>
                 {props.touched.time && props.errors.time}

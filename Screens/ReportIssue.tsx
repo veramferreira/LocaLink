@@ -21,7 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colours from "../constants/colours";
-// setting type for TS
+
 interface FormValues {
   title: string;
   description: string;
@@ -29,7 +29,6 @@ interface FormValues {
   img: string;
 }
 
-// Setting the rules for form validation
 const formSchema = yup.object({
   title: yup.string().required().min(4),
   description: yup.string().required().min(4),
@@ -37,7 +36,6 @@ const formSchema = yup.object({
   img: yup.string().min(4),
 });
 
-//Setting the button colour when it's pressed
 const buttonPressedStyle = {
   backgroundColor: "#F57C01",
   borderColor: "#F57C01",
@@ -63,8 +61,8 @@ export default function ReportIssue({ navigation }: any) {
       quality: 1,
     });
     if (!result.canceled) {
-      const source = { uri: result.assets[0].uri }; // Access the selected asset from the assets array
-      console.log(source);
+      const source = { uri: result.assets[0].uri };
+
       setCurrentImage(source);
       handleUploadImage(source);
     }
@@ -83,7 +81,6 @@ export default function ReportIssue({ navigation }: any) {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Handle progress updates
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
@@ -95,9 +92,6 @@ export default function ReportIssue({ navigation }: any) {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-          console.log("File available at", downloadUrl);
-
-          // props.setFieldValue("photoUrl", downloadUrl);
           setDownloadUrl(downloadUrl);
           setUploading(false);
           Alert.alert("Photo uploaded");
@@ -119,7 +113,7 @@ export default function ReportIssue({ navigation }: any) {
       };
 
       await addDoc(collection(db, "reportedIssues"), docData);
-      console.log("Document written successfully");
+
       resetForm();
       setCurrentImage(null);
       setSubmitted(true);
@@ -130,7 +124,6 @@ export default function ReportIssue({ navigation }: any) {
     }
   };
 
-  // Setting up the alert message after the form has been submitted
   const showAlert = () => {
     Alert.alert(
       "Your form has been submitted!",
