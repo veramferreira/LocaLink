@@ -66,10 +66,12 @@ export default function About({ navigation }: any) {
     <>
       {!community ? null : (
         <ScrollView>
-          <Image source={{
-                      uri: communityInfo.img,
-                    }} 
-                    style={styles.coverImg}/>
+          <Image
+            source={{
+              uri: communityInfo.img,
+            }}
+            style={styles.coverImg}
+          />
           <View>
             <Text style={styles.heading}>About {community}</Text>
             <View style={styles.main}>
