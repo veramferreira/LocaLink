@@ -1,5 +1,4 @@
 import "react-native-gesture-handler";
-
 import SignInPage from "./Screens/SignIn";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,7 +19,6 @@ import AddEvent from "./Screens/AddEvent";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProfileSetup from "./Screens/ProfileSetup";
 import Header from "./comp/Header";
-
 import HeaderRight from "./comp/HeaderRight";
 import GeneralChat from "./Screens/GeneralChat";
 import { FindCreate } from "./Screens/FindCreate";
@@ -32,17 +30,17 @@ import {
   Poppins_500Medium,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
-
 import React, { useState } from "react";
 import AssignAdmins from "./Screens/AssignAdminsPage";
 import LostItems from "./Screens/LostItems";
 import FoundItem from "./Screens/FoundItem";
 import LostItemCard from "./Screens/LostItemCard";
-
 import MarketplaceItemCard from "./Screens/MarketplaceItemCard";
 import ListItem from "./Screens/ListItem";
-
 import { Ionicons } from "@expo/vector-icons";
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs();
 import AddRecommendation from "./Screens/AddRecommendation";
 import RecommendationsItemCard from "./Screens/RecommendationsItemCard";
 
@@ -52,7 +50,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [userContext, setUserContext] = useState({});
-  // const [adminRole, setAdminRole] = useState("none");
+
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -272,4 +270,3 @@ export default function App() {
     </QueryClientProvider>
   );
 }
-//push

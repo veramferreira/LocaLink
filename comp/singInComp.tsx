@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
   ScrollView,
+  LogBox,
 } from "react-native";
 import { auth } from "../config/firebase";
 import {
@@ -20,6 +21,8 @@ interface SignInCompProps {
   onSignIn: () => void;
 }
 
+LogBox.ignoreAllLogs()
+
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -30,7 +33,11 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 300,
-    height: 300,
+    height: 200,
+
+  },
+  inputWrapper: {
+    flex: 1,
   },
   input: {
     width: "100%",
@@ -91,11 +98,9 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
         .then(() => {
           setUserContext({ email: email.toLowerCase() });
           navigation.navigate("ProfileSetup");
-          console.log("User creation successful");
         })
         .catch((error) => {
           setError(error.message);
-          console.log("User creation error:", error);
         });
     } else {
       signInWithEmailAndPassword(auth, email, password)
@@ -109,7 +114,6 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
           let userRole = "";
           let postCount = 0;
 
-          console.log(userList);
           for (const user of userList) {
             if (user.email.toLowerCase() === email.toLowerCase()) {
               emailExist = true;
@@ -150,7 +154,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
               email: email.toLowerCase(),
             });
           }
-          console.log("Sign-in successful");
+
           onSignIn();
           if (!emailExist || !userExist) {
             navigation.navigate("ProfileSetup");
@@ -175,9 +179,10 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
   return (
     <View style={styles.wrapper}>
       <ScrollView>
-        <View>
+        <View style={styles.inputWrapper}>
           <Image style={styles.logo} source={require("../assets/logo.png")} />
           {error !== "" && <Text style={styles.errorText}>{error}</Text>}
+          <View>
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -203,6 +208,7 @@ const SignIn: React.FC<SignInCompProps> = ({ onSignIn, userList }) => {
                 : "Don't have an account? Sign Up"}
             </Text>
           </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>

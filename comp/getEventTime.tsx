@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { fromUnixTime, format } from "date-fns";
 import { db } from "../config/firebase";
+import { MyContext } from "../Context";
 
 interface CalendarEventTime {
   formDateString: string;
@@ -11,10 +12,11 @@ const getEventTime = (date: any) => {
   const [currentCalendarEvent, setCurrentCalendarEvent] = useState<
     CalendarEventTime[]
   >([]);
+  const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      query(collection(db, "calendarEvent"), orderBy("timestamp")),
+      query(collection(db, `${userContext?.userName}calendarEvent`), orderBy("timestamp")),
       (querySnapshot) => {
         const calendarEventArr: CalendarEventTime[] = [];
 

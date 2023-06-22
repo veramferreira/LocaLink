@@ -14,13 +14,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Formik, FormikProps } from "formik";
-import { auth, db, storage } from "../config/firebase";
+import { db, storage } from "../config/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { MyContext } from "../Context";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import BackButton from "../comp/BackButton";
 import colours from "../constants/colours";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -28,8 +27,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface FormValues {
   itemName: string;
   description: string;
-  // photoUrl: string;
-  //   date: string;
+
   contactEmail: string;
   price: number;
 }
@@ -37,8 +35,7 @@ interface FormValues {
 const formSchema = yup.object({
   itemName: yup.string().required().min(4),
   description: yup.string().required().min(4),
-  // photoUrl: yup.string().required().url(),
-  //   date: yup.string().optional(),
+
   contactEmail: yup.string().required().email(),
   price: yup.number().required(),
 });
@@ -56,7 +53,6 @@ const buttonDisabledStyle = {
 const ListItem: React.FC = () => {
   const { userContext } = useContext(MyContext);
   const [isButtonPressed, setButtonPressed] = useState(false);
-  const [isSubmitted, setSubmitted] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
@@ -72,8 +68,8 @@ const ListItem: React.FC = () => {
       quality: 1,
     });
     if (!result.canceled) {
-      const source = { uri: result.assets[0].uri }; // Access the selected asset from the assets array
-      console.log(source);
+      const source = { uri: result.assets[0].uri };
+
       setCurrentImage(source);
       handleUploadImage(source);
     }
@@ -92,7 +88,6 @@ const ListItem: React.FC = () => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Handle progress updates
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
@@ -104,9 +99,6 @@ const ListItem: React.FC = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-          console.log("File available at", downloadUrl);
-
-          // props.setFieldValue("photoUrl", downloadUrl);
           setDownloadUrl(downloadUrl);
           setUploading(false);
           Alert.alert("Photo uploaded");
@@ -124,19 +116,18 @@ const ListItem: React.FC = () => {
         itemName: values.itemName,
         description: values.description,
         photoUrl: downloadUrl,
-        // date: values.date,
+
         contactEmail: values.contactEmail,
         price: values.price,
         timestamp: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "marketplace"), docData);
+      await addDoc(collection(db, `${userContext?.communityName}marketplace`), docData);
       resetForm();
       setCurrentImage(null);
-      setSubmitted(true);
+
       setDownloadUrl("");
       showAlert();
-      console.log("form submitted");
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -200,7 +191,6 @@ const ListItem: React.FC = () => {
                   value={props.values.price}
                   onBlur={props.handleBlur("price")}
                   keyboardType="numeric"
-                  //   onFocus={showDatePicker}
                 />
                 <Text style={styles.errorText}>
                   {props.touched.price && props.errors.price}
@@ -208,7 +198,6 @@ const ListItem: React.FC = () => {
                 <Text style={styles.text}>Contact Email:</Text>
                 <TextInput
                   style={styles.input}
-                  // placeholder="Enter item photo URL..."
                   onChangeText={props.handleChange("contactEmail")}
                   value={props.values.contactEmail}
                   onBlur={props.handleBlur("contactEmail")}
@@ -372,7 +361,6 @@ const styles = StyleSheet.create({
   buttonTextUpload: {
     color: colours.font,
     fontFamily: "Poppins_400Regular",
-
   },
   buttonsWrapper: {
     width: "100%",

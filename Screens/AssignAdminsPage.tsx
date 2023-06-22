@@ -1,10 +1,4 @@
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "@firebase/firestore";
+import { collection, onSnapshot, query, where } from "@firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { db } from "../config/firebase";
 import { MyContext } from "../Context";
@@ -35,9 +29,7 @@ export default function AssignAdmins() {
     return () => communityUserQuery();
   }, []);
 
-  useEffect(() => {
-    console.log(CommunityUserList);
-  }, [CommunityUserList]);
+  useEffect(() => {}, [CommunityUserList]);
 
   return (
     <ScrollView>

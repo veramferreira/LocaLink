@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
-import { auth, db } from "../config/firebase";
+import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
+import { db } from "../config/firebase";
 import {
   QuerySnapshot,
   collection,
@@ -25,6 +25,7 @@ interface CommunityInfo {
   management2Img: string;
   management3Name: string;
   management3Img: string;
+  img: string;
 }
 
 export default function About({ navigation }: any) {
@@ -32,7 +33,7 @@ export default function About({ navigation }: any) {
   const [communityInfo, setCommunityInfo] = useState<CommunityInfo | null>(
     null
   );
-  const { userContext, setUserContext } = useContext(MyContext);
+  const { userContext } = useContext(MyContext);
 
   useEffect(() => {
     if (userContext?.communityName) {
@@ -64,78 +65,86 @@ export default function About({ navigation }: any) {
   return (
     <>
       {!community ? null : (
-        <View>
-          <Text style={styles.heading}>About {community}</Text>
-          <View style={styles.main}>
-            <View style={styles.block}>
-              <Text style={styles.title}>Description of {community}: </Text>
-              <View style={styles.contactsBody}>
-                <Text style={styles.normalText}>
-                  {communityInfo.description}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.block}>
-              <Text style={styles.title}>Useful Contacts:</Text>
-              <View style={styles.contacts}>
-                <Text style={styles.normalText}>
-                  <Text style={styles.semiBold}>
-                    {communityInfo.contact1Name}:{" "}
+        <ScrollView>
+          <Image
+            source={{
+              uri: communityInfo.img,
+            }}
+            style={styles.coverImg}
+          />
+          <View>
+            <Text style={styles.heading}>About {community}</Text>
+            <View style={styles.main}>
+              <View style={styles.block}>
+                <Text style={styles.title}>Description of {community}: </Text>
+                <View style={styles.contactsBody}>
+                  <Text style={styles.normalText}>
+                    {communityInfo.description}
                   </Text>
-                  {communityInfo.contact1Info}
-                </Text>
-                <Text style={styles.normalText}>
-                  <Text style={styles.semiBold}>
-                    {communityInfo.contact2Name}:{" "}
+                </View>
+              </View>
+              <View style={styles.block}>
+                <Text style={styles.title}>Useful Contacts:</Text>
+                <View style={styles.contacts}>
+                  <Text style={styles.normalText}>
+                    <Text style={styles.semiBold}>
+                      {communityInfo.contact1Name}:{" "}
+                    </Text>
+                    {communityInfo.contact1Info}
                   </Text>
-                  {communityInfo.contact2Info}
-                </Text>
-                <Text style={styles.normalText}>
-                  <Text style={styles.semiBold}>
-                    {communityInfo.contact3Name}:{" "}
+                  <Text style={styles.normalText}>
+                    <Text style={styles.semiBold}>
+                      {communityInfo.contact2Name}:{" "}
+                    </Text>
+                    {communityInfo.contact2Info}
                   </Text>
-                  {communityInfo.contact3Info}
-                </Text>
+                  <Text style={styles.normalText}>
+                    <Text style={styles.semiBold}>
+                      {communityInfo.contact3Name}:{" "}
+                    </Text>
+                    {communityInfo.contact3Info}
+                  </Text>
+                </View>
               </View>
-            </View>
-            <Text style={styles.title}>Management:</Text>
-            <View style={styles.managementBlock}>
-              <View>
-                <Image
-                  style={styles.avatarImg}
-                  source={{
-                    uri: communityInfo.management1Img,
-                  }}
-                />
-                <Text style={styles.adminName}>
-                  {communityInfo.management1Name}
-                </Text>
-              </View>
-              <View>
-                <Image
-                  style={styles.avatarImg}
-                  source={{
-                    uri: communityInfo.management2Img,
-                  }}
-                />
-                <Text style={styles.adminName}>
-                  {communityInfo.management2Name}
-                </Text>
-              </View>
-              <View>
-                <Image
-                  style={styles.avatarImg}
-                  source={{
-                    uri: communityInfo.management3Img,
-                  }}
-                />
-                <Text style={styles.adminName}>
-                  {communityInfo.management3Name}
-                </Text>
+              <Text style={styles.title}>Management:</Text>
+              <View style={styles.managementBlock}>
+                <View>
+                  <Image
+                    style={styles.avatarImg}
+                    source={{
+                      uri: communityInfo.management1Img,
+                    }}
+                  />
+                  <Text style={styles.adminName}>
+                    {communityInfo.management1Name}
+                  </Text>
+                </View>
+                <View>
+                  <Image
+                    style={styles.avatarImg}
+                    source={{
+                      uri: communityInfo.management2Img,
+                    }}
+                  />
+                  <Text style={styles.adminName}>
+                    {communityInfo.management2Name}
+                  </Text>
+                </View>
+                <View>
+                  <Image
+                    style={styles.avatarImg}
+                    source={{
+                      uri: communityInfo.management3Img,
+                    }}
+                  />
+                  <Text style={styles.adminName}>
+                    {communityInfo.management3Name}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       )}
     </>
   );
@@ -156,6 +165,10 @@ const styles = StyleSheet.create({
     margin: 20,
     fontSize: 20,
     fontFamily: "Poppins_700Bold",
+  },
+  coverImg: {
+    width: 450,
+    height: 200,
   },
   main: {
     marginRight: 30,

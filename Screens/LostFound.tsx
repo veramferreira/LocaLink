@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   },
 
   h2: {
-    // flex: 0.5,
     fontFamily: "Poppins_700Bold",
     textAlign: "center",
     fontWeight: "bold",
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
   },
 
   containerList: {
-    // flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",

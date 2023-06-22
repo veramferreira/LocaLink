@@ -8,19 +8,11 @@ import {
 } from "react-native";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  doc,
-  getDocs,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 import colours from "../constants/colours.js";
 import { MyContext } from "../Context";
 import updatePostCount from "../Utils/updatePostCount";
-import HandleNotifications from "../comp/handleNotifications";
 
 type NavigationItem = {
   id: number;
@@ -84,7 +76,7 @@ export const HomepageScreen: React.FC = () => {
   useEffect(() => {
     const checkForNewPosts = async () => {
       const managementAnnouncementsQuerySnapshot = await getDocs(
-        collection(db, "postAdminAnnouncement")
+        collection(db, `${userContext.communityName}postAdminAnnouncement`)
       );
 
       const currentPostCount = managementAnnouncementsQuerySnapshot.docs.length;
@@ -97,13 +89,12 @@ export const HomepageScreen: React.FC = () => {
       setHasNewPosts(hasNewPosts);
       updatePostCount(userContext.email.toLowerCase(), currentPostCount);
       setUserContext({ ...userContext, postCount: currentPostCount });
-      // setPreviousPostCount(currentPostCount);
     };
 
     checkForNewPosts();
 
     const unsubscribe = onSnapshot(
-      collection(db, "postAdminAnnouncement"),
+      collection(db, `${userContext?.communityName}postAdminAnnouncement`),
       () => {
         checkForNewPosts();
       }
