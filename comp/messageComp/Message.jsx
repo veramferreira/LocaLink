@@ -14,7 +14,7 @@ const Message = ({ message }) => {
   const { userContext } = useContext(MyContext);
 
   const sentReceivedText = () => {
-    return message.name === userContext.userName
+    return message.name === userContext?.userName
       ? {
           fontFamily: "Poppins_400Regular",
           textAlign: "right",
@@ -26,7 +26,7 @@ const Message = ({ message }) => {
   };
 
   const sentReceivedName = () => {
-    return message.name === userContext.userName
+    return message.name === userContext?.userName
       ? {
           fontFamily: "Poppins_500Medium",
           marginBottom: 10,
