@@ -4,9 +4,20 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AddModeToUser from "../Utils/AddModeToUSer";
 import colours from "../constants/colours";
+import LogOutComp from "../comp/logOutComp";
+import { auth } from "../config/firebase";
+import { useNavigation } from "@react-navigation/native";
 export default function EditProfile() {
   const { userContext, setUserContext } = useContext(MyContext);
-
+  const navigation = useNavigation();
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      navigation.navigate("SignIn");
+    } catch (error) {
+      console.log("Error logging out:", error);
+    }
+  };
   // const opMode = () => {
   //   if (userContext.ldMode === "Dark") {
   //     return "Light";
@@ -43,6 +54,7 @@ export default function EditProfile() {
         <Text style={styles.boldText}>
           Role: <Text style={styles.normalText}>{userContext?.role}</Text>
         </Text>
+        <LogOutComp onLogout={handleLogout} />
       </View>
     </View>
   );
