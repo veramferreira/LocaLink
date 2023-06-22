@@ -150,7 +150,7 @@ const AddRecommendation: React.FC = () => {
 
   return (
     <>
-      <BackButton path="Marketplace" />
+      <BackButton path="Recommendations" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <Text style={styles.heading}>Add your recommendation</Text>
