@@ -59,7 +59,7 @@ const AddRecommendation: React.FC = () => {
   const [downloadUrl, setDownloadUrl] = useState("");
 
   const navigation = useNavigation();
-  const userEmail = userContext?.email || "";
+  //   const userEmail = userContext?.email || "";
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

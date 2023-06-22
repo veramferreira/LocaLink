@@ -10,14 +10,14 @@ const RecommendationsItemCard: React.FC<{ route: any }> = ({ route }) => {
 
   return (
     <>
-      <BackButton path="Marketplace" />
+      <BackButton path="Recommendations" />
 
       <View style={styles.container}>
         <Text style={styles.heading}>{name}</Text>
         <Image source={{ uri: photoUrl }} style={styles.itemImage} />
         <View style={styles.descriptionContainer}>
           <Text style={styles.description}>{description}</Text>
-          <Text style={styles.description}>{contacts}</Text>
+
           <Text style={styles.description}>{website}</Text>
         </View>
       </View>
