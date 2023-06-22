@@ -109,28 +109,6 @@ export default function ReportIssue({ navigation }: any) {
     );
   };
 
-  // const handleSubmit = async (
-  //   values: FormValues,
-  //   { resetForm }: { resetForm: () => void }
-  // ) => {
-  //   try {
-  //     const docData = {
-  //       title: values.title,
-  //       description: values.description,
-  //       email: values.email,
-  //       img: values.img,
-  //     };
-
-  //     await addDoc(collection(db, "reportedIssues"), docData);
-  //     console.log("Document written successfully");
-  //     resetForm();
-  //     setSubmitted(true);
-  //     showAlert();
-  //   } catch (error) {
-  //     console.error("Error adding document: ", error);
-  //   }
-  // };
-
   useEffect(() => {
     if (userContext?.communityName) {
       const q = query(
