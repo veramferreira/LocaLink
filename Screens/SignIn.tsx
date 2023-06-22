@@ -4,12 +4,12 @@ import SignIn from "../comp/singInComp";
 import LogOutComp from "../comp/logOutComp";
 import { auth, db } from "../config/firebase";
 import { collection, onSnapshot, orderBy, query } from "@firebase/firestore";
-import { MyContext } from "../Context"; // Import MyContext from the context file
+import { MyContext } from "../Context";
 
 const styles = StyleSheet.create({
   nav: {
     backgroundColor: "#F57C01",
-    // height: 80,
+
     flexDirection: "row",
     alignItems: "center",
     padding: 16,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F57C01",
-  }
+  },
 });
 
 const SignInPage: React.FC = () => {
