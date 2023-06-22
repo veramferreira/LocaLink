@@ -21,6 +21,7 @@ import * as yup from "yup";
 import { useNavigation } from "@react-navigation/native";
 import { MyContext } from "../Context";
 import colours from "../constants/colours";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface FormValues {
   title: string;
