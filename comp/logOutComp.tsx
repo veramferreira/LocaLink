@@ -8,7 +8,7 @@ interface LogOutCompProps {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   wrapper: {
-    marginTop: "50%",
+    // marginTop: "50%",
   },
   buttonText: {
     color: "white",
