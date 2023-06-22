@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { MyContext } from "../Context";
 import colours from "../constants/colours";
+import BackButton from "../comp/BackButton";
 
 interface FormValues {
   eventName: string;
@@ -42,7 +43,7 @@ const AddEvent: React.FC = () => {
   const [isSubmitted, setSubmitted] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
-  const {userContext} = useContext(MyContext);
+  const { userContext } = useContext(MyContext);
 
   const navigation = useNavigation();
 
@@ -74,7 +75,10 @@ const AddEvent: React.FC = () => {
         time: values.time,
       };
 
-      await addDoc(collection(db, `${userContext?.communityName}calendarEvent`), docData);
+      await addDoc(
+        collection(db, `${userContext?.communityName}calendarEvent`),
+        docData
+      );
       resetForm();
       setSubmitted(true);
       showAlert();
@@ -90,108 +94,114 @@ const AddEvent: React.FC = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.heading}>Add Event</Text>
-        <Formik
-          initialValues={{ eventName: "", description: "", date: "" }}
-          validationSchema={formSchema}
-          onSubmit={handleSubmit}
-        >
-          {(props: FormikProps<FormValues>) => (
-            <View style={styles.form}>
-              <Text style={styles.text}>Event Name:</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter event name..."
-                onChangeText={props.handleChange("eventName")}
-                value={props.values.eventName}
-                onBlur={props.handleBlur("eventName")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.eventName && props.errors.eventName}
-              </Text>
-              <Text style={styles.text}>Description:</Text>
-              <TextInput
-                multiline
-                minHeight={70}
-                style={styles.input}
-                placeholder="Enter event description..."
-                onChangeText={props.handleChange("description")}
-                value={props.values.description}
-                onBlur={props.handleBlur("description")}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.description && props.errors.description}
-              </Text>
-              <Text style={styles.text}>Date:</Text>
+    <>
+      <BackButton path="Calendar" />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Text style={styles.heading}>Add Event</Text>
+          <Formik
+            initialValues={{ eventName: "", description: "", date: "" }}
+            validationSchema={formSchema}
+            onSubmit={handleSubmit}
+          >
+            {(props: FormikProps<FormValues>) => (
+              <View style={styles.form}>
+                <Text style={styles.text}>Event Name:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter event name..."
+                  onChangeText={props.handleChange("eventName")}
+                  value={props.values.eventName}
+                  onBlur={props.handleBlur("eventName")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.eventName && props.errors.eventName}
+                </Text>
+                <Text style={styles.text}>Description:</Text>
+                <TextInput
+                  multiline
+                  minHeight={70}
+                  style={styles.input}
+                  placeholder="Enter event description..."
+                  onChangeText={props.handleChange("description")}
+                  value={props.values.description}
+                  onBlur={props.handleBlur("description")}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.description && props.errors.description}
+                </Text>
+                <Text style={styles.text}>Date:</Text>
 
-              <TextInput
-                style={styles.input}
-                placeholder="Enter event date..."
-                onChangeText={props.handleChange("date")}
-                value={props.values.date}
-                onBlur={props.handleBlur("date")}
-                onFocus={showDatePicker}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.date && props.errors.date}
-              </Text>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={(date) => {
-                  props.setFieldValue("date", date.toISOString().split("T")[0]);
-                  hideDatePicker();
-                }}
-                textColor="#000000"
-                onCancel={hideDatePicker}
-              />
-              <Text style={styles.text}>Time:</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter event date..."
+                  onChangeText={props.handleChange("date")}
+                  value={props.values.date}
+                  onBlur={props.handleBlur("date")}
+                  onFocus={showDatePicker}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.date && props.errors.date}
+                </Text>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={(date) => {
+                    props.setFieldValue(
+                      "date",
+                      date.toISOString().split("T")[0]
+                    );
+                    hideDatePicker();
+                  }}
+                  textColor="#000000"
+                  onCancel={hideDatePicker}
+                />
+                <Text style={styles.text}>Time:</Text>
 
-              <TextInput
-                style={styles.input}
-                placeholder="Enter event time..."
-                onChangeText={props.handleChange("time")}
-                value={props.values.time}
-                onBlur={props.handleBlur("time")}
-                onFocus={showTimePicker}
-              />
-              <Text style={styles.errorText}>
-                {props.touched.time && props.errors.time}
-              </Text>
-              <DateTimePickerModal
-                isVisible={isTimePickerVisible}
-                mode="time"
-                onConfirm={(time) => {
-                  const formattedTime = time.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  });
-                  props.setFieldValue("time", formattedTime);
-                  hideTimePicker();
-                }}
-                textColor="#000000"
-                onCancel={hideTimePicker}
-              />
-              <TouchableOpacity
-                title="Add Event"
-                onPress={props.handleSubmit}
-                style={[
-                  styles.button,
-                  isButtonPressed ? buttonPressedStyle : null,
-                ]}
-                onPressIn={() => setButtonPressed(true)}
-                onPressOut={() => setButtonPressed(false)}
-                activeOpacity={1}
-              >
-                <Text style={styles.buttonText}>Add Event</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </Formik>
-      </View>
-    </TouchableWithoutFeedback>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter event time..."
+                  onChangeText={props.handleChange("time")}
+                  value={props.values.time}
+                  onBlur={props.handleBlur("time")}
+                  onFocus={showTimePicker}
+                />
+                <Text style={styles.errorText}>
+                  {props.touched.time && props.errors.time}
+                </Text>
+                <DateTimePickerModal
+                  isVisible={isTimePickerVisible}
+                  mode="time"
+                  onConfirm={(time) => {
+                    const formattedTime = time.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    });
+                    props.setFieldValue("time", formattedTime);
+                    hideTimePicker();
+                  }}
+                  textColor="#000000"
+                  onCancel={hideTimePicker}
+                />
+                <TouchableOpacity
+                  title="Add Event"
+                  onPress={props.handleSubmit}
+                  style={[
+                    styles.button,
+                    isButtonPressed ? buttonPressedStyle : null,
+                  ]}
+                  onPressIn={() => setButtonPressed(true)}
+                  onPressOut={() => setButtonPressed(false)}
+                  activeOpacity={1}
+                >
+                  <Text style={styles.buttonText}>Add Event</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
+        </View>
+      </TouchableWithoutFeedback>
+    </>
   );
 };
 
