@@ -126,7 +126,7 @@ const AddRecommendation: React.FC = () => {
       };
 
       await addDoc(
-        collection(db, `${userContext?.userName}recommendations`),
+        collection(db, `${userContext?.communityName}recommendations`),
         docData
       );
       resetForm();

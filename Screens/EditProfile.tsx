@@ -54,7 +54,7 @@ export default function EditProfile() {
         <Text style={styles.boldText}>
           Role: <Text style={styles.normalText}>{userContext?.role}</Text>
         </Text>
-        <LogOutComp onLogout={handleLogout} />
+      <LogOutComp onLogout={handleLogout} />
       </View>
     </View>
   );
