@@ -52,3 +52,17 @@ Babel - https://babel.dev/docs/en/next/babel-core
 Formik - https://formik.org
 
 Yup - https://github.com/jquense/yup
+
+##
+
+Contributors:
+
+https://github.com/veramferreira
+
+https://github.com/AlinaKhvishchuk
+
+https://github.com/GuyKensdale
+
+https://github.com/JoshuaGoodwill
+
+https://github.com/SarahHume
