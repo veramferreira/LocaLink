@@ -4,7 +4,7 @@
 ![image](https://github.com/GuyKensdale/Local-Link/assets/124263674/a71e0083-7699-479f-9251-4742bd6abf2a)
 
 ## Overview
-LocaLink is an app for Android and iOS designed to bring local communities together without the need to share personal information such as email or phone numbers. It aims to be the one-stop shop for online community interaction, organizing and providing access to all the information about a building or neighborhood.
+LocaLink is an app for Android and iOS designed to bring local communities together without the need to share personal information such as email or phone numbers. It aims to be the one-stop shop for online community interaction, organising and providing access to all the information about a building or a neighbourhood.
 
 ----
 ## App Description
