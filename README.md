@@ -72,13 +72,13 @@ Other technologies and libraries used include:
 LocaLink was developed as a group project during a 13-week Software Development Bootcamp with [Northcoders](https://northcoders.com/). The team consisted of five contributors who came up with the idea, outlined the project, created mockups, built the entire project, and presented it at graduation on the 23rd of July, 2023.
 
 Here is the wireframe of the project:
-![app wireframe](localink-wireframe.png)
+![app wireframe](https://github.com/veramferreira/LocaLink/blob/main/assets/localink-wireframe.png?raw=true)
 
 I was responsible for creating the design/visual aspect of LocaLink and helped building features and screens of the App.
 
 The first mockups of the App were created on Figma:
 
-![app initial mockups](mockups.png)
+![app initial mockups](https://github.com/veramferreira/LocaLink/blob/main/assets/mockups.png?raw=true)
 
 ### Project Contributors:
 
